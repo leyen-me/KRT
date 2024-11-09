@@ -1,0 +1,6 @@
+{
+  "watch": ["src", ".env", ".env.*"],
+  "ext": ".ts,.js,.env",
+  "ignore": [".git", "node_modules", "dist", ".cache"],
+  "exec": "tsc --outDir .cache && node .cache/index.js"
+}

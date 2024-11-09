@@ -1,0 +1,10 @@
+{
+  "name": "demo-express-vue-vercel",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter server dev",
+    "build": "pnpm -r build",
+    "start": "pnpm -r start"
+  }
+}
