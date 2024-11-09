@@ -1,35 +1,17 @@
-import fs from "fs";
 import path from "path";
-
 import { Express } from "express";
-import { CLIENT_SERVER_PATH, IS_PRODUCTION } from "../constants";
-import { ViteDevServer } from "vite";
 
 import { apiRouter } from "../api";
+import { CLIENT_SERVER_PATH, IS_PRODUCTION } from "../constants";
 
-export function route(app: Express, vite?: ViteDevServer) {
+export function route(app: Express) {
   app.use("/api", apiRouter);
 
-  app.use("/*", async (req, res, next) => {
-    const url = req.originalUrl;
-    console.log("url", url);
-    try {
-      let template = fs.readFileSync(
-        path.resolve(CLIENT_SERVER_PATH, "index.html"),
-        "utf-8"
-      );
-      if (!IS_PRODUCTION && vite) {
-        template = await vite.transformIndexHtml(url, template);
-      }
-      res.status(200).set({ "Content-Type": "text/html" }).end(template);
-    } catch (e: any) {
-      if (!IS_PRODUCTION && vite) {
-        vite.ssrFixStacktrace(e);
-      }
-      next(e);
-    }
-  });
-
+  if (IS_PRODUCTION) {
+    app.get("*", (req, res) => {
+      res.sendFile(path.resolve(CLIENT_SERVER_PATH, "index.html"));
+    });
+  }
   return (req, res, next) => {
     next();
   };

@@ -7,4 +7,4 @@ export const IS_PRODUCTION = process.env.NODE_ENV === "production";
 
 export const CLIENT_SERVER_PATH = IS_PRODUCTION
   ? path.resolve(process.cwd(), "./dist/client")
-  : path.resolve(process.cwd(), "../client");
+  : path.resolve(process.cwd(), "../client");  
