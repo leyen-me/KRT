@@ -1,3 +1,4 @@
 packages:
   - 'src/client'
   - 'src/server'
+  - 'src/common/lang'

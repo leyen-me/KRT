@@ -70,6 +70,10 @@ pnpm --filter server install package-name
 pnpm -r install typescript -D
 ```
 
+## 部署
+
+我们非常推荐将整个服务部署到`dokploy`上，dokploy安装使用简单，自带CICD。是部署的最佳选择
+
 ## 贡献
 
 欢迎任何形式的贡献！如果你有好的想法或发现了问题，欢迎提交 **Issue** 或 **Pull Request**。
