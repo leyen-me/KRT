@@ -12,7 +12,7 @@ importers:
     dependencies:
       '@common/lang':
         specifier: workspace:*
-        version: link:../common/lang
+        version: link:../packages/common/lang
       '@radix-ui/react-slot':
         specifier: ^1.1.0
         version: 1.1.0(@types/react@18.3.12)(react@18.3.1)
@@ -75,7 +75,7 @@ importers:
         specifier: ^5.4.10
         version: 5.4.10(@types/node@22.9.0)
 
-  src/common/lang:
+  src/packages/common/lang:
     devDependencies:
       '@types/node':
         specifier: ^22.9.0
@@ -88,7 +88,7 @@ importers:
     dependencies:
       '@common/lang':
         specifier: workspace:*
-        version: link:../common/lang
+        version: link:../packages/common/lang
       '@prisma/client':
         specifier: 5.22.0
         version: 5.22.0(prisma@5.22.0)

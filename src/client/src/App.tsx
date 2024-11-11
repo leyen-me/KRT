@@ -1,34 +1,49 @@
-import { Route, Routes, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
+
+import { getLocalInfo, LocalInfo } from "@common/lang";
+
+import AdminLayout from "./layout/AdminLayout";
+
 import Home from "@/pages/home";
 import About from "@/pages/about";
 import NotFound from "@/pages/error";
+import AdminSysUser from "./pages/admin/sys/user";
+import Layout from "./layout/Layout";
+import { createContext, useContext } from "react";
 
-import { LANG } from "@common/lang";
+const AppContext = createContext<LocalInfo | undefined>(undefined);
+
+export const useAppContext = () => {
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error("useAppContext must be used within a Provider");
+  }
+  return context;
+};
 
 function App() {
+  const localInfo = getLocalInfo();
+
   return (
-    <>
-      {LANG}
-      <div className="flex h-full">
-        <nav className="flex-[0.2] h-full bg-black text-white">
-          <ul>
-            <li className="underline">
-              <Link to="/">Home</Link>
-            </li>
-            <li className="underline">
-              <Link to="/about">About</Link>
-            </li>
-          </ul>
-        </nav>
-        <div className="flex-1 h-full">
-          <Routes>
-            <Route path="/" element={<Home />} />
+    <AppContext.Provider value={localInfo}>
+      <BrowserRouter basename={localInfo.baseName} future={{ v7_startTransition: true }}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route path="/admin/sys/user" element={<AdminSysUser />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
             <Route path="*" element={<NotFound />} /> {/* 默认的 404 页面 */}
-          </Routes>
-        </div>
-      </div>
-    </>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AppContext.Provider>
   );
 }
 
