@@ -1,11 +1,11 @@
-const About = () => {
+const Pricing = () => {
   return (
     <>
       <div className="h-full flex items-center justify-center">
-        <h1>About</h1>
+        <h1>Pricing</h1>
       </div>
     </>
   );
 };
 
-export default About;
+export default Pricing;
