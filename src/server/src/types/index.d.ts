@@ -1,4 +1,4 @@
-// Extend the type of process.env
+/// <reference types="vite/client" />
 
 // middleware/result.ts
 interface Result<T> {
@@ -9,7 +9,6 @@ interface Result<T> {
 
 declare global {
   declare namespace Express {
-
     // middleware/result.ts
     export interface Response {
       success: (data: any, message?: string) => void;
@@ -18,12 +17,9 @@ declare global {
     }
   }
 
-  // .env
-  declare namespace NodeJS {
-    interface ProcessEnv {
-      NODE_ENV: "development" | "production";
-      PORT: string;
-    }
+  interface ImportMetaEnv {
+    readonly VITE_PORT: number;
+    readonly VITE_AUTH_SECURITY: string;
   }
 }
 

@@ -1,11 +1,16 @@
+import { IS_PRODUCTION } from "@/constants/index";
 import { Express } from "express";
 
 export function listen(app: Express) {
-  const port = process.env.PORT || 5000;
-
-  app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-  });
+  if (IS_PRODUCTION) {
+    app.listen(Number(import.meta.env.VITE_PORT) || 5000, () => {
+      console.log(
+        `Server running at http://localhost:${
+          Number(import.meta.env.VITE_PORT) || 5000
+        }`
+      );
+    });
+  }
   return (req, res, next) => {
     next();
   };
