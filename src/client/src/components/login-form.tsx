@@ -8,10 +8,20 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { LoginVo, LoginVoKeys } from "@app/server/src/api/sys/auth";
 import { t } from "@common/i18n";
 import { Link } from "react-router-dom";
+import { Spinner } from "./ui/spinner";
 
-export function LoginForm() {
+export interface LoginFormProp {
+  loginLoading: boolean
+  loginData: LoginVo
+
+  onChange: (key: LoginVoKeys, value: string) => void
+  onLogin: () => void
+}
+
+export function LoginForm({ loginData, loginLoading, onChange, onLogin }: LoginFormProp) {
   return (
     <Card className="mx-auto max-w-sm min-w-[350px]">
       <CardHeader>
@@ -25,8 +35,12 @@ export function LoginForm() {
             <Input
               id="email"
               type="email"
-              placeholder={t("pages.login.emailPlacehoder")}
               required
+              placeholder={t("pages.login.emailPlacehoder")}
+              value={loginData.username}
+              onChange={(e) => {
+                onChange("username", e.target.value)
+              }}
             />
           </div>
           <div className="grid gap-2">
@@ -36,10 +50,14 @@ export function LoginForm() {
                 {t("pages.login.forgetPassword")}
               </Link>
             </div>
-            <Input id="password" type="password" required />
+            <Input id="password" type="password" required
+              onChange={(e) => {
+                onChange("password", e.target.value)
+              }}
+            />
           </div>
-          <Button type="submit" className="w-full">
-            {t("pages.login.login")}
+          <Button disabled={loginLoading} onClick={onLogin} className="w-full">
+            {loginLoading ? <Spinner /> : null} {t("pages.login.login")}
           </Button>
           <Button variant="outline" className="w-full">
             {t("pages.login.loginWithGoogle")}

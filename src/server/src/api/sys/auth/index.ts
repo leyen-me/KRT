@@ -9,8 +9,19 @@ authRouter.post("/register", (req, res) => {
   res.success("Hello, World!");
 });
 
-authRouter.get("/login", (req, res) => {
-  const { username, password } = req.body;
+
+export type LoginVo = {
+  username: string
+  password: string
+}
+export type LoginVoKeys = keyof LoginVo
+
+export type LoginResponseVo = {
+  token: string
+}
+
+authRouter.post("/login", (req, res) => {
+  const { username, password } = req.body as LoginVo;
 
   //   res.success("Hello, World!");
   // 示例使用
@@ -25,10 +36,17 @@ authRouter.get("/login", (req, res) => {
   // 解密
   // const decrypted = decrypt(encryptedData, process.env.AUTH_SECURITY, iv);
 
-  res.success({
-    token: encryptedData,
-    iv: iv,
-  });
+  // res.success({
+  //   token: encryptedData,
+  //   iv: iv,
+  // });
+
+  setTimeout(() => {
+    res.success({
+      token: encryptedData,
+      iv: iv,
+    });
+  }, 3000)
 });
 
 authRouter.post("/logout", (req, res) => {

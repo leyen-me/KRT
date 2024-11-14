@@ -9,7 +9,12 @@ export function vite(app: Express) {
     app.use(express.static(CLIENT_SERVER_PATH));
   } else {
     createServer({
-      server: { middlewareMode: true },
+      server: {
+        middlewareMode: true,
+        hmr: {
+          port: Number(import.meta.env.VITE_PORT) + 1
+        }
+      },
       root: CLIENT_SERVER_PATH,
     }).then(async (server) => {
       app.use(server.middlewares);

@@ -1,4 +1,4 @@
-import { fetchMenuTree, fetchUserInfo } from "@/api/auth";
+import { fetchMenuTree, fetchUserInfo } from "@/api/sys/auth";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";

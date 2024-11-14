@@ -1,8 +1,15 @@
 // apiUtils.js
 
 // 通用的 fetch 请求封装函数
-export const fetchRequest = async (url: string, options = {}) => {
-    const response = await fetch(url, options);
+
+// todo: type
+// RequestInit
+
+export const fetchRequest = async (url: string, options: any = {}) => {
+    const response = await fetch(url, {
+        ...options,
+        body: options.body ? JSON.stringify(options.body) : undefined
+    });
 
     // 如果响应状态不为 2xx，抛出错误
     if (!response.ok) {

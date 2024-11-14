@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 // middleware/result.ts
-interface Result<T> {
+export interface Result<T> {
   code: number;
   data: T;
   message: string;
