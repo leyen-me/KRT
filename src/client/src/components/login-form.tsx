@@ -37,9 +37,9 @@ export function LoginForm({ loginData, loginLoading, onChange, onLogin }: LoginF
               type="email"
               required
               placeholder={t("pages.login.emailPlacehoder")}
-              value={loginData.username}
+              value={loginData.email}
               onChange={(e) => {
-                onChange("username", e.target.value)
+                onChange("email", e.target.value)
               }}
             />
           </div>

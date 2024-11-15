@@ -1,23 +1,21 @@
-import express, { json } from "express";
+import Koa from "koa";
+import bodyParser from "koa-bodyparser";
 
-import { cors } from "./middlewares/cors";
-import { vite } from "./middlewares/vite";
-import { result } from "./middlewares/result";
-import { listen } from "./middlewares/listen";
+import { createViteServer } from "./middlewares/vite";
+import { listenServer } from "./middlewares/listen";
+import { responseMiddleware } from "./middlewares/result";
 
-export const app = express();
+// Create Koa app
+export const app = new Koa();
 
-// 让接口可以跨域，全栈项目，默认关闭
-app.use(cors(app));
+// parse body
+app.use(bodyParser());
 
-// 统一响应格式
-app.use(result(app));
+// response middleware
+app.use(responseMiddleware);
 
-// 解析 JSON 格式的请求体
-app.use(json());
+// vite
+createViteServer(app)
 
-// 启动Vite服务, 加载路由
-app.use(vite(app));
-
-// 监听端口
-app.use(listen(app));
+// listen
+listenServer(app);

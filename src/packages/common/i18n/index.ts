@@ -10,6 +10,7 @@ import zhCn from "./locals/zh-CN";
 
 // 支持的语言列表
 const DEFAULT_PATH = "/";
+
 export const LOCALS = [
   {
     default: true,
@@ -75,6 +76,34 @@ export const useI18nContext = (): I18nInfo => {
   return context;
 };
 
+export const getI18n = (): I18nInfo => {
+  let i18nInfo = {
+    name: LOCALS.find((local) => local.default)!.name, // 默认语言
+    path: DEFAULT_PATH,
+  };
+  // 从 URL 获取语言信息
+  const info = location.pathname.match(
+    new RegExp("^/(" + LOCALS.map((local) => local.name).join("|") + ")")
+  );
+
+  if (info) {
+    i18nInfo = {
+      name: info[1],
+      path: info[0],
+    };
+  } else {
+    // 如果 URL 中没有语言部分，使用默认语言
+    const defaultLocal = LOCALS.find((local) => local.default);
+    if (defaultLocal) {
+      i18nInfo = {
+        name: defaultLocal.name,
+        path: DEFAULT_PATH,
+      };
+    }
+  }
+  return i18nInfo;
+};
+
 // 用于切换语言的函数
 export const setI18n = (name: string, rLocation: any) => {
   // 判断是否是系统语言
@@ -88,7 +117,7 @@ export const setI18n = (name: string, rLocation: any) => {
 
 // t 函数用于获取翻译
 export const t = (key: string): string => {
-  const { name } = useI18nContext();
+  const { name } = getI18n();
   const local = LOCALS.find((local) => local.name === name)?.value;
 
   if (!local) {
@@ -96,10 +125,10 @@ export const t = (key: string): string => {
   }
 
   // 使用 useRef 缓存翻译结果
-  const cacheRef = useRef<Map<string, string>>(new Map());
+  const cacheRef = new Map();
 
-  if (cacheRef.current.has(key)) {
-    return cacheRef.current.get(key) as string;
+  if (cacheRef.has(key)) {
+    return cacheRef.get(key) as string;
   }
 
   // 根据 key 从语言包中递归查找
@@ -115,7 +144,7 @@ export const t = (key: string): string => {
   }
 
   if (typeof result === "string") {
-    cacheRef.current.set(key, result); // 缓存翻译结果
+    cacheRef.set(key, result); // 缓存翻译结果
     return result;
   }
 

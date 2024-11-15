@@ -1,54 +1,36 @@
 // Authentication
 
-import express from "express";
 import { decrypt, encrypt } from "@/utils/pwUtils";
+import { sysAuthService } from "@/service/sys/auth";
+import Router from "koa-router";
 
-export const authRouter = express.Router();
-
-authRouter.post("/register", (req, res) => {
-  res.success("Hello, World!");
+export const authRouter = new Router({
+  prefix: "/auth",
 });
 
+authRouter.post("/register", (ctx, next) => {
+  ctx.body = "register!";
+});
 
 export type LoginVo = {
-  username: string
-  password: string
-}
-export type LoginVoKeys = keyof LoginVo
+  email: string;
+  password: string;
+};
+export type LoginVoKeys = keyof LoginVo;
 
 export type LoginResponseVo = {
-  token: string
-}
+  token: string;
+};
 
-authRouter.post("/login", (req, res) => {
-  const { username, password } = req.body as LoginVo;
-
-  //   res.success("Hello, World!");
-  // 示例使用
-  const detailUserId = "435432542";
-
-  // 加密
-  const { encryptedData, iv } = encrypt(
-    detailUserId,
-    import.meta.env.VITE_AUTH_SECURITY
-  );
-
-  // 解密
-  // const decrypted = decrypt(encryptedData, process.env.AUTH_SECURITY, iv);
-
-  // res.success({
-  //   token: encryptedData,
-  //   iv: iv,
-  // });
-
-  setTimeout(() => {
-    res.success({
-      token: encryptedData,
-      iv: iv,
-    });
-  }, 3000)
+authRouter.get("/login", async (ctx, next) => {
+  throw new Error("test error");
+  // const { email, password } = ctx.body as LoginVo;
+  // // todo: 参数校验
+  // const result = await sysAuthService.login({ email, password });
+  // ctx.body = result;
+  ctx.body = "login!";
 });
 
-authRouter.post("/logout", (req, res) => {
-  res.success("Hello, World!");
+authRouter.post("/logout", (ctx, next) => {
+  ctx.body = "logout!";
 });

@@ -1,7 +1,9 @@
-import express from "express";
+import Router from "koa-router";
 
-export const userRouter = express.Router();
+export const userRouter = new Router({
+  prefix: "/user",
+});
 
-userRouter.get("/", (req, res) => {
-  res.success("Hello, World!");
+userRouter.get("/", (ctx, next) => {
+  ctx.body = "Hello, World!";
 });

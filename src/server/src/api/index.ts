@@ -1,16 +1,7 @@
-import express from "express";
+import Router from "koa-router";
 import { sysRouter } from "./sys";
+import { errorMiddleware } from "../middlewares/error";
 
-export const apiRouter = express.Router();
-
-apiRouter.use("/sys", sysRouter);
-
-// 404
-apiRouter.use((req, res, next) => {
-  res.noFound();
-});
-
-// Exception interception
-apiRouter.use((err, req, res, next) => {
-  res.error(500, err.message);
-});
+export const apiRouter = new Router({ prefix: "/api" });
+apiRouter.use(errorMiddleware);
+apiRouter.use(sysRouter.routes(), sysRouter.allowedMethods());

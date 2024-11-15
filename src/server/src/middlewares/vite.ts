@@ -1,28 +1,37 @@
-import express, { Express } from "express";
+import Koa from "koa";
+import koaStatic from "koa-static";
+import koaConnect from "koa-connect";
+import koaSend from "koa-send";
 import { createServer } from "vite";
 
 import { CLIENT_SERVER_PATH, IS_PRODUCTION } from "../constants";
-import { route } from "./route";
+import { apiRouter } from "../api";
+import { notFoundMiddleware } from "./error";
 
-export function vite(app: Express) {
+export async function createViteServer(app: Koa) {
+  // Register API routes
+  app.use(apiRouter.routes());
+  // Fix API router 404
+  app.use(notFoundMiddleware);
+  app.use(apiRouter.allowedMethods());
+
   if (IS_PRODUCTION) {
-    app.use(express.static(CLIENT_SERVER_PATH));
+    // Routes other than API routes
+    app.use(koaStatic(CLIENT_SERVER_PATH));
+    if (IS_PRODUCTION) {
+      // Fix react router or vue router history mode
+      app.use(async (ctx) => {
+        await koaSend(ctx, "index.html", { root: CLIENT_SERVER_PATH });
+      });
+    }
   } else {
-    createServer({
+    // Routes other than API routes
+    const server = await createServer({
       server: {
         middlewareMode: true,
-        hmr: {
-          port: Number(import.meta.env.VITE_PORT) + 1
-        }
       },
       root: CLIENT_SERVER_PATH,
-    }).then(async (server) => {
-      app.use(server.middlewares);
     });
+    app.use(koaConnect(server.middlewares));
   }
-
-  app.use(route(app));
-  return (req, res, next) => {
-    next();
-  };
 }

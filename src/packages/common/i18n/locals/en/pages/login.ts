@@ -9,4 +9,13 @@ export default {
   loginWithGoogle: "Login with Google",
   registerDesc: "Don't have an account?",
   register: "Sign up",
+
+  sonner: {
+    success: {
+      description: "Longin success",
+    },
+    error: {
+      title: "Error",
+    },
+  },
 };

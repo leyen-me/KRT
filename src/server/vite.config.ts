@@ -10,7 +10,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
   return {
     plugins: [
       ...VitePluginNode({
-        adapter: "express",
+        adapter: "koa",
         appPath: "./src/index.ts",
         exportName: "app",
         initAppOnBoot: false,
@@ -20,7 +20,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
     ],
     server: {
       port: VITE_PORT,
-      host: "0.0.0.0",
+      host: "0.0.0.0"
     },
     build: {
       outDir: "./dist/server",

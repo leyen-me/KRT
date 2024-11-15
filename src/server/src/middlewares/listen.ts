@@ -1,7 +1,6 @@
 import { IS_PRODUCTION } from "@/constants/index";
-import { Express } from "express";
 
-export function listen(app: Express) {
+export function listenServer(app: any) {
   if (IS_PRODUCTION) {
     app.listen(Number(import.meta.env.VITE_PORT) || 5000, () => {
       console.log(
@@ -11,7 +10,4 @@ export function listen(app: Express) {
       );
     });
   }
-  return (req, res, next) => {
-    next();
-  };
 }

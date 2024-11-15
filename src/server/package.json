@@ -6,7 +6,6 @@
     "dev": "vite",
     "build": "vite build",
     "start": "pnpm db:migrate && node ./dist/server/index.cjs",
-    
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev --name init",
     "db:seed": "node prisma/seed.mjs"
@@ -14,13 +13,23 @@
   "dependencies": {
     "@common/i18n": "workspace:*",
     "@prisma/client": "5.22.0",
+    "@types/koa": "^2.15.0",
+    "@types/koa-bodyparser": "^4.3.12",
+    "@types/koa-router": "^7.4.8",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "koa": "^2.15.3",
+    "koa-bodyparser": "^4.4.1",
+    "koa-connect": "^2.1.0",
+    "koa-router": "^13.0.1",
+    "koa-send": "^5.0.1",
+    "koa-static": "^5.0.0",
     "nanoid": "^5.0.8"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.17",
+    "@types/koa-static": "^4.0.4",
     "@types/node": "^22.9.0",
     "prisma": "^5.22.0",
     "typescript": "^5.0.4",
