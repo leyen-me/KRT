@@ -5,7 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LOCALS, setI18n, t, useI18nContext } from "@common/i18n";
+import { LOCALS, DEFAULT_LOCAL_NAME, setI18n, t, useI18nContext } from "@app/i18n";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -43,7 +43,7 @@ export function I18nTool() {
         })}
         <DropdownMenuItem
           onClick={() => {
-            handleToggleLocal(LOCALS.find((local) => local.default)!.name);
+            handleToggleLocal(DEFAULT_LOCAL_NAME);
           }}
         >
           {t("pages.common.i18n.system")}

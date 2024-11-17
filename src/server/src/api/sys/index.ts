@@ -8,6 +8,3 @@ export const sysRouter = new Router({
 
 sysRouter.use(authRouter.routes(), authRouter.allowedMethods());
 sysRouter.use(userRouter.routes(), userRouter.allowedMethods());
-
-// sysRouter.use("/auth", authRouter);
-// sysRouter.use("/user", userRouter);

@@ -11,11 +11,10 @@
     "db:seed": "node prisma/seed.mjs"
   },
   "dependencies": {
-    "@common/i18n": "workspace:*",
+    "@app/i18n": "workspace:*",
+    "@app/result": "workspace:*",
     "@prisma/client": "5.22.0",
-    "@types/koa": "^2.15.0",
-    "@types/koa-bodyparser": "^4.3.12",
-    "@types/koa-router": "^7.4.8",
+
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "koa": "^2.15.3",
@@ -29,11 +28,14 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.17",
-    "@types/koa-static": "^4.0.4",
     "@types/node": "^22.9.0",
+    "@types/koa": "^2.15.0",
+    "@types/koa-static": "^4.0.4",
+    "@types/koa-bodyparser": "^4.3.12",
+    "@types/koa-router": "^7.4.8",
     "prisma": "^5.22.0",
-    "typescript": "^5.0.4",
-    "vite": "^4.5.5",
+    "typescript": "~5.6.2",
+    "vite": "^5.0.0",
     "vite-plugin-node": "^4.0.0"
   }
 }

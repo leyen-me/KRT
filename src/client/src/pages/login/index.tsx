@@ -12,7 +12,7 @@ import { fetchSysAuthLogin } from "@/api/sys/auth";
 
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { t } from "@common/i18n";
+import { t } from "@app/i18n";
 import { useAuthStore } from "@/stores/useAuthStore";
 
 export default function Page() {

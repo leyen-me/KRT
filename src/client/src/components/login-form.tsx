@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LoginVo, LoginVoKeys } from "@app/server/src/api/sys/auth";
-import { t } from "@common/i18n";
+import { t } from "@app/i18n";
 import { Link } from "react-router-dom";
 import { Spinner } from "./ui/spinner";
 

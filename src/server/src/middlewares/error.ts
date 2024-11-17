@@ -1,15 +1,11 @@
-import { RESPONSE_NO_FOUND_CODE } from "@/constants";
+import { BaseError } from "@/error/BaseError";
+import { I18nResult } from "@app/result";
 import { Context, Next } from "koa";
 
 export const notFoundMiddleware = async (ctx: Context, next: Next) => {
   // Check if it's an API route
   if (ctx.path.startsWith("/api/")) {
-    // ctx.success()
-    ctx.status = RESPONSE_NO_FOUND_CODE;
-    ctx.body = {
-      error: "API Not Found",
-      status: RESPONSE_NO_FOUND_CODE,
-    };
+    ctx.send(new I18nResult(404));
   } else {
     await next();
   }
@@ -19,10 +15,11 @@ export const errorMiddleware = async (ctx: Context, next: Next) => {
   try {
     await next();
   } catch (err: any) {
-    ctx.status = err.status || 500;
-    ctx.body = {
-      code: err.status || 500,
-      message: err.message || "服务器内部错误",
-    };
+    console.error(err);
+    if (err instanceof BaseError) {
+      ctx.send(new I18nResult(err.code));
+    } else {
+      ctx.send(new I18nResult(500));
+    }
   }
 };

@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { I18nContext, useI18n } from "@common/i18n";
-import { ThemeProvider } from "@client/theme";
+import { I18nContext, useI18n } from "@app/i18n";
+import { ThemeProvider } from "@app/theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import NotFound from "@/pages/error";

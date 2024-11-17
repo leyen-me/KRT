@@ -1,0 +1,14 @@
+{
+  "name": "@app/helper",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+  }
+}

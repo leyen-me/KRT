@@ -1,0 +1,19 @@
+{
+  "name": "@app/result",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/koa": "^2.15.0",
+    "@types/koa-router": "^7.4.8",
+    "@types/node": "^22.9.0",
+    "@types/react": "^18.3.12",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@app/i18n": "workspace:*",
+    "koa": "^2.15.3"
+  }
+}
