@@ -3,7 +3,7 @@ import { t } from "@app/i18n";
 export type IResult<T = any> = {
   code: number;
   message: string;
-  data?: T;
+  data: T;
 };
 
 export type IResultMapping = Record<number, string>;

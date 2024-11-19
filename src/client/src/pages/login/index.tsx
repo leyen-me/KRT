@@ -6,20 +6,18 @@ import {
   LoginResponseVo,
   LoginVo,
   LoginVoKeys,
-} from "@app/server/src/api/sys/auth";
-import { Result } from "@app/server/src/types";
+} from "@app/server/src/service/sys/auth";
 import { fetchSysAuthLogin } from "@/api/sys/auth";
 
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { t } from "@app/i18n";
 import { useAuthStore } from "@/stores/useAuthStore";
+import { IResult } from "@app/result";
 
 export default function Page() {
   const { isAuthenticated, setToken } = useAuthStore();
-
-  console.log(isAuthenticated);
-
+  
   const [loginData, setLoginData] = useState<LoginVo>({
     email: "",
     password: "",
@@ -27,7 +25,7 @@ export default function Page() {
 
   // 使用 useMutation 来执行登录操作
   const { mutate, isPending: loginPending } = useMutation<
-    Result<LoginResponseVo>,
+    IResult<LoginResponseVo>,
     Error,
     LoginVo
   >({

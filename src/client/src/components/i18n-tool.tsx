@@ -5,7 +5,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LOCALS, DEFAULT_LOCAL_NAME, setI18n, t, useI18nContext } from "@app/i18n";
+import { setI18n, t, useI18nContext } from "@app/i18n";
+import { LOCALS, DEFAULT_LOCAL_NAME } from "@app/i18n/locals";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 

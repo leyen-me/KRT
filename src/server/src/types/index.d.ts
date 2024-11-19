@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
-/// <reference types="@app/i18n" />
 /// <reference types="@app/result" />
+/// <reference types="@app/i18n" />
 
 declare global {
   interface ImportMetaEnv {

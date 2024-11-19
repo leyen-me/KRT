@@ -1,33 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import en from "./locals/en";
-import zhCn from "./locals/zh-CN";
-import { flattenObject } from "@app/helper/tree";
+import { LOCALS, DEFAULT_LOCAL_NAME, DEFAULT_PATH } from "./locals";
 
-export const LOCALS = [
-  {
-    name: "en",
-    value: en,
-    flat: flattenObject(en),
-    i18nName: "pages.common.i18n.en",
-  },
-  {
-    name: "zh-CN",
-    value: zhCn,
-    flat: flattenObject(zhCn),
-    i18nName: "pages.common.i18n.zhCn",
-  },
-] as const;
-
-export type ILocalName = (typeof LOCALS)[number]["name"];
-export const DEFAULT_PATH = "/";
-export const DEFAULT_LOCAL_NAME: ILocalName = "en";
-
-export const checkLocaByName = (name: string) => {
-  return (
-    LOCALS.find((local) => local.name === name) ||
-    LOCALS.find((local) => local.name === DEFAULT_LOCAL_NAME)
-  );
-};
 export const checkLocaByPathname = (pathname: string) => {
   return pathname.match(
     new RegExp("^/(" + LOCALS.map((local) => local.name).join("|") + ")")
@@ -103,11 +76,4 @@ export const t = (key: string, ctx?: any): string => {
     : LOCALS.find((local) => local.name === clientName);
   let result = local!.flat[key];
   return result ? result : key;
-};
-
-export const koaI18n = () => {
-  return async (ctx: any, next: any) => {
-    ctx.i18n = checkLocaByName(ctx.header["x-i18n"])?.name;
-    await next();
-  };
 };

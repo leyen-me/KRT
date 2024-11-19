@@ -1,8 +1,37 @@
-import { LoginVo } from "@/api/sys/auth";
 import { prisma } from "@/libs/prisma";
+import { I18nResult, Result } from "@app/result";
+import { Context } from "koa";
+
+// register
+
+// login
+export type LoginVo = {
+  email: string;
+  password: string;
+};
+export type LoginVoKeys = keyof LoginVo;
+
+export type LoginResponseVo = {
+  token: string;
+};
+
+// logout
+
+export type LogoutResponseVo = {
+  success: boolean;
+};
 
 export const sysAuthService = {
-  login: async (loginVo: LoginVo) => {
+  register: async (ctx: Context) => {
+    ctx.send(new Result(200));
+  },
+  login: async (ctx: Context) => {
+    const res = {
+      token: "1234",
+    };
+    return ctx.send(new I18nResult(200, res));
+
+    const loginVo = ctx.request.body as LoginVo;
     // 1. Query user from database by email
     const sysUser = await prisma.sys_user.findFirst({
       where: {
@@ -33,5 +62,8 @@ export const sysAuthService = {
     //   //   token: encryptedData,
     //   //   iv: iv,
     //   // });
+  },
+  logout: async (ctx: Context) => {
+    // 1. 删除token
   },
 };

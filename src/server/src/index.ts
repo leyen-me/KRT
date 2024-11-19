@@ -4,8 +4,8 @@ import bodyParser from "koa-bodyparser";
 import { createViteServer } from "./middlewares/vite";
 import { listenServer } from "./middlewares/listen";
 import { result } from "@app/result";
-import { koaI18n, LOCALS } from "@app/i18n";
-
+import { LOCALS } from "@app/i18n/locals";
+import { koaI18n } from "@app/i18n/koa";
 import { ERROR_CODES } from "./constants/ErrorCode";
 
 // create koa app

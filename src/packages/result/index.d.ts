@@ -1,7 +1,12 @@
 import { AbstractResult } from "./index";
 
+declare module "koa" {
+  export interface Context {
+    send: (response: AbstractResult) => void;
+  }
+}
 declare module "koa-router" {
-  export interface IRouterParamContext<StateT = any, CustomT = {}> {
+  interface IRouterParamContext {
     send: (response: AbstractResult) => void;
   }
 }

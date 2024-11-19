@@ -5,7 +5,7 @@ import { defineConfig } from "vite";
 import { VitePluginNode } from "vite-plugin-node";
 
 // https://vite.dev/config/
-export default defineConfig(({ command, mode, ssrBuild }) => {
+export default defineConfig(({ mode }) => {
   const { VITE_PORT } = loadEnv(mode, process.cwd());
   return {
     plugins: [
@@ -15,12 +15,24 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
         exportName: "app",
         initAppOnBoot: false,
         tsCompiler: "esbuild",
-        swcOptions: {},
+        swcOptions: {
+          jsc: {
+            target: "es2019",
+            parser: {
+              syntax: "typescript",
+              decorators: true,
+            },
+            transform: {
+              legacyDecorator: true,
+              decoratorMetadata: true,
+            },
+          },
+        },
       }),
     ],
     server: {
-      port: VITE_PORT,
-      host: "0.0.0.0"
+      port: Number(VITE_PORT),
+      host: "0.0.0.0",
     },
     build: {
       outDir: "./dist/server",

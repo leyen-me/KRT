@@ -10,6 +10,7 @@
     "@app/server": "workspace:*",
     "@app/theme": "workspace:*",
     "@app/i18n": "workspace:*",
+    "@app/result": "workspace:*",
     
     "@radix-ui/react-dropdown-menu": "^2.1.2",
     "@radix-ui/react-label": "^2.1.0",

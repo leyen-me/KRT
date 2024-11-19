@@ -1,10 +1,13 @@
-import type { ILocalName } from './index.ts'
+import type { ILocalName } from "./index.ts";
 
-import Router = require('koa-router')
-
-declare module "koa-router" {
-  export interface IRouterParamContext<StateT = any, CustomT = {}> {
+declare module "koa" {
+  export interface Context {
     i18n: ILocalName;
   }
 }
 
+declare module "koa-router" {
+  interface IRouterParamContext {
+    i18n: ILocalName;
+  }
+}
