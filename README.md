@@ -11,6 +11,14 @@ Execute the following command in the project root directory to install all depen
 pnpm i
 ```
 
+## Init DataBase
+
+```sh
+cd src/server
+pnpm db:generate
+pnpm db:migrate
+```
+
 ## Start the development environment
 
 During development, you can start the local development server with the following command to preview the frontend and backend functions in real time:
@@ -61,7 +69,7 @@ pnpm -r install typescript -D
 
 ## Deployment
 
-We highly recommend deploying the entire service to `dokploy`, which is easy to install and自带 CICD. It is the best choice for deployment.
+We highly recommend deploying the entire service to `dokploy`, which is easy to install and have CICD. It is the best choice for deployment.
 
 ## Contribution
 

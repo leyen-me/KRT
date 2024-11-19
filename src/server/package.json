@@ -13,8 +13,9 @@
   "dependencies": {
     "@app/i18n": "workspace:*",
     "@app/result": "workspace:*",
-    "@prisma/client": "5.22.0",
+    "@app/helper": "workspace:*",
 
+    "@prisma/client": "5.22.0",
     "koa": "^2.15.3",
     "koa-bodyparser": "^4.4.1",
     "koa-connect": "^2.1.0",

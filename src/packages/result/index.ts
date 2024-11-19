@@ -1,4 +1,5 @@
 import { t } from "@app/i18n";
+import { Context, Next } from "koa";
 
 export type IResult<T = any> = {
   code: number;
@@ -33,9 +34,9 @@ export type IResultOptions = {
 export let resultMappingTable: IResultMapping = {};
 export let i18nLocales: ILocale[] = [];
 
-export class AbstractResult {
+export class AbstractResult<T> {
   public code: number = 0;
-  public data?: any;
+  public data: T | null = null;
   public message: string = "";
 
   public json(ctx) {
@@ -43,8 +44,8 @@ export class AbstractResult {
   }
 }
 
-export class Result extends AbstractResult {
-  constructor(code: number, data?: any) {
+export class Result<T> extends AbstractResult<T> {
+  constructor(code: number, data?: T) {
     super();
     this.code = code;
     this.data = data ? data : null;
@@ -60,15 +61,15 @@ export class Result extends AbstractResult {
   }
 }
 
-export class I18nResult extends AbstractResult {
-  constructor(code: number, data?: any) {
+export class I18nResult<T> extends AbstractResult<T> {
+  constructor(code: number, data?: T) {
     super();
     this.code = code;
     this.data = data ? data : null;
     this.message = resultMappingTable[code];
   }
 
-  public json(ctx) {
+  public json(ctx: Context) {
     return {
       code: this.code,
       data: this.data,
@@ -77,17 +78,19 @@ export class I18nResult extends AbstractResult {
   }
 }
 
-export const result = (options: IResultOptions) => {
+export const koaResult = (options: IResultOptions) => {
   const { i18n, mapping } = options;
   resultMappingTable = mapping;
   if (i18n && i18n.locales) {
     i18nLocales = i18n.locales as unknown as ILocale[];
   }
 
-  return async (ctx, next) => {
-    ctx.send = (response: AbstractResult) => {
+  return async (ctx: Context, next: Next) => {
+    ctx.send = (response: any) => {
+      const res = response.json(ctx);
       ctx.status = 200;
-      ctx.body = response.json(ctx);
+      ctx.body = res
+      return res
     };
     await next();
   };

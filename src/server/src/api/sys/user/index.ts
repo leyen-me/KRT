@@ -4,6 +4,6 @@ export const userRouter = new Router({
   prefix: "/user",
 });
 
-userRouter.get("/", (ctx, next) => {
+userRouter.get("/", (ctx) => {
   ctx.body = "Hello, World!";
 });

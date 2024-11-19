@@ -3,7 +3,7 @@ import bodyParser from "koa-bodyparser";
 
 import { createViteServer } from "./middlewares/vite";
 import { listenServer } from "./middlewares/listen";
-import { result } from "@app/result";
+import { koaResult } from "@app/result";
 import { LOCALS } from "@app/i18n/locals";
 import { koaI18n } from "@app/i18n/koa";
 import { ERROR_CODES } from "./constants/ErrorCode";
@@ -19,7 +19,7 @@ app.use(koaI18n());
 
 // response middleware
 app.use(
-  result({
+  koaResult({
     i18n: {
       locales: LOCALS,
     },

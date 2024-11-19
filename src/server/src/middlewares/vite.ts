@@ -29,6 +29,10 @@ export async function createViteServer(app: Koa) {
     const server = await createServer({
       server: {
         middlewareMode: true,
+        hmr:{
+          port: 9002,
+          clientPort: 9002
+        }
       },
       root: CLIENT_SERVER_PATH,
     });

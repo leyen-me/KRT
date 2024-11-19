@@ -4,5 +4,7 @@ export const ERROR_CODES = {
   500: "server.error.code.internal_error",
 
   // sys auth
-  30001: "server.error.code.sys.auth.user_not_found",
+  200_001: "server.error.code.sys.auth.user_not_found",
+  200_002: "server.error.code.sys.auth.passoword_not_incorrect",
+  200_003: "server.error.code.sys.auth.passoword_decrypt",
 };

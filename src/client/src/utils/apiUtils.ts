@@ -1,16 +1,21 @@
 // apiUtils.js
 
+import { getI18n } from "@app/i18n";
+
 // 通用的 fetch 请求封装函数
 
 // todo: type
 // RequestInit
 
 export const fetchRequest = async (url: string, options: any = {}) => {
+  const i18n = getI18n().name
+  console.log(i18n);
+  
   const response = await fetch(url, {
     ...options,
     headers: {
       "Content-Type": "application/json",
-      "X-I18n": "zh-CN",
+      "X-I18n": i18n,
       ...options.headers,
     },
     body: options.body ? JSON.stringify(options.body) : undefined,

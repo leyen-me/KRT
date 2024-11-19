@@ -14,25 +14,16 @@ export default defineConfig(({ mode }) => {
         appPath: "./src/index.ts",
         exportName: "app",
         initAppOnBoot: false,
-        tsCompiler: "esbuild",
-        swcOptions: {
-          jsc: {
-            target: "es2019",
-            parser: {
-              syntax: "typescript",
-              decorators: true,
-            },
-            transform: {
-              legacyDecorator: true,
-              decoratorMetadata: true,
-            },
-          },
-        },
+        tsCompiler: "esbuild"
       }),
     ],
     server: {
       port: Number(VITE_PORT),
       host: "0.0.0.0",
+      hmr: {
+        port: 9003,
+        clientPort: 9003
+      }
     },
     build: {
       outDir: "./dist/server",
