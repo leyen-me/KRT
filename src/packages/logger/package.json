@@ -1,5 +1,5 @@
 {
-  "name": "@app/helper",
+  "name": "@app/logger",
   "version": "1.0.0",
   "description": "",
   "keywords": [],
@@ -10,6 +10,7 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "dayjs": "^1.11.13"
+    "winston": "^3.17.0",
+    "winston-daily-rotate-file": "^5.0.0"
   }
 }

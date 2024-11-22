@@ -71,9 +71,9 @@ export const t = (key: string, ctx?: any): string => {
     const { name } = getI18n();
     clientName = name;
   }
-  let local = ctx
+  let locals = ctx
     ? LOCALS.find((local) => local.name === ctx.i18n)
     : LOCALS.find((local) => local.name === clientName);
-  let result = local!.flat[key];
+  let result = locals!.flat[key];
   return result ? result : key;
 };

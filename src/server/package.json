@@ -11,11 +11,12 @@
     "db:seed": "node prisma/seed.mjs"
   },
   "dependencies": {
-    "@app/i18n": "workspace:*",
-    "@app/result": "workspace:*",
     "@app/helper": "workspace:*",
-
+    "@app/i18n": "workspace:*",
+    "@app/logger": "workspace:*",
+    "@app/result": "workspace:*",
     "@prisma/client": "5.22.0",
+    "ioredis": "^5.4.1",
     "koa": "^2.15.3",
     "koa-bodyparser": "^4.4.1",
     "koa-connect": "^2.1.0",
@@ -25,11 +26,11 @@
     "nanoid": "^5.0.8"
   },
   "devDependencies": {
-    "@types/node": "^22.9.0",
     "@types/koa": "^2.15.0",
-    "@types/koa-static": "^4.0.4",
     "@types/koa-bodyparser": "^4.3.12",
     "@types/koa-router": "^7.4.8",
+    "@types/koa-static": "^4.0.4",
+    "@types/node": "^22.9.0",
     "prisma": "^5.22.0",
     "typescript": "~5.6.2",
     "vite": "^5.0.0",

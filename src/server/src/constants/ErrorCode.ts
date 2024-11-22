@@ -5,6 +5,7 @@ export const ERROR_CODES = {
 
   // sys auth
   200_001: "server.error.code.sys.auth.user_not_found",
-  200_002: "server.error.code.sys.auth.passoword_not_incorrect",
-  200_003: "server.error.code.sys.auth.passoword_decrypt",
+  200_002: "server.error.code.sys.auth.password_not_incorrect",
+  200_003: "server.error.code.sys.auth.password_decrypt",
+  200_004: "server.error.code.sys.auth.user_disabled",
 };

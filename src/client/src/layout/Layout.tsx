@@ -1,7 +1,7 @@
 import { Tool } from "@/components/tool";
 import { Card } from "@/components/ui/card";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
-import { Toaster, toast } from 'sonner'
+import { Toaster } from "@/components/ui/toaster"
 
 export default function Layout() {
   const location = useLocation();

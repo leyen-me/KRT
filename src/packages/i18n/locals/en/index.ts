@@ -34,12 +34,12 @@ export default {
       registerDesc: "Don't have an account?",
       register: "Sign up",
 
-      sonner: {
+      toast: {
         success: {
-          description: "Longin success",
+          description: "Login success",
         },
         error: {
-          title: "Error",
+          description: "Uh oh! Something went wrong.",
         },
       },
     },
@@ -50,10 +50,13 @@ export default {
         success: "Success",
         not_found: "API Not Found",
         internal_error: "Internal Error",
-        
+
         sys: {
           auth: {
             user_not_found: "User not found",
+            password_not_incorrect: "Password not incorrect",
+            password_decrypt: "Password decrypt error",
+            user_disabled: "User disabled",
           },
         },
       },

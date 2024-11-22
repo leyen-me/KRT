@@ -34,12 +34,12 @@ export default {
       registerDesc: "还没有账号?",
       register: "注册",
 
-      sonner: {
+      toast: {
         success: {
           description: "登录成功",
         },
         error: {
-          title: "错误",
+          description: "哎呀！出错了。",
         },
       },
     },
@@ -50,10 +50,13 @@ export default {
         success: "成功",
         not_found: "API 未找到",
         internal_error: "服务器内部错误",
-      },
-      sys: {
-        auth: {
-          user_not_found: "用户不存在",
+        sys: {
+          auth: {
+            user_not_found: "用户不存在",
+            password_not_incorrect: "密码不正确",
+            password_decrypt: "密码格式错误",
+            user_disabled: "用户已禁用",
+          },
         },
       },
     },

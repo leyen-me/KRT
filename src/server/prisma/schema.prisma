@@ -13,26 +13,48 @@ datasource db {
   url      = env("VITE_DATABASE_URL")
 }
 
-enum SysUserGender {
+// sys user gender
+enum SYS_USER_GENDER {
   MALE
   FEMALE
   UNKNOWN
 }
 
-enum SysUserStatus {
+// sys user status
+enum SYS_USER_STATUS {
   NORMAL
   DISABLED
 }
 
+// sys user
 model sys_user {
-  id         String        @id @default(cuid())
-  email      String
-  nickname   String?
-  password   String
-  avatar     String?
-  gender     SysUserGender @default(UNKNOWN)
-  mobile     String?
-  status     SysUserStatus @default(NORMAL)
-  super_admin Boolean       @default(false)
-  created_at  DateTime      @default(now())
+  id String @id @default(cuid())
+
+  email       String
+  nickname    String
+  password    String
+  status      SYS_USER_STATUS  @default(NORMAL)
+  super_admin Boolean          @default(false)
+  avatar      String?
+  gender      SYS_USER_GENDER? @default(UNKNOWN)
+  mobile      String?
+
+  created_at DateTime @default(dbgenerated("NOW()")) @db.DateTime
+  updated_at DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.Timestamp(0)
+  created_by String?
+  updated_by String?
+}
+
+// sys user token
+model sys_user_token {
+  id String @id @default(cuid())
+
+  token   String
+  user_id String
+  expires DateTime @db.DateTime
+
+  created_at DateTime @default(dbgenerated("NOW()")) @db.DateTime
+  updated_at DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.Timestamp(0)
+  created_by String?
+  updated_by String?
 }
