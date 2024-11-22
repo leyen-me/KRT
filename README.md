@@ -1,3 +1,5 @@
+English | [简体中文](./README_zh-CN.md)
+
 # KRT
 
 `Koa-React-TypeScript` (KRT) is a full-stack development framework based on PNPM package management. It uses the same dependencies, languages, and ports to build modern Web applications.
