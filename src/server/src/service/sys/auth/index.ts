@@ -10,7 +10,7 @@ import { PasswordNotIncorrectError } from "@/error/sys/auth/PasswordNotIncorrect
 import { PasswordDecryptError } from "@/error/sys/auth/PasswordDecryptError";
 import { sys_user, SYS_USER_STATUS } from "@prisma/client";
 import { UserDisabledError } from "@/error/sys/auth/UserDisabledError";
-import { nanoid } from "nanoid";
+import { v4 as uuidv4 } from "uuid";
 import {
   RegisterSchemaType,
   RegisterResponseType,
@@ -37,7 +37,7 @@ export class SysAuthService extends BaseService {
     };
 
     // 2. Issue a token to the user
-    const token = nanoid(24);
+    const token = uuidv4();
 
     // 3. set token to redis, set token to database
     // 3.1 Store the token in redis and set the expiration time
@@ -145,7 +145,7 @@ export class SysAuthService extends BaseService {
         data: {
           email,
           // random password
-          password: encrypt(nanoid(6), import.meta.env.VITE_AUTH_SECURITY).data,
+          password: encrypt(uuidv4(), import.meta.env.VITE_AUTH_SECURITY).data,
         },
       });
     }

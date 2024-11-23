@@ -5,9 +5,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "scripts": {
-    "build": "tsc"
-  },
+  "scripts": {},
   "devDependencies": {
     "@app/helper": "workspace:*",
     "@types/koa": "^2.15.0",

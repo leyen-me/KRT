@@ -35,11 +35,6 @@ export default function Page() {
         title: t("pages.register.toast.error.description"),
         variant: "destructive",
         description: error.message,
-        action: (
-          <ToastAction altText={t("pages.register.toast.error.try_again")}>
-            {t("pages.register.toast.error.try_again")}
-          </ToastAction>
-        ),
       });
     },
   });

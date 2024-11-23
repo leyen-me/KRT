@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "start": "pnpm db:migrate && node ./dist/server/index.cjs",
+    "start": "pnpm db:migrate:prod && node ./dist/server/index.cjs",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev --name init",
+    "db:migrate:prod": "prisma migrate deploy",
     "db:seed": "node prisma/seed.mjs"
   },
   "dependencies": {
@@ -25,7 +26,7 @@
     "koa-router": "^13.0.1",
     "koa-send": "^5.0.1",
     "koa-static": "^5.0.0",
-    "nanoid": "^5.0.8"
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "@types/koa": "^2.15.0",
