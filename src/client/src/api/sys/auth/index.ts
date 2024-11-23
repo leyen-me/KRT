@@ -9,12 +9,12 @@ import {
 } from "@app/model";
 import { RegisterSchemaType, RegisterResponseType } from "@app/model";
 
-export const fetchUserInfo = async () => {
-  return fetchRequest(`/user-info`);
+export const fetchSysAuthUserInfo = async () => {
+  return fetchRequest(`/sys/auth/user-info`);
 };
 
-export const fetchMenuTree = async () => {
-  return fetchRequest(`/user-info`);
+export const fetchSysAuthMenuTree = async () => {
+  return fetchRequest(`/sys/auth/menu-tree`);
 };
 
 export const fetchSysAuthLogin = async (

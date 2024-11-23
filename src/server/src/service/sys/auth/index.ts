@@ -160,6 +160,13 @@ export class SysAuthService extends BaseService {
     return ctx.send(new I18nResult<LoginWithGoogleResponseType>(200, res));
   };
 
+  public userInfo = async (ctx: Context) => {
+    const token = ctx.get(AUTHORIZATION_KEY);
+    const userDetailString = await redisClient.getSysUserToken(token);
+    const userDetail = userDetailString ? JSON.parse(userDetailString) : null;
+    return ctx.send(new I18nResult<LoginResponseType>(200, userDetail));
+  };
+
   public logout = async (ctx: Context) => {
     // 1. Get token from header
     const token = ctx.get(AUTHORIZATION_KEY);
