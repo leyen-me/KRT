@@ -31,10 +31,11 @@ model sys_user {
   id String @id @default(cuid())
 
   email       String
-  nickname    String
   password    String
   status      SYS_USER_STATUS  @default(NORMAL)
   super_admin Boolean          @default(false)
+  
+  nickname    String?
   avatar      String?
   gender      SYS_USER_GENDER? @default(UNKNOWN)
   mobile      String?

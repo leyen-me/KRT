@@ -7,4 +7,5 @@ export const sysAuthService = new SysAuthService({ tableName: "sys_auth" })
 
 authRouter.post("/register", sysAuthService.register);
 authRouter.post("/login", sysAuthService.login);
+authRouter.post("/login-with-google", sysAuthService.loginWithGoogle);
 authRouter.post("/logout", sysAuthService.logout);

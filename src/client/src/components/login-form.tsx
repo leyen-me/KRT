@@ -6,22 +6,48 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { LoginVo, LoginVoKeys } from "@app/server/src/service/sys/auth";
-import { t } from "@app/i18n";
+import { t, useI18nContext } from "@app/i18n";
 import { Link } from "react-router-dom";
 import { Spinner } from "./ui/spinner";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { LoginSchema, LoginSchemaType } from "@app/model";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
+import { CredentialResponse } from "@react-oauth/google";
 
 export interface LoginFormProp {
-  loginLoading: boolean
-  loginData: LoginVo
+  loginLoading: boolean;
+  onLogin: (values: LoginSchemaType) => void;
 
-  onChange: (key: LoginVoKeys, value: string) => void
-  onLogin: () => void
+  onGoogleLogin: (credentialResponse: CredentialResponse) => void;
 }
 
-export function LoginForm({ loginData, loginLoading, onChange, onLogin }: LoginFormProp) {
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
+export function LoginForm({
+  loginLoading,
+  onLogin,
+  onGoogleLogin,
+}: LoginFormProp) {
+  const { name } = useI18nContext();
+  const form = useForm<LoginSchemaType>({
+    resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
   return (
     <Card className="mx-auto max-w-sm min-w-[350px]">
       <CardHeader>
@@ -29,43 +55,78 @@ export function LoginForm({ loginData, loginLoading, onChange, onLogin }: LoginF
         <CardDescription>{t("pages.login.desc")}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-4">
-          <div className="grid gap-2">
-            <Label htmlFor="email">{t("pages.login.email")}</Label>
-            <Input
-              id="email"
-              type="email"
-              required
-              placeholder={t("pages.login.emailPlacehoder")}
-              value={loginData.email}
-              onChange={(e) => {
-                onChange("email", e.target.value)
-              }}
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onLogin)} className="space-y-2">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("pages.login.email")}</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder={t("pages.login.email_placeholder")}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          <div className="grid gap-2">
-            <div className="flex items-center">
-              <Label htmlFor="password">{t("pages.login.password")}</Label>
-              <Link to={"#"} className="ml-auto inline-block text-sm underline">
-                {t("pages.login.forgetPassword")}
-              </Link>
-            </div>
-            <Input id="password" type="password" required
-              onChange={(e) => {
-                onChange("password", e.target.value)
-              }}
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="flex items-center">
+                    <FormLabel>{t("pages.login.password")}</FormLabel>
+                    <Link to="#" className="ml-auto text-sm underline">
+                      {t("pages.login.forget_password")}
+                    </Link>
+                  </div>
+                  <FormControl>
+                    <Input type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          <Button disabled={loginLoading} onClick={onLogin} className="w-full">
-            {loginLoading ? <Spinner /> : null} {t("pages.login.login")}
-          </Button>
-          <Button variant="outline" className="w-full">
-            {t("pages.login.loginWithGoogle")}
-          </Button>
-        </div>
+            <Button
+              disabled={loginLoading}
+              onClick={form.handleSubmit(onLogin)}
+              className="w-full !mt-4"
+            >
+              {loginLoading ? <Spinner /> : null} {t("pages.login.login")}
+            </Button>
+
+            {GOOGLE_CLIENT_ID && (
+              <GoogleOAuthProvider
+                clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+              >
+                <div className="w-full">
+                  <GoogleLogin
+                    locale={name === "zh-CN" ? "zh_CN" : "en"}
+                    onSuccess={(credentialResponse) =>
+                      onGoogleLogin(credentialResponse)
+                    }
+                    onError={() => {
+                      console.log("Login Failed");
+                    }}
+                  />
+                </div>
+              </GoogleOAuthProvider>
+            )}
+            {/* t("pages.login.login_with_google") */}
+            {/* <Button
+              variant="outline"
+              className="w-full"
+              onClick={onGoogleLogin}
+            ></Button> */}
+          </form>
+        </Form>
         <div className="mt-4 text-center text-sm">
-          {t("pages.login.registerDesc")}{" "}
-          <Link to={"#"} className="underline">
+          {t("pages.login.register_desc")}{" "}
+          <Link to="/register" className="underline">
             {t("pages.login.register")}
           </Link>
         </div>

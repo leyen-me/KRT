@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import NotFound from "@/pages/error";
 import Login from "@/pages/login";
+import Register from "@/pages/register";
 
 import Layout from "./layout/Layout";
 import Home from "@/pages/home";
@@ -40,6 +41,7 @@ function App() {
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path="/support" element={<Support />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
               </Route>
               <Route
                 path="/admin"

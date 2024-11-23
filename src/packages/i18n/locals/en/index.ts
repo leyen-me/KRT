@@ -26,19 +26,45 @@ export default {
       title: "Login",
       desc: "Enter your email below to login to your account",
       email: "Email",
-      emailPlacehoder: "m@example.com",
+      email_placeholder: "m@example.com",
       password: "Password",
-      forgetPassword: "Forgot your password?",
+      forget_password: "Forgot your password?",
       login: "Login",
-      loginWithGoogle: "Login with Google",
-      registerDesc: "Don't have an account?",
+      login_with_google: "Login with Google",
+      register_desc: "Don't have an account?",
       register: "Sign up",
-
+      email_error: "Email is invalid",
+      password_error: "Password must be at least 6 characters",
       toast: {
         success: {
           description: "Login success",
         },
         error: {
+          try_again: "Try again",
+          description: "Uh oh! Something went wrong.",
+        },
+      },
+    },
+    register: {
+      title: "Register",
+      desc: "Enter your email below to create your account",
+      email: "Email",
+      email_placeholder: "m@example.com",
+      password: "Password",
+      confirm_password: "Confirm Password",
+      login: "Login",
+      login_desc: "Already have an account?",
+      register: "Register",
+
+      email_error: "Email is invalid",
+      password_error: "Password must be at least 6 characters",
+
+      toast: {
+        success: {
+          description: "Register success",
+        },
+        error: {
+          try_again: "Try again",
           description: "Uh oh! Something went wrong.",
         },
       },
@@ -57,6 +83,7 @@ export default {
             password_not_incorrect: "Password not incorrect",
             password_decrypt: "Password decrypt error",
             user_disabled: "User disabled",
+            user_already_exists: "User already exists",
           },
         },
       },

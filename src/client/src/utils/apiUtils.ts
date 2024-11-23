@@ -8,12 +8,15 @@ import { getI18n } from "@app/i18n";
 // RequestInit
 
 export const fetchRequest = async (url: string, options: any = {}) => {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
   const i18n = getI18n().name;
-  const response = await fetch(url, {
+  const token = localStorage.getItem("token");
+  const response = await fetch(`${baseUrl}${url}`, {
     ...options,
     headers: {
       "Content-Type": "application/json",
       "X-I18n": i18n,
+      Authorization: token,
       ...options.headers,
     },
     body: options.body ? JSON.stringify(options.body) : undefined,

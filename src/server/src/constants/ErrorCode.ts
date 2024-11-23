@@ -8,4 +8,5 @@ export const ERROR_CODES = {
   200_002: "server.error.code.sys.auth.password_not_incorrect",
   200_003: "server.error.code.sys.auth.password_decrypt",
   200_004: "server.error.code.sys.auth.user_disabled",
+  200_005: "server.error.code.sys.auth.user_already_exists",
 };

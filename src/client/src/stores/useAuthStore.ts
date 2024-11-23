@@ -1,5 +1,5 @@
 import { create } from "zustand";
-
+import { AUTHORIZATION_KEY } from "@/constants";
 export type AuthStore = {
   token: string;
   isAuthenticated: boolean;
@@ -10,21 +10,21 @@ export type AuthStore = {
 };
 
 const useAuthStore = create<AuthStore>((set) => ({
-  token: localStorage.getItem("token") || "",
+  token: localStorage.getItem(AUTHORIZATION_KEY) || "",
   isAuthenticated: false,
 
   setToken: (token: string) => {
-    localStorage.setItem("token", token);
+    localStorage.setItem(AUTHORIZATION_KEY, token);
     set({ token, isAuthenticated: true });
   },
 
   logout: () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem(AUTHORIZATION_KEY);
     set({ token: "", isAuthenticated: false });
   },
 
   checkAuth: () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem(AUTHORIZATION_KEY);
     if (token) {
       set({ token, isAuthenticated: true });
     }

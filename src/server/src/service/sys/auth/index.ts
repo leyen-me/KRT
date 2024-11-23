@@ -11,27 +11,15 @@ import { PasswordDecryptError } from "@/error/sys/auth/PasswordDecryptError";
 import { SYS_USER_STATUS } from "@prisma/client";
 import { UserDisabledError } from "@/error/sys/auth/UserDisabledError";
 import { nanoid } from "nanoid";
-
-// =========================================register=========================================
-
-// =========================================register=========================================
-
-// =========================================login=========================================
-export type LoginVo = {
-  email: string;
-  password: string;
-};
-export type LoginVoKeys = keyof LoginVo;
-export type LoginResponseVo = {
-  token: string;
-};
-// =========================================login=========================================
-
-// =========================================logout=========================================
-export type LogoutResponseVo = {
-  success: boolean;
-};
-// =========================================logout=========================================
+import {
+  RegisterSchemaType,
+  RegisterResponseType,
+  LoginWithGoogleSchemaType,
+  LoginWithGoogleResponseType,
+} from "@app/model";
+import { LoginSchemaType, LoginResponseType } from "@app/model";
+import { UserAlreadyExistsError } from "@/error/sys/auth/UserAlreadyExistsError";
+import { AUTHORIZATION_KEY } from "@/constants";
 
 export class SysAuthService extends BaseService {
   public constructor({ tableName }) {
@@ -39,11 +27,29 @@ export class SysAuthService extends BaseService {
   }
 
   public async register(ctx: Context) {
-    ctx.send(new I18nResult(200));
+    const { email, password } = ctx.request.body as RegisterSchemaType;
+    // 1. Check if the user already exists
+    const sysUser = await prisma.sys_user.findFirst({
+      where: {
+        email,
+      },
+    });
+    if (sysUser) {
+      throw new UserAlreadyExistsError();
+    }
+    // 2. Create user
+    await prisma.sys_user.create({
+      data: {
+        email,
+        password: encrypt(password, import.meta.env.VITE_AUTH_SECURITY).data,
+      },
+    });
+    // 3. Return success message
+    return ctx.send(new I18nResult<RegisterResponseType>(200));
   }
 
-  public async login(ctx: Context): Promise<IResult<LoginResponseVo>> {
-    const { email, password } = ctx.request.body as LoginVo;
+  public async login(ctx: Context): Promise<IResult<LoginResponseType>> {
+    const { email, password } = ctx.request.body as LoginSchemaType;
     // 1. Query user from database by email
     const sysUser = await prisma.sys_user.findFirst({
       where: {
@@ -105,10 +111,23 @@ export class SysAuthService extends BaseService {
 
     // 8. Return the token to the user
     const res = { token };
-    return ctx.send(new I18nResult<LoginResponseVo>(200, res));
+    return ctx.send(new I18nResult<LoginResponseType>(200, res));
+  }
+
+  public async loginWithGoogle(ctx: Context) {
+    const { credential } = ctx.request.body as LoginWithGoogleSchemaType;
+    console.log(credential);
+    const res = await this.login(ctx);
+    return res;
   }
 
   public async logout(ctx: Context) {
-    // ctx.send(new Result(200));
+    // 1. Get token from header
+    const token = ctx.get(AUTHORIZATION_KEY);
+    // 2. Delete token from redis
+    // await redisClient.deleteSysUserToken(token);
+
+    // 3. Return success message
+    return ctx.send(new I18nResult(200));
   }
 }

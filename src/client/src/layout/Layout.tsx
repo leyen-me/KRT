@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/toaster"
 export default function Layout() {
   const location = useLocation();
   const shouldHideHeader =
-    location.pathname === "/login" || location.pathname === "/other-page";
+    location.pathname === "/login" || location.pathname === "/register";
 
   const navList = [
     {
