@@ -12,10 +12,17 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useMutation } from "@tanstack/react-query";
 import { CredentialResponse } from "@react-oauth/google";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function Page() {
   const { setToken } = useAuthStore();
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirectUrl = searchParams.get("redirect");
+  const decodedRedirectUrl = redirectUrl
+    ? decodeURIComponent(redirectUrl)
+    : "/";
 
   const { mutate, isPending: loginPending } = useMutation<
     IResult<LoginResponseType>,
@@ -32,6 +39,7 @@ export default function Page() {
         variant: "success",
         description: message,
       });
+      navigate(decodedRedirectUrl);
     },
     onError: (error) => {
       toast({
@@ -57,6 +65,7 @@ export default function Page() {
         variant: "success",
         description: message,
       });
+      navigate(decodedRedirectUrl);
     },
     onError: (error) => {
       toast({

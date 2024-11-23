@@ -17,6 +17,7 @@
     "@app/model": "workspace:*",
     "@app/result": "workspace:*",
     "@prisma/client": "5.22.0",
+    "google-auth-library": "^9.15.0",
     "ioredis": "^5.4.1",
     "koa": "^2.15.3",
     "koa-bodyparser": "^4.4.1",

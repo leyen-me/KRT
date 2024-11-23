@@ -8,7 +8,7 @@ import { decrypt, encrypt } from "@app/helper/password";
 import { UserNoFoundError } from "@/error/sys/auth/UserNoFoundError";
 import { PasswordNotIncorrectError } from "@/error/sys/auth/PasswordNotIncorrectError";
 import { PasswordDecryptError } from "@/error/sys/auth/PasswordDecryptError";
-import { SYS_USER_STATUS } from "@prisma/client";
+import { sys_user, SYS_USER_STATUS } from "@prisma/client";
 import { UserDisabledError } from "@/error/sys/auth/UserDisabledError";
 import { nanoid } from "nanoid";
 import {
@@ -20,13 +20,46 @@ import {
 import { LoginSchemaType, LoginResponseType } from "@app/model";
 import { UserAlreadyExistsError } from "@/error/sys/auth/UserAlreadyExistsError";
 import { AUTHORIZATION_KEY } from "@/constants";
+import { OAuth2Client, TokenPayload } from "google-auth-library";
+
+const client = new OAuth2Client(import.meta.env.VITE_GOOGLE_CLIENT_ID);
 
 export class SysAuthService extends BaseService {
   public constructor({ tableName }) {
     super({ tableName });
   }
 
-  public async register(ctx: Context) {
+  private issueToken = async (sysUser: sys_user) => {
+    // 1. todo: Query user other related information, menu list, permission list, remove password information, and combine it into UserDetail
+    const userDetail = {
+      ...sysUser,
+      password: undefined,
+    };
+
+    // 2. Issue a token to the user
+    const token = nanoid(24);
+
+    // 3. set token to redis, set token to database
+    // 3.1 Store the token in redis and set the expiration time
+    const expires = Number(import.meta.env.VITE_AUTH_EXPIRES);
+    await redisClient.setSysUserToken(
+      token,
+      JSON.stringify(userDetail),
+      expires
+    );
+    // 3.2 set token to database
+    await prisma.sys_user_token.create({
+      data: {
+        token,
+        user_id: sysUser.id,
+        expires: new Date(Date.now() + expires * 1000),
+      },
+    });
+
+    return { token };
+  };
+
+  public register = async (ctx: Context) => {
     const { email, password } = ctx.request.body as RegisterSchemaType;
     // 1. Check if the user already exists
     const sysUser = await prisma.sys_user.findFirst({
@@ -46,9 +79,9 @@ export class SysAuthService extends BaseService {
     });
     // 3. Return success message
     return ctx.send(new I18nResult<RegisterResponseType>(200));
-  }
+  };
 
-  public async login(ctx: Context): Promise<IResult<LoginResponseType>> {
+  public login = async (ctx: Context): Promise<IResult<LoginResponseType>> => {
     const { email, password } = ctx.request.body as LoginSchemaType;
     // 1. Query user from database by email
     const sysUser = await prisma.sys_user.findFirst({
@@ -83,45 +116,51 @@ export class SysAuthService extends BaseService {
     if (sysUser.status === SYS_USER_STATUS.DISABLED) {
       throw new UserDisabledError();
     }
-    // 5. todo: Query user other related information, menu list, permission list, remove password information, and combine it into UserDetail
-    const userDetail = {
-      ...sysUser,
-      password: undefined,
-    };
 
-    // 6. Issue a token to the user
-    const token = nanoid(24);
+    // 5. Return the token to the user
+    const res = await this.issueToken(sysUser);
+    return ctx.send(new I18nResult<LoginResponseType>(200, res));
+  };
 
-    // 7. set token to redis, set token to database
-    // 7.1 Store the token in redis and set the expiration time
-    const expires = Number(import.meta.env.VITE_AUTH_EXPIRES);
-    await redisClient.setSysUserToken(
-      token,
-      JSON.stringify(userDetail),
-      expires
-    );
-    // 7.2 set token to database
-    await prisma.sys_user_token.create({
-      data: {
-        token,
-        user_id: sysUser.id,
-        expires: new Date(Date.now() + expires * 1000),
+  public loginWithGoogle = async (ctx: Context) => {
+    // 1. Verify the token
+    const { credential } = ctx.request.body as LoginWithGoogleSchemaType;
+    const ticket = await client.verifyIdToken({
+      idToken: credential,
+      audience: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    const { email = "", name = "", picture = "" } = payload as TokenPayload;
+
+    // 2. Query user from database by email
+    let sysUser = await prisma.sys_user.findFirst({
+      where: {
+        email,
       },
     });
 
-    // 8. Return the token to the user
-    const res = { token };
-    return ctx.send(new I18nResult<LoginResponseType>(200, res));
-  }
+    // 3. If user not found, auto register
+    if (!sysUser) {
+      sysUser = await prisma.sys_user.create({
+        data: {
+          email,
+          // random password
+          password: encrypt(nanoid(6), import.meta.env.VITE_AUTH_SECURITY).data,
+        },
+      });
+    }
 
-  public async loginWithGoogle(ctx: Context) {
-    const { credential } = ctx.request.body as LoginWithGoogleSchemaType;
-    console.log(credential);
-    const res = await this.login(ctx);
-    return res;
-  }
+    // 4. Check if the user is disabled
+    if (sysUser.status === SYS_USER_STATUS.DISABLED) {
+      throw new UserDisabledError();
+    }
 
-  public async logout(ctx: Context) {
+    // 5. Return the token to the user
+    const res = await this.issueToken(sysUser);
+    return ctx.send(new I18nResult<LoginWithGoogleResponseType>(200, res));
+  };
+
+  public logout = async (ctx: Context) => {
     // 1. Get token from header
     const token = ctx.get(AUTHORIZATION_KEY);
     // 2. Delete token from redis
@@ -129,5 +168,5 @@ export class SysAuthService extends BaseService {
 
     // 3. Return success message
     return ctx.send(new I18nResult(200));
-  }
+  };
 }
