@@ -13,17 +13,13 @@ export default defineConfig(({ mode }) => {
         adapter: "koa",
         appPath: "./src/index.ts",
         exportName: "app",
-        initAppOnBoot: false,
-        tsCompiler: "esbuild"
+        initAppOnBoot: true,
+        tsCompiler: "esbuild",
       }),
     ],
     server: {
       port: Number(VITE_PORT),
-      host: "0.0.0.0",
-      hmr: {
-        port: 9003,
-        clientPort: 9003
-      }
+      host: "0.0.0.0"
     },
     build: {
       outDir: "./dist/server",

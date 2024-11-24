@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "nodemon",
     "build": "vite build",
     "start": "pnpm db:migrate:prod && node ./dist/server/index.cjs",
     "db:generate": "prisma generate",
@@ -34,6 +34,7 @@
     "@types/koa-router": "^7.4.8",
     "@types/koa-static": "^4.0.4",
     "@types/node": "^22.9.0",
+    "nodemon": "^3.1.7",
     "prisma": "^5.22.0",
     "typescript": "~5.6.2",
     "vite": "^5.0.0",
