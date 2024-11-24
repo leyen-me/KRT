@@ -42,8 +42,6 @@ model sys_user {
 
   created_at DateTime @default(dbgenerated("NOW()")) @db.DateTime
   updated_at DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.Timestamp(0)
-  created_by String?
-  updated_by String?
 }
 
 // sys user token
@@ -56,6 +54,19 @@ model sys_user_token {
 
   created_at DateTime @default(dbgenerated("NOW()")) @db.DateTime
   updated_at DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.Timestamp(0)
-  created_by String?
-  updated_by String?
+}
+
+// sys role
+model sys_role {
+  id String @id @default(cuid())
+
+  name String
+}
+
+// sys user role
+model sys_user_role {
+  id String @id @default(cuid())
+
+  user_id String
+  role_id String
 }
