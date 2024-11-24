@@ -1,6 +1,9 @@
 import { fetchSysAuthUserInfo } from "@/api/sys/auth";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import type { UserDetailType } from "@app/server/src/service/sys/auth";
+import { IResult } from "@app/result";
+import { useEffect } from "react";
 
 // Create a ProtectedRoute component to check if the user has permission to access the admin route.
 export const AdminProtectedRoute = ({
@@ -11,39 +14,28 @@ export const AdminProtectedRoute = ({
   const navigate = useNavigate();
   const isAuthenticated = false;
 
-  // 获取用户信息
   const {
     data: userInfo,
     error: userError,
     isLoading: isUserLoading,
-  } = useQuery({
+  } = useQuery<IResult<UserDetailType>>({
     queryKey: ["userInfo"],
     queryFn: fetchSysAuthUserInfo,
+    staleTime: 0,
   });
 
-  // const {
-  //   data: menuTree,
-  //   error: menuError,
-  //   isLoading: isMenuLoading,
-  // } = useQuery({
-  //   queryKey: ["menuTree", userInfo?.id],
-  //   queryFn: () => fetchMenuTree(userInfo?.id),
-  //   enabled: !!userInfo,
-  // });
+  // control error and redirect
+  useEffect(() => {
+    if (!isUserLoading && (userError || !userInfo?.data)) {
+      console.error("Error fetching user info:", userError);
+      navigate("/login?redirect=/admin/sys/dashboard");
+    }
+  }, [userError, userInfo, isUserLoading, navigate]);
 
+  // control loading and error
   if (isUserLoading) return <div>Loading user info...</div>;
-  if (userError) {
-    console.error("Error fetching user info:", userError);
-    navigate("/login?redirect=/admin/sys/dashboard");
+  if (userError || !userInfo?.data) {
     return null;
   }
-
-  // if (isMenuLoading) return <div>Loading menu tree...</div>;
-  // if (menuError) {
-  //   console.error("Error fetching menu tree:", menuError);
-  //   navigate("/login?redirect=/admin/dashboard");
-  //   return null;
-  // }
-
   return <>{children}</>;
 };

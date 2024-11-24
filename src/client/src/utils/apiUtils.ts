@@ -1,5 +1,6 @@
 // apiUtils.js
 
+import { AUTHORIZATION_KEY } from "@/constants";
 import { getI18n } from "@app/i18n";
 
 // 通用的 fetch 请求封装函数
@@ -10,7 +11,7 @@ import { getI18n } from "@app/i18n";
 export const fetchRequest = async (url: string, options: any = {}) => {
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
   const i18n = getI18n().name;
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem(AUTHORIZATION_KEY);
   const response = await fetch(`${baseUrl}${url}`, {
     ...options,
     headers: {

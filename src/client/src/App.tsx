@@ -19,6 +19,7 @@ import Support from "@/pages/support";
 import AdminLayout from "./layout/AdminLayout";
 import { AdminProtectedRoute } from "./layout/AdminProtectedRoute";
 import AdminSysUser from "./pages/admin/sys/user";
+import AdminSysDashboard from "./pages/admin/sys/dashboard";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +53,7 @@ function App() {
                 }
               >
                 <Route path="/admin/sys/user" element={<AdminSysUser />} />
+                <Route path="/admin/sys/dashboard" element={<AdminSysDashboard />} />
                 <Route path="*" element={<NotFound />} /> {/* 管理 404 页面 */}
               </Route>
               <Route path="*" element={<NotFound />} /> {/* 默认的 404 页面 */}

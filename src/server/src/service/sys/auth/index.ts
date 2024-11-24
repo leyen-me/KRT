@@ -24,6 +24,8 @@ import { OAuth2Client, TokenPayload } from "google-auth-library";
 
 const client = new OAuth2Client(import.meta.env.VITE_GOOGLE_CLIENT_ID);
 
+export type UserDetailType = Omit<sys_user, "password">;
+
 export class SysAuthService extends BaseService {
   public constructor({ tableName }) {
     super({ tableName });
@@ -163,8 +165,10 @@ export class SysAuthService extends BaseService {
   public userInfo = async (ctx: Context) => {
     const token = ctx.get(AUTHORIZATION_KEY);
     const userDetailString = await redisClient.getSysUserToken(token);
-    const userDetail = userDetailString ? JSON.parse(userDetailString) : null;
-    return ctx.send(new I18nResult<LoginResponseType>(200, userDetail));
+    const userDetail: UserDetailType = userDetailString
+      ? JSON.parse(userDetailString)
+      : null;
+    return ctx.send(new I18nResult<UserDetailType>(200, userDetail));
   };
 
   public logout = async (ctx: Context) => {
