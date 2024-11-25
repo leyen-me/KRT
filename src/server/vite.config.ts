@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
     ],
     server: {
       port: Number(VITE_PORT),
-      host: "0.0.0.0"
+      host: "0.0.0.0",
     },
     build: {
       outDir: "./dist/server",

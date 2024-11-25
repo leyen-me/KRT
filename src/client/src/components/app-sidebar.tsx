@@ -40,16 +40,16 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Dashboard",
+          url: "/admin/sys/dashboard",
         },
         {
-          title: "Starred",
-          url: "#",
+          title: "User",
+          url: "/admin/sys/user",
         },
         {
-          title: "Settings",
-          url: "#",
+          title: "Role",
+          url: "/admin/sys/role",
         },
       ],
     },
@@ -162,8 +162,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <Command className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">Acme Inc</span>
-                  <span className="truncate text-xs">Enterprise</span>
+                  <span className="truncate font-semibold">KRT</span>
+                  <span className="truncate text-xs">Koa react</span>
                 </div>
               </a>
             </SidebarMenuButton>

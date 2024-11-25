@@ -195,25 +195,16 @@ export default function AdminSysUser() {
 
   return (
     <div className="w-full">
-      {/* title */}
-      <h1 className="text-2xl font-bold">用户管理</h1>
-      <p className="text-sm mt-2 text-gray-500">
-        用户管理，可以对用户进行增删改查
-      </p>
-
       {/* table header */}
       <div className="flex items-center py-4 mt-4">
-        <h3 className="text-sm text-gray-500">All Users 44</h3>
-        <div className="flex items-center gap-2">
-          <Input
-            placeholder="Filter emails..."
-            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("email")?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
-        </div>
+        <Input
+          placeholder="Filter emails..."
+          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("email")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -254,9 +245,9 @@ export default function AdminSysUser() {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   );
                 })}

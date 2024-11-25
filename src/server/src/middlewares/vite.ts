@@ -28,7 +28,7 @@ export async function createViteServer(app: Koa) {
     // Routes other than API routes
     const server = await createServer({
       server: {
-        middlewareMode: true,
+        middlewareMode: true
       },
       root: CLIENT_SERVER_PATH,
     });
