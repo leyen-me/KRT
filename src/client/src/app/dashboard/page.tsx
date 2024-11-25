@@ -1,37 +1,3 @@
-// import { Tool } from "@/components/tool";
-// import { Link, Outlet } from "react-router-dom";
-
-// export default function AdminLayout() {
-//   return (
-//     <>
-//       <div className="flex w-full h-full">
-//         <nav className="w-64 h-full flex flex-col gap-4 p-4 border-r border-gray-200">
-//           <Link to="/admin/sys/dashboard" className="underline">
-//             Dashboard
-//           </Link>
-//           <Link to="/admin/sys/user" className="underline">
-//             User
-//           </Link>
-//           <Link to="/admin/sys/role" className="underline">
-//             Role
-//           </Link>
-//         </nav>
-//         <main className="w-0 flex-1 flex flex-col">
-//           <header className="w-full h-16 flex items-center justify-between px-8 border-b border-gray-200">
-//             menu | 面包削
-//             <div className="flex items-center gap-4">
-//               <p>搜索 | 头像</p>
-//               <Tool relative />
-//             </div>
-//           </header>
-//           <div className="w-full p-8 h-0 flex-1">
-//             <Outlet />
-//           </div>
-//         </main>
-//       </div>
-//     </>
-//   );
-// }
 import { AppSidebar } from "@/components/app-sidebar"
 import {
   Breadcrumb,

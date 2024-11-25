@@ -69,6 +69,14 @@ export default {
         },
       },
     },
+    error: {
+      not_found: {
+        title: "Oops! Page Not Found!",
+        desc: "It seems like the page you're looking for does not exist or might have been removed.",
+        back: "Go Back",
+        home: "Back to Home",
+      },
+    },
   },
   server: {
     error: {

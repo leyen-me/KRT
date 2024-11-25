@@ -68,6 +68,14 @@ export default {
         },
       },
     },
+    error: {
+      not_found: {
+        title: "哎呀！页面未找到！",
+        desc: "您访问的页面不存在或已被删除。",
+        back: "返回",
+        home: "返回首页",
+      },
+    },
   },
   server: {
     error: {

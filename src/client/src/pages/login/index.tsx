@@ -13,6 +13,7 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import { useMutation } from "@tanstack/react-query";
 import { CredentialResponse } from "@react-oauth/google";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Logo from "@/components/logo";
 
 export default function Page() {
   const { setToken } = useAuthStore();
