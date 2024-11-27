@@ -1,5 +1,16 @@
 import { t } from "@app/i18n";
+import { SysUser } from "@prisma/client";
 import { z } from "zod";
+
+export const PageSchema = z.object({
+  page: z.number().min(1, t("pages.page_error")),
+  pageSize: z.number().min(1, t("pages.page_size_error")),
+});
+export type PageSchemaType = z.infer<typeof PageSchema>;
+export type PageResponseType<T> = {
+  total: number;
+  list: T[];
+};
 
 // login
 export const LoginSchema = z.object({
@@ -28,3 +39,14 @@ export const RegisterSchema = z.object({
 });
 export type RegisterSchemaType = z.infer<typeof RegisterSchema>;
 export type RegisterResponseType = null;
+
+export type { SysUser } from "@prisma/client";
+export type SysUserDetailType = Omit<SysUser, "password">;
+export type SysUserPageSchemaType = PageSchemaType & {
+  email?: string;
+};
+export type SysUserPageResponseType = PageResponseType<SysUserDetailType>;
+
+export type { SysRole } from "@prisma/client";
+export type { SysUserRole } from "@prisma/client";
+export type { SysUserToken } from "@prisma/client";

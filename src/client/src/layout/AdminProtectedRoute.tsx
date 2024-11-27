@@ -1,7 +1,7 @@
 import { fetchSysAuthUserInfo } from "@/api/sys/auth";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import type { UserDetailType } from "@app/server/src/service/sys/auth";
+import type { SysUserDetailType } from "@app/server/src/service/sys/auth";
 import { IResult } from "@app/result";
 import { useEffect } from "react";
 
@@ -12,16 +12,20 @@ export const AdminProtectedRoute = ({
   children: React.ReactNode;
 }) => {
   const navigate = useNavigate();
-  const isAuthenticated = false;
 
   const {
     data: userInfo,
     error: userError,
     isLoading: isUserLoading,
-  } = useQuery<IResult<UserDetailType>>({
+  } = useQuery<IResult<SysUserDetailType>>({
     queryKey: ["userInfo"],
     queryFn: fetchSysAuthUserInfo,
+
+    // refetch on mount
+    refetchOnMount: true,
     staleTime: 0,
+    retry: 2,
+    retryDelay: 1000,
   });
 
   // control error and redirect

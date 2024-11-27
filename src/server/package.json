@@ -15,7 +15,6 @@
     "@app/helper": "workspace:*",
     "@app/i18n": "workspace:*",
     "@app/logger": "workspace:*",
-    "@app/model": "workspace:*",
     "@app/result": "workspace:*",
     "@prisma/client": "5.22.0",
     "google-auth-library": "^9.15.0",
@@ -26,7 +25,8 @@
     "koa-router": "^13.0.1",
     "koa-send": "^5.0.1",
     "koa-static": "^5.0.0",
-    "uuid": "^11.0.3"
+    "uuid": "^11.0.3",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/koa": "^2.15.0",

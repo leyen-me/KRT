@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
 import { Spinner } from "./ui/spinner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { LoginSchema, LoginSchemaType } from "@app/model";
+import { LoginSchema, LoginSchemaType } from "@app/server/src/model";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GoogleLogin } from "@react-oauth/google";
 import { CredentialResponse } from "@react-oauth/google";

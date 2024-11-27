@@ -4,7 +4,7 @@ import {
   LoginSchemaType,
   LoginWithGoogleSchemaType,
   LoginWithGoogleResponseType,
-} from "@app/model";
+} from "@app/server/src/model";
 import { IResult } from "@app/result";
 import { fetchSysAuthLogin, fetchSysAuthLoginWithGoogle } from "@/api/sys/auth";
 import { LoginForm } from "@/components/login-form";
@@ -13,7 +13,6 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import { useMutation } from "@tanstack/react-query";
 import { CredentialResponse } from "@react-oauth/google";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import Logo from "@/components/logo";
 
 export default function Page() {
   const { setToken } = useAuthStore();

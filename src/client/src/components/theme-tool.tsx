@@ -3,15 +3,16 @@ import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useTheme } from "@app/theme";
+import { ThemeList, useTheme } from "@app/theme";
 import { t } from "@app/i18n";
 
 export function ThemeTool() {
-  const { setTheme } = useTheme();
+  const { theme: currentTheme, setTheme } = useTheme();
 
   return (
     <DropdownMenu>
@@ -22,16 +23,19 @@ export function ThemeTool() {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
+
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          {t("pages.common.theme.light")}
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          {t("pages.common.theme.dark")}
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          {t("pages.common.theme.system")}
-        </DropdownMenuItem>
+        {ThemeList.map((theme) => {
+          return (
+            <DropdownMenuCheckboxItem
+              key={theme}
+              checked={theme === currentTheme}
+              onClick={() => setTheme(theme)}
+            >
+              {t(`pages.common.theme.${theme}`)}
+            </DropdownMenuCheckboxItem>
+          );
+        })}
       </DropdownMenuContent>
     </DropdownMenu>
   );

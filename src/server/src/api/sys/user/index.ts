@@ -1,9 +1,8 @@
 import Router from "koa-router";
 
-export const userRouter = new Router({
-  prefix: "/user",
-});
+import { SysUserService } from "@/service/sys/user";
 
-userRouter.get("/", (ctx) => {
-  ctx.body = "Hello, World!";
-});
+export const userRouter = new Router({ prefix: "/user" });
+export const sysUserService = new SysUserService({ tableName: "SysUser" })
+
+userRouter.get("/page", sysUserService.page);

@@ -27,46 +27,46 @@ enum SYS_USER_STATUS {
 }
 
 // sys user
-model sys_user {
+model SysUser {
   id String @id @default(cuid())
 
   email       String
   password    String
   status      SYS_USER_STATUS  @default(NORMAL)
-  super_admin Boolean          @default(false)
+  superAdmin Boolean          @default(false)
   
   nickname    String?
   avatar      String?
   gender      SYS_USER_GENDER? @default(UNKNOWN)
   mobile      String?
 
-  created_at DateTime @default(dbgenerated("NOW()")) @db.DateTime
-  updated_at DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.Timestamp(0)
+  createdAt DateTime @default(dbgenerated("NOW()")) @db.DateTime
+  updatedAt DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.Timestamp(0)
 }
 
 // sys user token
-model sys_user_token {
+model SysUserToken {
   id String @id @default(cuid())
 
   token   String
-  user_id String
+  userId String
   expires DateTime @db.DateTime
 
-  created_at DateTime @default(dbgenerated("NOW()")) @db.DateTime
-  updated_at DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.Timestamp(0)
+  createdAt DateTime @default(dbgenerated("NOW()")) @db.DateTime
+  updatedAt DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.Timestamp(0)
 }
 
 // sys role
-model sys_role {
+model SysRole {
   id String @id @default(cuid())
 
   name String
 }
 
 // sys user role
-model sys_user_role {
+model SysUserRole {
   id String @id @default(cuid())
 
-  user_id String
-  role_id String
+  userId String
+  roleId String
 }

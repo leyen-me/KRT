@@ -6,8 +6,8 @@ import {
   LoginResponseType,
   LoginWithGoogleResponseType,
   LoginWithGoogleSchemaType,
-} from "@app/model";
-import { RegisterSchemaType, RegisterResponseType } from "@app/model";
+} from "@app/server/src/model";
+import { RegisterSchemaType, RegisterResponseType } from "@app/server/src/model";
 
 export const fetchSysAuthUserInfo = async () => {
   return fetchRequest(`/sys/auth/user-info`);

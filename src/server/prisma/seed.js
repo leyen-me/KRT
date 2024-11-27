@@ -5,7 +5,7 @@ export const SYS_USERS = [
     id: "user_a",
     email: "a@example.com",
     password: "DpRhz9JwNaNc1RJLb2nkgA==",
-    super_admin: true,
+    superAdmin: true,
   },
   {
     id: "user_b",
@@ -28,18 +28,18 @@ export const SYS_ROLES = [
 export const SYS_USER_ROLES = [
   {
     id: "1",
-    user_id: "user_a",
-    role_id: "developer",
+    userId: "user_a",
+    roleId: "developer",
   },
   {
     id: "2",
-    user_id: "user_a",
-    role_id: "developer",
+    userId: "user_a",
+    roleId: "developer",
   },
   {
     id: "3",
-    user_id: "user_b",
-    role_id: "designer",
+    userId: "user_b",
+    roleId: "designer",
   },
 ];
 
@@ -56,9 +56,9 @@ const createOrUpdate = async (model, data) => {
 };
 
 async function main() {
-  await createOrUpdate("sys_user", SYS_USERS);
-  await createOrUpdate("sys_role", SYS_ROLES);
-  await createOrUpdate("sys_user_role", SYS_USER_ROLES);
+  await createOrUpdate("SysUser", SYS_USERS);
+  await createOrUpdate("SysRole", SYS_ROLES);
+  await createOrUpdate("SysUserRole", SYS_USER_ROLES);
 }
 
 main()

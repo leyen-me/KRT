@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 // External packages
 import { t } from "@app/i18n";
 import { IResult } from "@app/result";
-import { RegisterSchemaType, RegisterResponseType } from "@app/model";
+import { RegisterSchemaType, RegisterResponseType } from "@app/server/src/model";
 
 // Internal components & utils
 import { RegisterForm } from "@/components/register-form";

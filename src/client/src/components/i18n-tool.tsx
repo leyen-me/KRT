@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
@@ -13,8 +14,8 @@ import { useLocation } from "react-router-dom";
 export function I18nTool() {
   const [currentName, setCurrentName] = useState("");
   const { name } = useI18nContext();
-  const rLocation = useLocation()
-  
+  const rLocation = useLocation();
+
   useEffect(() => {
     setCurrentName(LOCALS.find((local) => local.name === name)!.i18nName);
   }, [name]);
@@ -34,21 +35,22 @@ export function I18nTool() {
       <DropdownMenuContent align="end">
         {LOCALS.map((local) => {
           return (
-            <DropdownMenuItem
+            <DropdownMenuCheckboxItem
               key={local.name}
+              checked={local.name === name}
               onClick={() => handleToggleLocal(local.name)}
             >
               {t(local.i18nName)}
-            </DropdownMenuItem>
+            </DropdownMenuCheckboxItem>
           );
         })}
-        <DropdownMenuItem
+        <DropdownMenuCheckboxItem
           onClick={() => {
             handleToggleLocal(DEFAULT_LOCAL_NAME);
           }}
         >
           {t("pages.common.i18n.system")}
-        </DropdownMenuItem>
+        </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

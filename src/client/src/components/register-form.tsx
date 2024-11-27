@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
 import { Spinner } from "./ui/spinner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { RegisterSchema, RegisterSchemaType } from "@app/model";
+import { RegisterSchema, RegisterSchemaType } from "@app/server/src/model";
 
 export interface RegisterFormProp {
   registerLoading: boolean;

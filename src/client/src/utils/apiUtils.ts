@@ -12,6 +12,9 @@ export const fetchRequest = async (url: string, options: any = {}) => {
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
   const i18n = getI18n().name;
   const token = localStorage.getItem(AUTHORIZATION_KEY);
+  if (!options.method || options.method === "GET") {
+    url = `${url}?${new URLSearchParams(options.params).toString()}`;
+  }
   const response = await fetch(`${baseUrl}${url}`, {
     ...options,
     headers: {

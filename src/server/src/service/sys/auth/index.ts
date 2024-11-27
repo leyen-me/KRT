@@ -8,7 +8,7 @@ import { decrypt, encrypt } from "@app/helper/password";
 import { UserNoFoundError } from "@/error/sys/auth/UserNoFoundError";
 import { PasswordNotIncorrectError } from "@/error/sys/auth/PasswordNotIncorrectError";
 import { PasswordDecryptError } from "@/error/sys/auth/PasswordDecryptError";
-import { sys_user, SYS_USER_STATUS } from "@prisma/client";
+import { SysUser, SYS_USER_STATUS } from "@prisma/client";
 import { UserDisabledError } from "@/error/sys/auth/UserDisabledError";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -16,22 +16,19 @@ import {
   RegisterResponseType,
   LoginWithGoogleSchemaType,
   LoginWithGoogleResponseType,
-} from "@app/model";
-import { LoginSchemaType, LoginResponseType } from "@app/model";
+} from "@/model";
+import { LoginSchemaType, LoginResponseType } from "@/model";
 import { UserAlreadyExistsError } from "@/error/sys/auth/UserAlreadyExistsError";
 import { AUTHORIZATION_KEY } from "@/constants";
 import { OAuth2Client, TokenPayload } from "google-auth-library";
 
 const client = new OAuth2Client(import.meta.env.VITE_GOOGLE_CLIENT_ID);
 
-export type UserDetailType = Omit<sys_user, "password">;
+export type SysUserDetailType = Omit<SysUser, "password">;
 
-export class SysAuthService extends BaseService {
-  public constructor({ tableName }) {
-    super({ tableName });
-  }
+export class SysAuthService {
 
-  private issueToken = async (sysUser: sys_user) => {
+  private issueToken = async (sysUser: SysUser) => {
     // 1. todo: Query user other related information, menu list, permission list, remove password information, and combine it into UserDetail
     const userDetail = {
       ...sysUser,
@@ -50,10 +47,10 @@ export class SysAuthService extends BaseService {
       expires
     );
     // 3.2 set token to database
-    await prisma.sys_user_token.create({
+    await prisma.sysUserToken.create({
       data: {
         token,
-        user_id: sysUser.id,
+        userId: sysUser.id,
         expires: new Date(Date.now() + expires * 1000),
       },
     });
@@ -64,7 +61,7 @@ export class SysAuthService extends BaseService {
   public register = async (ctx: Context) => {
     const { email, password } = ctx.request.body as RegisterSchemaType;
     // 1. Check if the user already exists
-    const sysUser = await prisma.sys_user.findFirst({
+    const sysUser = await prisma.sysUser.findFirst({
       where: {
         email,
       },
@@ -73,7 +70,7 @@ export class SysAuthService extends BaseService {
       throw new UserAlreadyExistsError();
     }
     // 2. Create user
-    await prisma.sys_user.create({
+    await prisma.sysUser.create({
       data: {
         email,
         password: encrypt(password, import.meta.env.VITE_AUTH_SECURITY).data,
@@ -86,7 +83,7 @@ export class SysAuthService extends BaseService {
   public login = async (ctx: Context): Promise<IResult<LoginResponseType>> => {
     const { email, password } = ctx.request.body as LoginSchemaType;
     // 1. Query user from database by email
-    const sysUser = await prisma.sys_user.findFirst({
+    const sysUser = await prisma.sysUser.findFirst({
       where: {
         email,
       },
@@ -135,7 +132,7 @@ export class SysAuthService extends BaseService {
     const { email = "", name = "", picture = "" } = payload as TokenPayload;
 
     // 2. Query user from database by email
-    let sysUser = await prisma.sys_user.findFirst({
+    let sysUser = await prisma.sysUser.findFirst({
       where: {
         email,
       },
@@ -143,7 +140,7 @@ export class SysAuthService extends BaseService {
 
     // 3. If user not found, auto register
     if (!sysUser) {
-      sysUser = await prisma.sys_user.create({
+      sysUser = await prisma.sysUser.create({
         data: {
           email,
           // random password
@@ -165,10 +162,10 @@ export class SysAuthService extends BaseService {
   public userInfo = async (ctx: Context) => {
     const token = ctx.get(AUTHORIZATION_KEY);
     const userDetailString = await redisClient.getSysUserToken(token);
-    const userDetail: UserDetailType = userDetailString
+    const userDetail: SysUserDetailType = userDetailString
       ? JSON.parse(userDetailString)
       : null;
-    return ctx.send(new I18nResult<UserDetailType>(200, userDetail));
+    return ctx.send(new I18nResult<SysUserDetailType>(200, userDetail));
   };
 
   public logout = async (ctx: Context) => {
