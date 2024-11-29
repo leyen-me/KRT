@@ -1,7 +1,7 @@
 import { fetchSysAuthUserInfo } from "@/api/sys/auth";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import type { SysUserDetailType } from "@app/server/src/service/sys/auth";
+import type { SysUserDetailType } from "@app/server/src/model";
 import { IResult } from "@app/result";
 import { useEffect } from "react";
 

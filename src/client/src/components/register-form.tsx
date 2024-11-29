@@ -18,9 +18,9 @@ import { Input } from "@/components/ui/input";
 import { t } from "@app/i18n";
 import { Link } from "react-router-dom";
 import { Spinner } from "./ui/spinner";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { RegisterSchema, RegisterSchemaType } from "@app/server/src/model";
+import { zodResolver } from "@/utils/zodUtils";
 
 export interface RegisterFormProp {
   registerLoading: boolean;

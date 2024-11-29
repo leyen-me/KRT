@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { t, useI18nContext } from "@app/i18n";
 import { Link } from "react-router-dom";
 import { Spinner } from "./ui/spinner";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from "@/utils/zodUtils";
 import { useForm } from "react-hook-form";
 import { LoginSchema, LoginSchemaType } from "@app/server/src/model";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -116,12 +116,6 @@ export function LoginForm({
                 </div>
               </GoogleOAuthProvider>
             )}
-            {/* t("pages.login.login_with_google") */}
-            {/* <Button
-              variant="outline"
-              className="w-full"
-              onClick={onGoogleLogin}
-            ></Button> */}
           </form>
         </Form>
         <div className="mt-4 text-center text-sm">

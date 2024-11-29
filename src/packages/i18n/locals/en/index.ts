@@ -1,4 +1,18 @@
 export default {
+  // common
+  common: {
+    // client and server validation
+    validate: {
+      required: "This field is required",
+      email: "Please enter a valid email address",
+      register: {
+        password_min_error: "Password must be at least 6 characters",
+      },
+      login: {
+        password_min_error: "Password must be at least 6 characters",
+      },
+    },
+  },
   pages: {
     common: {
       i18n: {
@@ -33,8 +47,6 @@ export default {
       login_with_google: "Login with Google",
       register_desc: "Don't have an account?",
       register: "Sign up",
-      email_error: "Email is invalid",
-      password_error: "Password must be at least 6 characters",
       toast: {
         success: {
           description: "Login success",
@@ -55,10 +67,6 @@ export default {
       login: "Login",
       login_desc: "Already have an account?",
       register: "Register",
-
-      email_error: "Email is invalid",
-      password_error: "Password must be at least 6 characters",
-
       toast: {
         success: {
           description: "Register success",
@@ -84,6 +92,7 @@ export default {
         success: "Success",
         not_found: "API Not Found",
         internal_error: "Internal Error",
+        validate_error: "Invalid parameters",
 
         sys: {
           auth: {

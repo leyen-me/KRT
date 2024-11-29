@@ -1,4 +1,16 @@
 export default {
+  common:{
+    validate: {
+      required: "此项为必填项",
+      email: "请输入有效的邮箱地址",
+      register: {
+        password_min_error: "密码长度至少为6位",
+      },
+      login: {
+        password_min_error: "密码长度至少为6位",
+      },
+    },
+  },
   pages: {
     common: {
       i18n: {
@@ -33,8 +45,6 @@ export default {
       login_with_google: "使用谷歌账号登录",
       register_desc: "还没有账号?",
       register: "注册",
-      email_error: "邮箱格式错误",
-      password_error: "密码长度至少为6位",
 
       toast: {
         success: {
@@ -56,8 +66,6 @@ export default {
       login: "登录",
       login_desc: "已有账号?",
       register: "注册",
-      email_error: "邮箱格式错误",
-      password_error: "密码长度至少为6位",
       toast: {
         success: {
           description: "注册成功",
@@ -83,6 +91,8 @@ export default {
         success: "成功",
         not_found: "API 未找到",
         internal_error: "服务器内部错误",
+        validate_error: "参数错误",
+
         sys: {
           auth: {
             user_not_found: "用户不存在",

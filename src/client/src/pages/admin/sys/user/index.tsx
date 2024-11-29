@@ -25,7 +25,7 @@ export default function SysUserPage() {
           </p>
         </div>
       </div>
-      {JSON.stringify(data)}
+      <p className="whitespace-pre-wrap break-words">{JSON.stringify(data)}</p>
       {/* <DataTable data={[]} columns={columns} /> */}
     </div>
   );

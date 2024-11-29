@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchRequest } from "@/utils/apiUtils";
 import { useState } from "react";
-import { IResult } from "@app/result";
 
 interface UseCrudOptions<T, Q extends Record<string, any>> {
   baseUrl: string;
@@ -58,7 +57,7 @@ export function useCrud<
       const params = {
         ...queryForm,
         ...(isPage && {
-          pageNo: pagination.page,
+          page: pagination.page,
           pageSize: pagination.limit,
         }),
         ...(sort.field && {

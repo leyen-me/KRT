@@ -7,7 +7,6 @@ import { RegisterSchemaType, RegisterResponseType } from "@app/server/src/model"
 
 // Internal components & utils
 import { RegisterForm } from "@/components/register-form";
-import { ToastAction } from "@/components/ui/toast";
 import { fetchSysAuthRegister } from "@/api/sys/auth";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";

@@ -1,7 +1,6 @@
 import { prisma } from "@/libs/prisma";
 import {
   SysUserPageSchemaType,
-  SysUser,
   SysUserPageResponseType,
 } from "@/model";
 import { BaseService } from "@/service/BaseService";
@@ -14,19 +13,14 @@ export class SysUserService extends BaseService {
       page = 1,
       pageSize = 10,
       email,
-    } = ctx.query as unknown as SysUserPageSchemaType;
-
-    const pageNumber = Number(page);
-    const pageSizeNumber = Number(pageSize);
-
+    } = ctx.state.query as SysUserPageSchemaType;
     const result = await prisma.sysUser.findMany({
       where: {
         ...(email ? { email: { contains: email } } : {}),
       },
-      skip: (pageNumber - 1) * pageSizeNumber,
-      take: pageSizeNumber,
+      skip: (page - 1) * pageSize,
+      take: pageSize,
     });
-
     const res = {
       total: result.length,
       list: result.map((item) => ({

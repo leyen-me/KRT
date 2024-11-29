@@ -2,7 +2,6 @@ import { Context } from "koa";
 import { prisma } from "@/libs/prisma";
 
 import { redisClient } from "@/libs/redis";
-import { BaseService } from "@/service/BaseService";
 import { I18nResult, IResult } from "@app/result";
 import { decrypt, encrypt } from "@app/helper/password";
 import { UserNoFoundError } from "@/error/sys/auth/UserNoFoundError";
@@ -16,6 +15,7 @@ import {
   RegisterResponseType,
   LoginWithGoogleSchemaType,
   LoginWithGoogleResponseType,
+  SysUserDetailType,
 } from "@/model";
 import { LoginSchemaType, LoginResponseType } from "@/model";
 import { UserAlreadyExistsError } from "@/error/sys/auth/UserAlreadyExistsError";
@@ -23,8 +23,6 @@ import { AUTHORIZATION_KEY } from "@/constants";
 import { OAuth2Client, TokenPayload } from "google-auth-library";
 
 const client = new OAuth2Client(import.meta.env.VITE_GOOGLE_CLIENT_ID);
-
-export type SysUserDetailType = Omit<SysUser, "password">;
 
 export class SysAuthService {
 
@@ -59,7 +57,7 @@ export class SysAuthService {
   };
 
   public register = async (ctx: Context) => {
-    const { email, password } = ctx.request.body as RegisterSchemaType;
+    const { email, password } = ctx.state.body as RegisterSchemaType;
     // 1. Check if the user already exists
     const sysUser = await prisma.sysUser.findFirst({
       where: {
@@ -81,7 +79,7 @@ export class SysAuthService {
   };
 
   public login = async (ctx: Context): Promise<IResult<LoginResponseType>> => {
-    const { email, password } = ctx.request.body as LoginSchemaType;
+    const { email, password } = ctx.state.body as LoginSchemaType;
     // 1. Query user from database by email
     const sysUser = await prisma.sysUser.findFirst({
       where: {
@@ -123,7 +121,7 @@ export class SysAuthService {
 
   public loginWithGoogle = async (ctx: Context) => {
     // 1. Verify the token
-    const { credential } = ctx.request.body as LoginWithGoogleSchemaType;
+    const { credential } = ctx.state.body as LoginWithGoogleSchemaType;
     const ticket = await client.verifyIdToken({
       idToken: credential,
       audience: import.meta.env.VITE_GOOGLE_CLIENT_ID,

@@ -1,10 +1,13 @@
-import { t } from "@app/i18n";
 import { SysUser } from "@prisma/client";
 import { z } from "zod";
 
+export { z } from "zod";
+export type { ZodSchema } from "zod";
+
+// page
 export const PageSchema = z.object({
-  page: z.number().min(1, t("pages.page_error")),
-  pageSize: z.number().min(1, t("pages.page_size_error")),
+  page: z.number().min(1, "common.validate.required"),
+  pageSize: z.number().min(1, "common.validate.required"),
 });
 export type PageSchemaType = z.infer<typeof PageSchema>;
 export type PageResponseType<T> = {
@@ -14,8 +17,11 @@ export type PageResponseType<T> = {
 
 // login
 export const LoginSchema = z.object({
-  email: z.string().email(t("pages.login.email_error")),
-  password: z.string().min(6, t("pages.login.password_error")),
+  email: z
+    .string()
+    .min(1, "common.validate.required")
+    .email("common.validate.email"),
+  password: z.string().min(6, "common.validate.login.password_min_error"),
 });
 export type LoginSchemaType = z.infer<typeof LoginSchema>;
 export type LoginResponseType = {
@@ -24,8 +30,8 @@ export type LoginResponseType = {
 
 // login with google
 export const LoginWithGoogleSchema = z.object({
-  clientId: z.string(),
-  credential: z.string(),
+  clientId: z.string().min(1, "common.validate.required"),
+  credential: z.string().min(1, "common.validate.required"),
 });
 export type LoginWithGoogleSchemaType = z.infer<typeof LoginWithGoogleSchema>;
 export type LoginWithGoogleResponseType = {
@@ -34,19 +40,27 @@ export type LoginWithGoogleResponseType = {
 
 // register
 export const RegisterSchema = z.object({
-  email: z.string().email(t("pages.register.email_error")),
-  password: z.string().min(6, t("pages.register.password_error")),
+  email: z
+    .string()
+    .min(1, "common.validate.required")
+    .email("common.validate.email"),
+  password: z.string().min(6, "common.validate.register.password_min_error"),
 });
 export type RegisterSchemaType = z.infer<typeof RegisterSchema>;
 export type RegisterResponseType = null;
 
+// sys user
 export type { SysUser } from "@prisma/client";
 export type SysUserDetailType = Omit<SysUser, "password">;
-export type SysUserPageSchemaType = PageSchemaType & {
-  email?: string;
-};
+export const SysUserPageSchema = PageSchema.extend({
+  email: z.string().optional(),
+});
+export type SysUserPageSchemaType = z.infer<typeof SysUserPageSchema>;
 export type SysUserPageResponseType = PageResponseType<SysUserDetailType>;
 
+// sys role
 export type { SysRole } from "@prisma/client";
 export type { SysUserRole } from "@prisma/client";
+
+// sys user token
 export type { SysUserToken } from "@prisma/client";
