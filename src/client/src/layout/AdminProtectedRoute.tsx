@@ -1,9 +1,10 @@
+import { useEffect } from "react";
+
 import { fetchSysAuthUserInfo } from "@/api/sys/auth";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import type { SysUserDetailType } from "@app/server/src/model";
 import { IResult } from "@app/result";
-import { useEffect } from "react";
 
 // Create a ProtectedRoute component to check if the user has permission to access the admin route.
 export const AdminProtectedRoute = ({

@@ -1,6 +1,7 @@
+import { useState } from "react";
+
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchRequest } from "@/utils/apiUtils";
-import { useState } from "react";
 
 interface UseCrudOptions<T, Q extends Record<string, any>> {
   baseUrl: string;
@@ -12,9 +13,6 @@ interface UseCrudOptions<T, Q extends Record<string, any>> {
   defaultQueryForm?: Q;
   defaultPage?: number;
   defaultLimit?: number;
-  onQuerySuccess?: (data: T[]) => void;
-  onQueryError?: (error: Error) => void;
-  onQuerySettled?: () => void;
 }
 
 interface PaginationState {
@@ -36,9 +34,6 @@ export function useCrud<
   defaultQueryForm = {} as Q,
   defaultPage = 1,
   defaultLimit = 10,
-  onQuerySuccess,
-  onQueryError,
-  onQuerySettled,
 }: UseCrudOptions<T, Q>) {
   const queryClient = useQueryClient();
   const [queryForm, setQueryForm] = useState<Q>(defaultQueryForm);
@@ -50,7 +45,7 @@ export function useCrud<
   const [sort, setSort] = useState({ field: "", order: "" });
 
   // List/Page Query
-  const { data, isLoading: loading } = useQuery<T>({
+  const { data, isLoading: loading } = useQuery<T[]>({
     queryKey: ["crud", baseUrl, queryForm, pagination, sort],
     queryFn: async () => {
       const url = isPage ? pageUrl : listUrl;
@@ -76,10 +71,11 @@ export function useCrud<
           ...prev,
           total: response.data.total,
         }));
-        return response.data;
+        return response.data.list;
       }
       return response.data;
     },
+    enabled: false,
   });
 
   // Create/Update Mutation
@@ -92,7 +88,7 @@ export function useCrud<
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["crud", baseUrl] });
+      refresh();
     },
   });
 
@@ -104,7 +100,7 @@ export function useCrud<
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["crud", baseUrl] });
+      refresh();
     },
   });
 
@@ -117,7 +113,7 @@ export function useCrud<
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["crud", baseUrl] });
+      refresh();
     },
   });
 
@@ -150,6 +146,10 @@ export function useCrud<
     setSort({ field: "", order: "" });
   };
 
+  const refresh = () => {
+    queryClient.invalidateQueries({ queryKey: ["crud", baseUrl] });
+  };
+
   return {
     // Data
     data,
@@ -164,6 +164,7 @@ export function useCrud<
     getDetail,
 
     // Query Form
+    refresh,
     setQueryForm,
     resetQueryForm,
 

@@ -1,8 +1,5 @@
 import { prisma } from "@/libs/prisma";
-import {
-  SysUserPageSchemaType,
-  SysUserPageResponseType,
-} from "@/model";
+import { SysUserPageSchemaType, SysUserPageResponseType } from "@/model";
 import { BaseService } from "@/service/BaseService";
 import { I18nResult } from "@app/result";
 import { Context } from "koa";
@@ -14,15 +11,21 @@ export class SysUserService extends BaseService {
       pageSize = 10,
       email,
     } = ctx.state.query as SysUserPageSchemaType;
-    const result = await prisma.sysUser.findMany({
-      where: {
-        ...(email ? { email: { contains: email } } : {}),
-      },
-      skip: (page - 1) * pageSize,
-      take: pageSize,
-    });
+    const where = {
+      ...(email ? { email: { contains: email } } : {}),
+    };
+    const [result, total] = await Promise.all([
+      prisma.sysUser.findMany({
+        where,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      prisma.sysUser.count({
+        where,
+      }),
+    ]);
     const res = {
-      total: result.length,
+      total,
       list: result.map((item) => ({
         ...item,
         password: undefined,

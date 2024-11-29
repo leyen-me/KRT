@@ -1,22 +1,10 @@
-// import { promises as fs } from "fs";
-// import path from "path";
-
-import { useCrud } from "@/hooks/use-crud";
-import { SysUserDetailType } from "@app/server/src/model";
-
-// import { columns } from "./components/columns";
-// import { DataTable } from "./components/data-table";
-// import { UserNav } from "./components/user-nav";
-// import { taskSchema } from "./data/schema";
+import { DataTable } from "./components/data-table";
+import { columns } from "./components/columns";
 
 // https://github.com/shadcn-ui/ui/blob/main/apps/www/app/(app)/examples/tasks/page.tsx
 export default function SysUserPage() {
-  const { data } = useCrud<SysUserDetailType[]>({
-    baseUrl: "/sys/user",
-  });
-
   return (
-    <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
+    <div className="h-full flex-1 flex-col space-y-6 p-2 md:flex xl:p-8 xl:space-y-8">
       <div className="flex items-center justify-between space-y-2">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">Welcome back!</h2>
@@ -25,8 +13,8 @@ export default function SysUserPage() {
           </p>
         </div>
       </div>
-      <p className="whitespace-pre-wrap break-words">{JSON.stringify(data)}</p>
-      {/* <DataTable data={[]} columns={columns} /> */}
+
+      <DataTable columns={columns} />
     </div>
   );
 }

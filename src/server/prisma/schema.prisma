@@ -30,15 +30,15 @@ enum SYS_USER_STATUS {
 model SysUser {
   id String @id @default(cuid())
 
-  email       String
-  password    String
-  status      SYS_USER_STATUS  @default(NORMAL)
-  superAdmin Boolean          @default(false)
-  
-  nickname    String?
-  avatar      String?
-  gender      SYS_USER_GENDER? @default(UNKNOWN)
-  mobile      String?
+  email      String
+  password   String
+  status     SYS_USER_STATUS @default(NORMAL)
+  superAdmin Boolean         @default(false)
+
+  nickname String?
+  avatar   String?
+  gender   SYS_USER_GENDER? @default(UNKNOWN)
+  mobile   String?
 
   createdAt DateTime @default(dbgenerated("NOW()")) @db.DateTime
   updatedAt DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.Timestamp(0)
@@ -49,7 +49,7 @@ model SysUserToken {
   id String @id @default(cuid())
 
   token   String
-  userId String
+  userId  String
   expires DateTime @db.DateTime
 
   createdAt DateTime @default(dbgenerated("NOW()")) @db.DateTime

@@ -1,3 +1,5 @@
+import { Outlet } from "react-router-dom"
+
 import { AppSidebar } from "@/components/app-sidebar"
 import { Tool } from "@/components/tool"
 import {
@@ -14,7 +16,6 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { Outlet } from "react-router-dom"
 
 export default function AdminLayout() {
   return (
