@@ -11,11 +11,9 @@ import { getI18n } from "@app/i18n";
 export const fetchRequest = async (url: string, options: any = {}) => {
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
   const i18n = getI18n().name;
-  const token = localStorage.getItem(AUTHORIZATION_KEY);
-  if (!options.method || options.method === "GET") {
-    url = `${url}?${new URLSearchParams(options.params).toString()}`;
-  }
+  const token = localStorage.getItem(AUTHORIZATION_KEY) || "";
   const response = await fetch(`${baseUrl}${url}`, {
+    method: options.method || "POST",
     ...options,
     headers: {
       "Content-Type": "application/json",

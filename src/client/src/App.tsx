@@ -20,6 +20,7 @@ import AdminLayout from "./layout/AdminLayout";
 import { AdminProtectedRoute } from "./layout/AdminProtectedRoute";
 import AdminSysUser from "./pages/admin/sys/user";
 import AdminSysDashboard from "./pages/admin/sys/dashboard";
+import { DrawerCSSProvider } from "./components/drawer-css-provider";
 
 const queryClient = new QueryClient();
 
@@ -27,40 +28,47 @@ function App() {
   const { i18nInfo } = useI18n();
   return (
     <ThemeProvider>
-      <I18nContext.Provider value={i18nInfo}>
-        <QueryClientProvider client={queryClient}>
-          <BrowserRouter
-            basename={i18nInfo.path}
-            future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-          >
-            <Routes>
-              <Route path="/" element={<Layout />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/product" element={<Product />} />
-                <Route path="/features" element={<Features />} />
-                <Route path="/pricing" element={<Pricing />} />
-                <Route path="/support" element={<Support />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-              </Route>
-              <Route
-                path="/admin"
-                element={
-                  <AdminProtectedRoute>
-                    <AdminLayout />
-                  </AdminProtectedRoute>
-                }
-              >
-                <Route path="/admin/sys/user" element={<AdminSysUser />} />
-                <Route path="/admin/sys/dashboard" element={<AdminSysDashboard />} />
-                <Route path="*" element={<NotFound />} /> {/* 管理 404 页面 */}
-              </Route>
-              <Route path="*" element={<NotFound />} /> {/* 默认的 404 页面 */}
-            </Routes>
-          </BrowserRouter>
-        </QueryClientProvider>
-      </I18nContext.Provider>
+      <DrawerCSSProvider>
+        <I18nContext.Provider value={i18nInfo}>
+          <QueryClientProvider client={queryClient}>
+            <BrowserRouter
+              basename={i18nInfo.path}
+              future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+            >
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/product" element={<Product />} />
+                  <Route path="/features" element={<Features />} />
+                  <Route path="/pricing" element={<Pricing />} />
+                  <Route path="/support" element={<Support />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                </Route>
+                <Route
+                  path="/admin"
+                  element={
+                    <AdminProtectedRoute>
+                      <AdminLayout />
+                    </AdminProtectedRoute>
+                  }
+                >
+                  <Route path="/admin/sys/user" element={<AdminSysUser />} />
+                  <Route
+                    path="/admin/sys/dashboard"
+                    element={<AdminSysDashboard />}
+                  />
+                  <Route path="*" element={<NotFound />} />{" "}
+                  {/* 管理 404 页面 */}
+                </Route>
+                <Route path="*" element={<NotFound />} />{" "}
+                {/* 默认的 404 页面 */}
+              </Routes>
+            </BrowserRouter>
+          </QueryClientProvider>
+        </I18nContext.Provider>
+      </DrawerCSSProvider>
     </ThemeProvider>
   );
 }

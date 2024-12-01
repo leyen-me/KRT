@@ -57,7 +57,7 @@ export class SysAuthService {
   };
 
   public register = async (ctx: Context) => {
-    const { email, password } = ctx.state.body as RegisterSchemaType;
+    const { email, password } = ctx.request.body as RegisterSchemaType;
     // 1. Check if the user already exists
     const sysUser = await prisma.sysUser.findFirst({
       where: {
@@ -79,7 +79,7 @@ export class SysAuthService {
   };
 
   public login = async (ctx: Context): Promise<IResult<LoginResponseType>> => {
-    const { email, password } = ctx.state.body as LoginSchemaType;
+    const { email, password } = ctx.request.body as LoginSchemaType;
     // 1. Query user from database by email
     const sysUser = await prisma.sysUser.findFirst({
       where: {
@@ -121,7 +121,7 @@ export class SysAuthService {
 
   public loginWithGoogle = async (ctx: Context) => {
     // 1. Verify the token
-    const { credential } = ctx.state.body as LoginWithGoogleSchemaType;
+    const { credential } = ctx.request.body as LoginWithGoogleSchemaType;
     const ticket = await client.verifyIdToken({
       idToken: credential,
       audience: import.meta.env.VITE_GOOGLE_CLIENT_ID,

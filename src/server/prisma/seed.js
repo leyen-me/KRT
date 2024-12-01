@@ -56,6 +56,13 @@ const createOrUpdate = async (model, data) => {
 };
 
 async function main() {
+  for (let i = 0; i < 100; i++) {
+    SYS_USERS.push({
+      id: `user_${i}`,
+      email: `user_${i}@example.com`,
+      password: "DpRhz9JwNaNc1RJLb2nkgA==",
+    });
+  }
   await createOrUpdate("SysUser", SYS_USERS);
   await createOrUpdate("SysRole", SYS_ROLES);
   await createOrUpdate("SysUserRole", SYS_USER_ROLES);

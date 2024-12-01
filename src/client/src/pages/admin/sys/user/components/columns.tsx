@@ -46,7 +46,7 @@ export const columns: ColumnDef<SysUserDetailType>[] = [
       <DataTableColumnHeader column={column} title="Id" />
     ),
     cell: ({ row }) => (
-      <div className="w-[80px] truncate">{row.getValue("id")}</div>
+      <div className="max-w-[80px] truncate">{row.getValue("id")}</div>
     ),
     enableSorting: false,
     enableHiding: false,
@@ -65,6 +65,15 @@ export const columns: ColumnDef<SysUserDetailType>[] = [
     ),
     cell: ({ row }) => (
       <div className="w-[80px]">{row.getValue("nickname")}</div>
+    ),  
+  },
+  {
+    accessorKey: "mobile",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Mobile" />
+    ),
+    cell: ({ row }) => (
+      <div>{row.getValue("mobile")}</div>
     ),
   },
   {

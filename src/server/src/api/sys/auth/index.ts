@@ -12,4 +12,4 @@ authRouter.post("/login", validate(LoginSchema), sysAuthService.login);
 authRouter.post("/login-with-google", validate(LoginWithGoogleSchema), sysAuthService.loginWithGoogle);
 authRouter.post("/logout", sysAuthService.logout);
 
-authRouter.get("/user-info", sysAuthService.userInfo);
+authRouter.post("/user-info", sysAuthService.userInfo);

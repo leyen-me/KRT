@@ -1,5 +1,5 @@
 import { Row } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -10,13 +10,19 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { UserEditContext } from "./data-table";
+import { useContext } from "react";
+import { SysUserDetailType } from "@app/server/src/model";
 
-interface DataTableRowActionsProps<TData> {
+interface DataTableRowActionsProps<TData extends SysUserDetailType> {
   row: Row<TData>;
 }
-export function DataTableRowActions<TData>({
+
+export function DataTableRowActions<TData extends SysUserDetailType>({
   row,
 }: DataTableRowActionsProps<TData>) {
+  const { setId } = useContext(UserEditContext);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -29,8 +35,20 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuItem>Detail</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            setId({ id: row.original.id });
+          }}
+        >
+          Edit
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            setId({ id: row.original.id });
+          }}
+        >
+          Detail
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           Delete
