@@ -1,5 +1,5 @@
 export default {
-  common:{
+  common: {
     validate: {
       required: "此项为必填项",
       email: "请输入有效的邮箱地址",
@@ -23,14 +23,13 @@ export default {
         dark: "暗黑",
         system: "系统",
       },
-      sonner: {
+      toast: {
         success: {
-          title: "成功",
-          confirm: "确定",
+          description: "登录成功",
         },
         error: {
-          title: "错误",
-          confirm: "确定",
+          try_again: "重试",
+          description: "哎呀！出错了。",
         },
       },
     },
@@ -45,16 +44,6 @@ export default {
       login_with_google: "使用谷歌账号登录",
       register_desc: "还没有账号?",
       register: "注册",
-
-      toast: {
-        success: {
-          description: "登录成功",
-        },
-        error: {
-          try_again: "重试",
-          description: "哎呀！出错了。",
-        },
-      },
     },
     register: {
       title: "注册",

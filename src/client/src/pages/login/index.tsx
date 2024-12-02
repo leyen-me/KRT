@@ -35,7 +35,7 @@ export default function Page() {
       const { token } = data;
       setToken(token);
       toast({
-        title: t("pages.login.toast.success.description"),
+        title: t("pages.common.toast.success.description"),
         variant: "success",
         description: message,
       });
@@ -43,7 +43,7 @@ export default function Page() {
     },
     onError: (error) => {
       toast({
-        title: t("pages.login.toast.error.description"),
+        title: t("pages.common.toast.error.description"),
         variant: "destructive",
         description: error.message,
       });
@@ -61,7 +61,7 @@ export default function Page() {
       const { token } = data;
       setToken(token);
       toast({
-        title: t("pages.login.toast.success.description"),
+        title: t("pages.common.toast.success.description"),
         variant: "success",
         description: message,
       });
@@ -69,7 +69,7 @@ export default function Page() {
     },
     onError: (error) => {
       toast({
-        title: t("pages.login.toast.error.description"),
+        title: t("pages.common.toast.error.description"),
         variant: "destructive",
         description: error.message,
       });

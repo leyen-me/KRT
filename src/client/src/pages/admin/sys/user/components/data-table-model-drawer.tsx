@@ -13,8 +13,11 @@ import { zodResolver } from "@/utils/zodUtils";
 import {
   SYS_USER_GENDER,
   SYS_USER_STATUS,
+  SysUserCreateResponseType,
   SysUserCreateSchema,
   SysUserCreateSchemaType,
+  SysUserDetailResponseType,
+  SysUserUpdateResponseType,
   SysUserUpdateSchema,
   SysUserUpdateSchemaType,
 } from "@app/server/src/model";
@@ -45,13 +48,37 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { IResult } from "@app/result";
+import {
+  fetchSysUserCreate,
+  fetchSysUserDetail,
+  fetchSysUserUpdate,
+} from "@/api/sys/user";
+import { t } from "@app/i18n";
+import { useToast } from "@/hooks/use-toast";
 
 export function DataTableModelDrawer() {
+  // common hook
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const defaultValues = {
+    email: "",
+    password: "",
+    status: SYS_USER_STATUS.NORMAL,
+    superAdmin: false,
+    nickname: "",
+    gender: SYS_USER_GENDER.UNKNOWN,
+    mobile: "",
+    avatar: "",
+    roleIds: [],
+  };
+
   // user edit context
   const { id, setId } = useContext(UserEditContext);
   useEffect(() => {
     form.clearErrors();
-    form.reset();
+    form.reset(defaultValues);
     setOpen(!!id);
   }, [id]);
 
@@ -63,28 +90,97 @@ export function DataTableModelDrawer() {
     }
     setOpen(openFlag);
   };
+  const closeDrawer = () => {
+    setId({ id: "" });
+    queryClient.invalidateQueries({ queryKey: ["sysUserPage"] });
+  };
 
   const form = useForm<SysUserCreateSchemaType | SysUserUpdateSchemaType>({
     resolver: zodResolver(
       id === MODEL_CREATE_FLAG_ID ? SysUserCreateSchema : SysUserUpdateSchema
     ),
-    defaultValues: {
-      email: "",
-      password: "",
-      status: SYS_USER_STATUS.NORMAL,
-      superAdmin: false,
-      nickname: "",
-      gender: SYS_USER_GENDER.UNKNOWN,
-      mobile: "",
-      avatar: "",
-      roleIds: [],
+    defaultValues,
+  });
+
+  const { data: modelInfo } = useQuery<IResult<SysUserDetailResponseType>>({
+    queryKey: ["sysUserDetail", id],
+    queryFn: () => fetchSysUserDetail(id),
+    // refetch on mount
+    refetchOnMount: true,
+    staleTime: 0,
+    enabled: !!id && id !== MODEL_CREATE_FLAG_ID,
+  });
+
+  useEffect(() => {
+    if (modelInfo?.data) {
+      // remove null value
+      const data = Object.fromEntries(
+        Object.entries(modelInfo.data).filter(([_, value]) => value !== null)
+      );
+      form.reset(data as SysUserUpdateSchemaType);
+    }
+  }, [modelInfo]);
+
+  const { mutate: mutateCreate, isPending: createPending } = useMutation<
+    IResult<SysUserCreateResponseType>,
+    Error,
+    SysUserCreateSchemaType
+  >({
+    mutationFn: fetchSysUserCreate,
+    onSuccess: (res) => {
+      const { message } = res;
+      toast({
+        title: t("pages.common.toast.success.description"),
+        variant: "success",
+        description: message,
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: t("pages.common.toast.error.description"),
+        variant: "destructive",
+        description: error.message,
+      });
+    },
+    onSettled: () => {
+      closeDrawer();
+    },
+  });
+
+  const { mutate: mutateUpdate, isPending: updatePending } = useMutation<
+    IResult<SysUserUpdateResponseType>,
+    Error,
+    SysUserUpdateSchemaType
+  >({
+    mutationFn: fetchSysUserUpdate,
+    onSuccess: (res) => {
+      const { message } = res;
+      toast({
+        title: t("pages.common.toast.success.description"),
+        variant: "success",
+        description: message,
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: t("pages.common.toast.error.description"),
+        variant: "destructive",
+        description: error.message,
+      });
+    },
+    onSettled: () => {
+      closeDrawer();
     },
   });
 
   const onSubmit = (
     data: SysUserCreateSchemaType | SysUserUpdateSchemaType
   ) => {
-    console.log(data);
+    if (id === MODEL_CREATE_FLAG_ID) {
+      mutateCreate(data as SysUserCreateSchemaType);
+    } else {
+      mutateUpdate(data as SysUserUpdateSchemaType);
+    }
   };
 
   return (
@@ -156,10 +252,10 @@ export function DataTableModelDrawer() {
                             </SelectTrigger>
                             <SelectContent>
                               <SelectItem value={SYS_USER_STATUS.NORMAL}>
-                                Active
+                                NORMAL
                               </SelectItem>
                               <SelectItem value={SYS_USER_STATUS.DISABLED}>
-                                Inactive
+                                DISABLED
                               </SelectItem>
                             </SelectContent>
                           </Select>
@@ -183,8 +279,8 @@ export function DataTableModelDrawer() {
                               <SelectValue placeholder="Select status" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="true">Yes</SelectItem>
-                              <SelectItem value="false">No</SelectItem>
+                              <SelectItem value="true">true</SelectItem>
+                              <SelectItem value="false">false</SelectItem>
                             </SelectContent>
                           </Select>
                         </FormControl>
@@ -208,10 +304,10 @@ export function DataTableModelDrawer() {
                             </SelectTrigger>
                             <SelectContent>
                               <SelectItem value={SYS_USER_GENDER.MALE}>
-                                Male
+                                MALE
                               </SelectItem>
                               <SelectItem value={SYS_USER_GENDER.FEMALE}>
-                                Female
+                                FEMALE
                               </SelectItem>
                               <SelectItem value={SYS_USER_GENDER.UNKNOWN}>
                                 UNKNOWN
@@ -291,11 +387,18 @@ export function DataTableModelDrawer() {
 
         <DrawerFooter className="w-full px-0">
           <Button
+            disabled={createPending || updatePending}
             onClick={() => {
               form.handleSubmit(onSubmit)();
             }}
           >
-            Save
+            {id === MODEL_CREATE_FLAG_ID
+              ? createPending
+                ? "Create..."
+                : "Create"
+              : updatePending
+              ? "Update..."
+              : "Update"}
           </Button>
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>

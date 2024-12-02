@@ -12,13 +12,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { UserEditContext } from "./data-table";
 import { useContext } from "react";
-import { SysUserDetailType } from "@app/server/src/model";
+import { SysUserDetailResponseType } from "@app/server/src/model";
 
-interface DataTableRowActionsProps<TData extends SysUserDetailType> {
+interface DataTableRowActionsProps<TData extends SysUserDetailResponseType> {
   row: Row<TData>;
 }
 
-export function DataTableRowActions<TData extends SysUserDetailType>({
+export function DataTableRowActions<TData extends SysUserDetailResponseType>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const { setId } = useContext(UserEditContext);

@@ -15,7 +15,7 @@ import {
   RegisterResponseType,
   LoginWithGoogleSchemaType,
   LoginWithGoogleResponseType,
-  SysUserDetailType,
+  SysUserDetailResponseType,
 } from "@/model";
 import { LoginSchemaType, LoginResponseType } from "@/model";
 import { UserAlreadyExistsError } from "@/error/sys/auth/UserAlreadyExistsError";
@@ -160,10 +160,10 @@ export class SysAuthService {
   public userInfo = async (ctx: Context) => {
     const token = ctx.get(AUTHORIZATION_KEY);
     const userDetailString = await redisClient.getSysUserToken(token);
-    const userDetail: SysUserDetailType = userDetailString
+    const userDetail: SysUserDetailResponseType = userDetailString
       ? JSON.parse(userDetailString)
       : null;
-    return ctx.send(new I18nResult<SysUserDetailType>(200, userDetail));
+    return ctx.send(new I18nResult<SysUserDetailResponseType>(200, userDetail));
   };
 
   public logout = async (ctx: Context) => {

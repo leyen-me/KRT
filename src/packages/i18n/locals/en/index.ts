@@ -25,14 +25,13 @@ export default {
         dark: "Dark",
         system: "System",
       },
-      sonner: {
+      toast: {
         success: {
-          title: "Success",
-          confirm: "Ok",
+          description: "Success",
         },
         error: {
-          title: "Error",
-          confirm: "Ok",
+          try_again: "Try again",
+          description: "Uh oh! Something went wrong.",
         },
       },
     },
@@ -47,15 +46,6 @@ export default {
       login_with_google: "Login with Google",
       register_desc: "Don't have an account?",
       register: "Sign up",
-      toast: {
-        success: {
-          description: "Login success",
-        },
-        error: {
-          try_again: "Try again",
-          description: "Uh oh! Something went wrong.",
-        },
-      },
     },
     register: {
       title: "Register",

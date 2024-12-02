@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/table";
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
-import { SysUserDetailType } from "@app/server/src/model";
+import { SysUserDetailResponseType } from "@app/server/src/model";
 import { createContext, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { DEFAULT_PAGE_INDEX, DEFAULT_PAGE_SIZE } from "@/constants";
@@ -29,7 +29,7 @@ import { fetchSysUserPage } from "@/api/sys/user";
 import { DataTableModelDrawer } from "./data-table-model-drawer";
 
 interface DataTableProps {
-  columns: ColumnDef<SysUserDetailType, any>[];
+  columns: ColumnDef<SysUserDetailResponseType, any>[];
 }
 
 export const UserEditContext = createContext({
@@ -41,6 +41,7 @@ export function DataTable({ columns }: DataTableProps) {
   const [editId, setEditId] = useState("");
   const setEditIdAction = ({ id }: { id: string }) => setEditId(id);
 
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -52,7 +53,7 @@ export function DataTable({ columns }: DataTableProps) {
 
   const { data, isLoading: loading } = useQuery<SysUserPageResponseType>({
     queryKey: [
-      "/sys/user/page",
+      "sysUserPage",
       pagination.pageIndex,
       pagination.pageSize,
       columnFilters,

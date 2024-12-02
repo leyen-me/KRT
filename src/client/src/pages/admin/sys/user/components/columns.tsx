@@ -2,7 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-import { SysUserDetailType } from "@app/server/src/model";
+import { SysUserDetailResponseType } from "@app/server/src/model";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
 
@@ -11,11 +11,7 @@ import { DataTableRowActions } from "./data-table-row-actions";
 // import { DataTableColumnHeader } from "./data-table-column-header"
 // import { DataTableRowActions } from "./data-table-row-actions"
 
-const labels: any[] = [];
-const statuses: any[] = [];
-const priorities: any[] = [];
-
-export const columns: ColumnDef<SysUserDetailType>[] = [
+export const columns: ColumnDef<SysUserDetailResponseType>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -32,7 +28,11 @@ export const columns: ColumnDef<SysUserDetailType>[] = [
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        onCheckedChange={(value) => {
+          row.toggleSelected(!!value);
+          
+          console.log(row.getIsSelected());
+        }}
         aria-label="Select row"
         className="translate-y-[2px]"
       />
@@ -65,16 +65,14 @@ export const columns: ColumnDef<SysUserDetailType>[] = [
     ),
     cell: ({ row }) => (
       <div className="w-[80px]">{row.getValue("nickname")}</div>
-    ),  
+    ),
   },
   {
     accessorKey: "mobile",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Mobile" />
     ),
-    cell: ({ row }) => (
-      <div>{row.getValue("mobile")}</div>
-    ),
+    cell: ({ row }) => <div>{row.getValue("mobile")}</div>,
   },
   {
     accessorKey: "status",

@@ -52,14 +52,26 @@ export type RegisterResponseType = null;
 // sys user
 export { SYS_USER_STATUS, SYS_USER_GENDER } from "@prisma/client";
 export type { SysUser } from "@prisma/client";
-export type SysUserDetailType = Omit<SysUser, "password">;
+
+// sys user detail
+export const SysUserDetailSchema = z.object({
+  id: z.string().min(1, "common.validate.required"),
+});
+export type SysUserDetailSchemaType = z.infer<typeof SysUserDetailSchema>;
+export type SysUserDetailResponseType = Omit<SysUser, "password"> & {
+  roleIds: string[];
+};
+
+// sys user page
 export const SysUserPageSchema = PageSchema.extend({
   email: z.string().optional(),
   status: z.array(z.nativeEnum(SYS_USER_STATUS)).optional(),
 });
 export type SysUserPageSchemaType = z.infer<typeof SysUserPageSchema>;
-export type SysUserPageResponseType = PageResponseType<SysUserDetailType>;
+export type SysUserPageResponseType =
+  PageResponseType<SysUserDetailResponseType>;
 
+// sys user create
 export const SysUserCreateSchema = z.object({
   email: z
     .string()
@@ -75,7 +87,13 @@ export const SysUserCreateSchema = z.object({
   roleIds: z.array(z.string()).optional(),
 });
 export type SysUserCreateSchemaType = z.infer<typeof SysUserCreateSchema>;
+export type SysUserCreateResponseType = {
+  id: string;
+};
+
+// sys user update
 export const SysUserUpdateSchema = SysUserCreateSchema.extend({
+  id: z.string().min(1, "common.validate.required"),
   email: z
     .string()
     .min(1, "common.validate.required")
@@ -89,6 +107,9 @@ export const SysUserUpdateSchema = SysUserCreateSchema.extend({
   superAdmin: z.boolean().optional(),
 });
 export type SysUserUpdateSchemaType = z.infer<typeof SysUserUpdateSchema>;
+export type SysUserUpdateResponseType = {
+  id: string;
+};
 
 // sys role
 export type { SysRole } from "@prisma/client";
