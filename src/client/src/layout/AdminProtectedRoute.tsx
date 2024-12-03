@@ -3,8 +3,9 @@ import { useEffect } from "react";
 import { fetchSysAuthUserInfo } from "@/api/sys/auth";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import type { SysUserDetailResponseType } from "@app/server/src/model";
-import { IResult } from "@app/result";
+import { QUERY_KEY } from "@/constants/query-key";
+import { fetchSysTranslationList } from "@/api/sys/translation";
+import { addI18nLocalValues } from "@app/i18n";
 
 // Create a ProtectedRoute component to check if the user has permission to access the admin route.
 export const AdminProtectedRoute = ({
@@ -15,13 +16,19 @@ export const AdminProtectedRoute = ({
   const navigate = useNavigate();
 
   const {
-    data: userInfo,
-    error: userError,
-    isLoading: isUserLoading,
-  } = useQuery<IResult<SysUserDetailResponseType>>({
-    queryKey: ["userInfo"],
-    queryFn: fetchSysAuthUserInfo,
-
+    data: _,
+    error,
+    isLoading,
+  } = useQuery<null>({
+    queryKey: [QUERY_KEY.SYS_INFO],
+    queryFn: async () => {
+      const [userInfo, translationList] = await Promise.all([
+        fetchSysAuthUserInfo(),
+        fetchSysTranslationList(),
+      ]);
+      // addI18nLocalValues(translationList.data);
+      return null;
+    },
     // refetch on mount
     refetchOnMount: true,
     staleTime: 0,
@@ -31,16 +38,16 @@ export const AdminProtectedRoute = ({
 
   // control error and redirect
   useEffect(() => {
-    if (!isUserLoading && (userError || !userInfo?.data)) {
-      console.error("Error fetching user info:", userError);
+    if (!isLoading && error) {
       navigate("/login?redirect=/admin/sys/dashboard");
     }
-  }, [userError, userInfo, isUserLoading, navigate]);
+  }, [error, isLoading, navigate]);
 
   // control loading and error
-  if (isUserLoading) return <div>Loading user info...</div>;
-  if (userError || !userInfo?.data) {
+  if (isLoading) return <div>Loading user info...</div>;
+  if (error) {
     return null;
   }
+
   return <>{children}</>;
 };

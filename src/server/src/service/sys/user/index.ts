@@ -8,6 +8,8 @@ import {
   SysUserDetailResponseType,
   SysUserUpdateSchemaType,
   SysUserUpdateResponseType,
+  DeleteSchemaType,
+  DeleteResponseType,
 } from "@/model";
 import { BaseService } from "@/service/BaseService";
 import { I18nResult } from "@app/result";
@@ -56,11 +58,11 @@ export class SysUserService extends BaseService {
   };
 
   public create = async (ctx: Context) => {
-    const { roleIds, ...model } = ctx.request.body as SysUserCreateSchemaType;
+    const { roleIds, ...data } = ctx.request.body as SysUserCreateSchemaType;
     // 1. Check if the user already exists
     const sysUser = await prisma.sysUser.findFirst({
       where: {
-        email: model.email,
+        email: data.email,
       },
     });
     if (sysUser) {
@@ -68,7 +70,7 @@ export class SysUserService extends BaseService {
     }
     // 2. Create user
     const res = await prisma.sysUser.create({
-      data: model,
+      data,
     });
 
     // 3. Return success message
@@ -78,12 +80,12 @@ export class SysUserService extends BaseService {
   };
 
   public update = async (ctx: Context) => {
-    const { roleIds, ...model } = ctx.request.body as SysUserUpdateSchemaType;
+    const { id, roleIds, ...data } = ctx.request.body as SysUserUpdateSchemaType;
     const res = await prisma.sysUser.update({
       where: {
-        id: model.id,
+        id,
       },
-      data: model,
+      data,
     });
     return ctx.send(
       new I18nResult<SysUserUpdateResponseType>(200, { id: res.id })

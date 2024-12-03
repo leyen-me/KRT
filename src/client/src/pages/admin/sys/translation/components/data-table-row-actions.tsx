@@ -1,5 +1,5 @@
 import { Row } from "@tanstack/react-table";
-import { MoreHorizontal, Plus } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -10,19 +10,19 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { UserEditContext, UserEditContextType } from "./data-table";
+import { TranslationEditContext, TranslationEditContextType } from "./data-table";
 import { useContext } from "react";
-import { SysUserDetailResponseType } from "@app/server/src/model";
+import { SysTranslationDetailResponseType } from "@app/server/src/model";
 import { t } from "@app/i18n";
 
-interface DataTableRowActionsProps<TData extends SysUserDetailResponseType> {
+interface DataTableRowActionsProps<TData extends SysTranslationDetailResponseType> {
   row: Row<TData>;
 }
 
-export function DataTableRowActions<TData extends SysUserDetailResponseType>({
+export function DataTableRowActions<TData extends SysTranslationDetailResponseType>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const { setId } = useContext(UserEditContext) as UserEditContextType;
+  const { setId } = useContext(TranslationEditContext) as TranslationEditContextType;
 
   return (
     <DropdownMenu>

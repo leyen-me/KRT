@@ -1,17 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { Table } from "@tanstack/react-table";
 import { useContext } from "react";
-import { UserEditContext } from "./data-table";
+import { UserEditContext, UserEditContextType } from "./data-table";
 import { MODEL_CREATE_FLAG_ID } from "@/constants";
+import { t } from "@app/i18n";
 
-type DataTableNewProps<TData> = {
-  table: Table<TData>;
-};
-
-export function DataTableNew<TData>({ table }: DataTableNewProps<TData>) {
-  const { setId } = useContext(UserEditContext);
-
+export function DataTableToolbarCreateBtn() {
+  const { setId } = useContext(UserEditContext) as UserEditContextType;
+  
   return (
     <Button
       variant="outline"
@@ -20,7 +16,7 @@ export function DataTableNew<TData>({ table }: DataTableNewProps<TData>) {
       onClick={() => setId({ id: MODEL_CREATE_FLAG_ID })}
     >
       <Plus />
-      New
+      {t("pages.common.data_table.toolbar.create")}
     </Button>
   );
 }

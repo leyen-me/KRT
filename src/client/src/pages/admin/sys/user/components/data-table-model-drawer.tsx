@@ -7,7 +7,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { UserEditContext } from "./data-table";
+import { UserEditContext, UserEditContextType } from "./data-table";
 import { useState, useContext, useEffect } from "react";
 import { zodResolver } from "@/utils/zodUtils";
 import {
@@ -57,6 +57,7 @@ import {
 } from "@/api/sys/user";
 import { t } from "@app/i18n";
 import { useToast } from "@/hooks/use-toast";
+import { QUERY_KEY } from "@/constants/query-key";
 
 export function DataTableModelDrawer() {
   // common hook
@@ -75,7 +76,7 @@ export function DataTableModelDrawer() {
   };
 
   // user edit context
-  const { id, setId } = useContext(UserEditContext);
+  const { id, setId } = useContext(UserEditContext) as UserEditContextType;
   useEffect(() => {
     form.clearErrors();
     form.reset(defaultValues);
@@ -92,7 +93,7 @@ export function DataTableModelDrawer() {
   };
   const closeDrawer = () => {
     setId({ id: "" });
-    queryClient.invalidateQueries({ queryKey: ["sysUserPage"] });
+    queryClient.invalidateQueries({ queryKey: [QUERY_KEY.SYS_USER_PAGE] });
   };
 
   const form = useForm<SysUserCreateSchemaType | SysUserUpdateSchemaType>({
@@ -103,7 +104,7 @@ export function DataTableModelDrawer() {
   });
 
   const { data: modelInfo } = useQuery<IResult<SysUserDetailResponseType>>({
-    queryKey: ["sysUserDetail", id],
+    queryKey: [QUERY_KEY.SYS_USER_DETAIL, id],
     queryFn: () => fetchSysUserDetail(id),
     // refetch on mount
     refetchOnMount: true,
@@ -134,6 +135,7 @@ export function DataTableModelDrawer() {
         variant: "success",
         description: message,
       });
+      closeDrawer();
     },
     onError: (error) => {
       toast({
@@ -143,7 +145,6 @@ export function DataTableModelDrawer() {
       });
     },
     onSettled: () => {
-      closeDrawer();
     },
   });
 
@@ -160,6 +161,7 @@ export function DataTableModelDrawer() {
         variant: "success",
         description: message,
       });
+      closeDrawer();
     },
     onError: (error) => {
       toast({
@@ -169,7 +171,6 @@ export function DataTableModelDrawer() {
       });
     },
     onSettled: () => {
-      closeDrawer();
     },
   });
 
@@ -188,12 +189,22 @@ export function DataTableModelDrawer() {
       <DrawerContent className="h-[calc(100vh-100px)] px-8 flex flex-col max-w-4xl mx-auto">
         <DrawerHeader className="px-0">
           <DrawerTitle className="text-2xl">
-            {id === MODEL_CREATE_FLAG_ID ? "Create User" : "Edit User"}
+            {id === MODEL_CREATE_FLAG_ID
+              ? t(
+                  "pages.admin.sys.user.data_table.model.drawer.header.create_title"
+                )
+              : t(
+                  "pages.admin.sys.user.data_table.model.drawer.header.update_title"
+                )}
           </DrawerTitle>
           <DrawerDescription>
             {id === MODEL_CREATE_FLAG_ID
-              ? "Create a new user account"
-              : "Edit existing user account"}
+              ? t(
+                  "pages.admin.sys.user.data_table.model.drawer.header.create_description"
+                )
+              : t(
+                  "pages.admin.sys.user.data_table.model.drawer.header.update_description"
+                )}
           </DrawerDescription>
         </DrawerHeader>
 
@@ -202,8 +213,16 @@ export function DataTableModelDrawer() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <Card>
                 <CardHeader>
-                  <CardTitle>基本信息</CardTitle>
-                  <CardDescription>账号基本信息</CardDescription>
+                  <CardTitle>
+                    {t(
+                      "pages.admin.sys.user.data_table.model.drawer.card1.base_title"
+                    )}
+                  </CardTitle>
+                  <CardDescription>
+                    {t(
+                      "pages.admin.sys.user.data_table.model.drawer.card1.base_description"
+                    )}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <FormField
@@ -211,9 +230,11 @@ export function DataTableModelDrawer() {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>
+                          {t("pages.admin.sys.user.data_table.columns.email")}
+                        </FormLabel>
                         <FormControl>
-                          <Input {...field} placeholder="Enter email" />
+                          <Input {...field} placeholder="a@example.com" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -225,7 +246,11 @@ export function DataTableModelDrawer() {
                       name="password"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Password</FormLabel>
+                          <FormLabel>
+                            {t(
+                              "pages.admin.sys.user.data_table.columns.password"
+                            )}
+                          </FormLabel>
                           <FormControl>
                             <Input type="password" {...field} />
                           </FormControl>
@@ -234,21 +259,21 @@ export function DataTableModelDrawer() {
                       )}
                     />
                   )}
-
-                  {/* status,superAdmin,gender,avatar */}
                   <FormField
                     control={form.control}
                     name="status"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Status</FormLabel>
+                        <FormLabel>
+                          {t("pages.admin.sys.user.data_table.columns.status")}
+                        </FormLabel>
                         <FormControl>
                           <Select
                             onValueChange={field.onChange}
                             defaultValue={field.value}
                           >
                             <SelectTrigger>
-                              <SelectValue placeholder="Select status" />
+                              <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
                               <SelectItem value={SYS_USER_STATUS.NORMAL}>
@@ -269,14 +294,18 @@ export function DataTableModelDrawer() {
                     name="superAdmin"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Super Admin</FormLabel>
+                        <FormLabel>
+                          {t(
+                            "pages.admin.sys.user.data_table.columns.super_admin"
+                          )}
+                        </FormLabel>
                         <FormControl>
                           <Select
                             onValueChange={(e) => field.onChange(e === "true")}
                             defaultValue={field.value ? "true" : "false"}
                           >
                             <SelectTrigger>
-                              <SelectValue placeholder="Select status" />
+                              <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
                               <SelectItem value="true">true</SelectItem>
@@ -293,14 +322,16 @@ export function DataTableModelDrawer() {
                     name="gender"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Gender</FormLabel>
+                        <FormLabel>
+                          {t("pages.admin.sys.user.data_table.columns.gender")}
+                        </FormLabel>
                         <FormControl>
                           <Select
                             onValueChange={field.onChange}
                             defaultValue={field.value}
                           >
                             <SelectTrigger>
-                              <SelectValue placeholder="Select gender" />
+                              <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
                               <SelectItem value={SYS_USER_GENDER.MALE}>
@@ -324,9 +355,11 @@ export function DataTableModelDrawer() {
                     name="avatar"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Avatar URL</FormLabel>
+                        <FormLabel>
+                          {t("pages.admin.sys.user.data_table.columns.avatar")}
+                        </FormLabel>
                         <FormControl>
-                          <Input {...field} placeholder="Enter avatar URL" />
+                          <Input {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -337,7 +370,11 @@ export function DataTableModelDrawer() {
                     name="nickname"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Nickname</FormLabel>
+                        <FormLabel>
+                          {t(
+                            "pages.admin.sys.user.data_table.columns.nickname"
+                          )}
+                        </FormLabel>
                         <FormControl>
                           <Input {...field} />
                         </FormControl>
@@ -350,7 +387,9 @@ export function DataTableModelDrawer() {
                     name="mobile"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Mobile</FormLabel>
+                        <FormLabel>
+                          {t("pages.admin.sys.user.data_table.columns.mobile")}
+                        </FormLabel>
                         <FormControl>
                           <Input {...field} />
                         </FormControl>
@@ -362,8 +401,16 @@ export function DataTableModelDrawer() {
               </Card>
               <Card>
                 <CardHeader>
-                  <CardTitle>角色</CardTitle>
-                  <CardDescription>账号角色</CardDescription>
+                  <CardTitle>
+                    {t(
+                      "pages.admin.sys.user.data_table.model.drawer.card2.role_title"
+                    )}
+                  </CardTitle>
+                  <CardDescription>
+                    {t(
+                      "pages.admin.sys.user.data_table.model.drawer.card2.role_description"
+                    )}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <FormField
@@ -371,7 +418,9 @@ export function DataTableModelDrawer() {
                     name="roleIds"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Role</FormLabel>
+                        <FormLabel>
+                          {t("pages.admin.sys.user.data_table.columns.roleIds")}
+                        </FormLabel>
                         <FormControl>
                           <Input {...field} />
                         </FormControl>
@@ -394,14 +443,16 @@ export function DataTableModelDrawer() {
           >
             {id === MODEL_CREATE_FLAG_ID
               ? createPending
-                ? "Create..."
-                : "Create"
+                ? t("pages.common.data_table.model.drawer.create") + "..."
+                : t("pages.common.data_table.model.drawer.create")
               : updatePending
-              ? "Update..."
-              : "Update"}
+              ? t("pages.common.data_table.model.drawer.update") + "..."
+              : t("pages.common.data_table.model.drawer.update")}
           </Button>
           <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="outline">
+              {t("pages.common.data_table.model.drawer.cancel")}
+            </Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

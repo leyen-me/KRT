@@ -1,12 +1,12 @@
 import { ColumnDef } from "@tanstack/react-table";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { SysUserDetailResponseType } from "@app/server/src/model";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
 import { t } from "@app/i18n";
+import { SysTranslationDetailResponseType } from "@app/server/src/model";
 
-export const columns: ColumnDef<SysUserDetailResponseType>[] = [
+export const columns: ColumnDef<SysTranslationDetailResponseType>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -46,69 +46,34 @@ export const columns: ColumnDef<SysUserDetailResponseType>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "email",
+    accessorKey: "transKey",
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        title={t("pages.admin.sys.user.data_table.columns.email")}
+        title={t("pages.admin.sys.translation.data_table.columns.key")}
       />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("email")}</div>,
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue("transKey")}</div>,
   },
   {
-    accessorKey: "nickname",
+    accessorKey: "type",
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        title={t("pages.admin.sys.user.data_table.columns.nickname")}
+        title={t("pages.admin.sys.translation.data_table.columns.type")}
       />
     ),
-    cell: ({ row }) => (
-      <div className="w-[80px]">{row.getValue("nickname")}</div>
-    ),
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue("type")}</div>,
   },
   {
-    accessorKey: "mobile",
+    accessorKey: "value",
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        title={t("pages.admin.sys.user.data_table.columns.mobile")}
+        title={t("pages.admin.sys.translation.data_table.columns.value")}
       />
     ),
-    cell: ({ row }) => <div>{row.getValue("mobile")}</div>,
-  },
-  {
-    accessorKey: "status",
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title={t("pages.admin.sys.user.data_table.columns.status")}
-      />
-    ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("status")}</div>,
-  },
-
-  {
-    accessorKey: "superAdmin",
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title={t("pages.admin.sys.user.data_table.columns.super_admin")}
-      />
-    ),
-    cell: ({ row }) => (
-      <div className="w-[80px]">{String(row.getValue("superAdmin"))}</div>
-    ),
-  },
-  {
-    accessorKey: "gender",
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title={t("pages.admin.sys.user.data_table.columns.gender")}
-      />
-    ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("gender")}</div>,
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue("value")}</div>,
   },
   {
     id: "actions",

@@ -23,28 +23,28 @@ import { DataTableToolbar } from "./data-table-toolbar";
 import {
   DeleteResponseType,
   DeleteSchemaType,
-  SysUserDetailResponseType,
+  SysTranslationDetailResponseType,
+  SysTranslationPageResponseType,
 } from "@app/server/src/model";
 import { createContext, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { DEFAULT_PAGE_INDEX, DEFAULT_PAGE_SIZE } from "@/constants";
-import { SysUserPageResponseType } from "@app/server/src/model";
-import { fetchSysUserDelete, fetchSysUserPage } from "@/api/sys/user";
 import { DataTableModelDrawer } from "./data-table-model-drawer";
 import { QUERY_KEY } from "@/constants/query-key";
 import { IResult } from "@app/result";
 import { useToast } from "@/hooks/use-toast";
 import { t } from "@app/i18n";
+import { fetchSysTranslationDelete, fetchSysTranslationPage } from "@/api/sys/translation";
 
 interface DataTableProps {
-  columns: ColumnDef<SysUserDetailResponseType, any>[];
+  columns: ColumnDef<SysTranslationDetailResponseType, any>[];
 }
 
-export type UserEditContextType = {
+export type TranslationEditContextType = {
   id: string;
   setId: ({ id }: { id: string }) => void;
 };
-export const UserEditContext = createContext<UserEditContextType | null>(null);
+export const TranslationEditContext = createContext<TranslationEditContextType | null>(null);
 
 export function DataTable({ columns }: DataTableProps) {
   const { toast } = useToast();
@@ -88,16 +88,16 @@ export function DataTable({ columns }: DataTableProps) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
-
-  const { data, isLoading: loading } = useQuery<SysUserPageResponseType>({
+  
+  const { data } = useQuery<SysTranslationPageResponseType>({
     queryKey: [
-      QUERY_KEY.SYS_USER_PAGE,
+      QUERY_KEY.SYS_TRANSLATION_PAGE,
       pagination.pageIndex,
       pagination.pageSize,
       columnFilters,
     ],
     queryFn: async () => {
-      const response = await fetchSysUserPage({
+      const response = await fetchSysTranslationPage({
         page: pagination.pageIndex + 1,
         pageSize: pagination.pageSize,
         ...Object.fromEntries(
@@ -165,7 +165,7 @@ export function DataTable({ columns }: DataTableProps) {
     Error,
     DeleteSchemaType
   >({
-    mutationFn: fetchSysUserDelete,
+    mutationFn: fetchSysTranslationDelete,
     onSuccess: (res) => {
       const { message } = res;
       toast({
@@ -177,7 +177,7 @@ export function DataTable({ columns }: DataTableProps) {
       setRowSelection({});
       setSelectedIds(new Set());
       // 刷新
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.SYS_USER_PAGE] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.SYS_TRANSLATION_PAGE] });
     },
     onError: (error) => {
       toast({
@@ -200,7 +200,7 @@ export function DataTable({ columns }: DataTableProps) {
   };
 
   return (
-    <UserEditContext.Provider value={{ id: editId, setId: setEditIdAction }}>
+    <TranslationEditContext.Provider value={{ id: editId, setId: setEditIdAction }}>
       <div className="space-y-4">
         <DataTableToolbar
           table={table}
@@ -262,6 +262,6 @@ export function DataTable({ columns }: DataTableProps) {
         <DataTablePagination table={table} total={data?.total || 0} />
       </div>
       <DataTableModelDrawer />
-    </UserEditContext.Provider>
+    </TranslationEditContext.Provider>
   );
 }

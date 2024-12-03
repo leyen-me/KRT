@@ -1,6 +1,8 @@
 import { fetchRequest } from "@/utils/apiUtils";
 import { IResult } from "@app/result";
 import {
+  DeleteResponseType,
+  DeleteSchemaType,
   SysUserCreateResponseType,
   SysUserCreateSchemaType,
   SysUserDetailResponseType,
@@ -32,4 +34,10 @@ export const fetchSysUserDetail = async (
   id: string
 ): Promise<IResult<SysUserDetailResponseType>> => {
   return fetchRequest(`/sys/user/detail`, { body: { id } });
+};
+
+export const fetchSysUserDelete = async (
+  body: DeleteSchemaType
+): Promise<IResult<DeleteResponseType>> => {
+  return fetchRequest(`/sys/user/delete`, { body });
 };

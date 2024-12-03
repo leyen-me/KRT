@@ -1,4 +1,10 @@
-import { SYS_USER_GENDER, SYS_USER_STATUS, SysUser } from "@prisma/client";
+import {
+  SYS_TRANSLATION_TYPE,
+  SYS_USER_GENDER,
+  SYS_USER_STATUS,
+  SysTranslation,
+  SysUser,
+} from "@prisma/client";
 import { z } from "zod";
 
 export { z } from "zod";
@@ -14,6 +20,12 @@ export type PageResponseType<T> = {
   total: number;
   list: T[];
 };
+
+export const DeleteSchema = z.object({
+  ids: z.array(z.string()),
+});
+export type DeleteSchemaType = z.infer<typeof DeleteSchema>;
+export type DeleteResponseType = null;
 
 // login
 export const LoginSchema = z.object({
@@ -48,6 +60,55 @@ export const RegisterSchema = z.object({
 });
 export type RegisterSchemaType = z.infer<typeof RegisterSchema>;
 export type RegisterResponseType = null;
+
+// sys translation
+export { SYS_TRANSLATION_TYPE } from "@prisma/client";
+export type { SysTranslation } from "@prisma/client";
+
+// sys translation page
+export const SysTranslationPageSchema = PageSchema.extend({
+  transKey: z.string().optional(),
+});
+export type SysTranslationPageSchemaType = z.infer<
+  typeof SysTranslationPageSchema
+>;
+export type SysTranslationPageResponseType = PageResponseType<SysTranslation>;
+
+// sys translation list
+export type SysTranslationListResponseType = SysTranslation[];
+
+// sys translation create
+export const SysTranslationCreateSchema = z.object({
+  transKey: z.string().min(1, "common.validate.required"),
+  type: z.nativeEnum(SYS_TRANSLATION_TYPE),
+  value: z.string().min(1, "common.validate.required"),
+});
+export type SysTranslationCreateSchemaType = z.infer<
+  typeof SysTranslationCreateSchema
+>;
+export type SysTranslationCreateResponseType = {
+  id: string;
+};
+
+// sys translation update
+export const SysTranslationUpdateSchema = SysTranslationCreateSchema.extend({
+  id: z.string().min(1, "common.validate.required"),
+});
+export type SysTranslationUpdateSchemaType = z.infer<
+  typeof SysTranslationUpdateSchema
+>;
+export type SysTranslationUpdateResponseType = {
+  id: string;
+};
+
+// sys translation detail
+export const SysTranslationDetailSchema = z.object({
+  id: z.string().min(1, "common.validate.required"),
+});
+export type SysTranslationDetailSchemaType = z.infer<
+  typeof SysTranslationDetailSchema
+>;
+export type SysTranslationDetailResponseType = SysTranslation;
 
 // sys user
 export { SYS_USER_STATUS, SYS_USER_GENDER } from "@prisma/client";

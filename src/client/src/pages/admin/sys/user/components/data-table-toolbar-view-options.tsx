@@ -1,37 +1,39 @@
-import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
-import { Table } from "@tanstack/react-table"
-import { Settings2 } from "lucide-react"
+import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+import { Table } from "@tanstack/react-table";
+import { Settings2 } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
+import { SysUserDetailResponseType } from "@app/server/src/model";
+import { t } from "@app/i18n";
 
-interface DataTableViewOptionsProps<TData> {
-  table: Table<TData>
+interface DataTableToolbarViewOptionsProps<
+  TData extends SysUserDetailResponseType
+> {
+  table: Table<TData>;
 }
 
-export function DataTableViewOptions<TData>({
-  table,
-}: DataTableViewOptionsProps<TData>) {
+export function DataTableToolbarViewOptions<
+  TData extends SysUserDetailResponseType
+>({ table }: DataTableToolbarViewOptionsProps<TData>) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          className="ml-auto h-8 flex"
-        >
+        <Button variant="outline" size="sm" className="ml-auto h-8 flex">
           <Settings2 />
-          View
+          {t("pages.common.data_table.toolbar.view")}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[150px]">
-        <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+        <DropdownMenuLabel>
+          {t("pages.common.data_table.toolbar.view.toggle_columns")}
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table
           .getAllColumns()
@@ -49,9 +51,9 @@ export function DataTableViewOptions<TData>({
               >
                 {column.id}
               </DropdownMenuCheckboxItem>
-            )
+            );
           })}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

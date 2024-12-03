@@ -1,12 +1,12 @@
 import { Table } from "@tanstack/react-table";
-import { SysUserDetailResponseType } from "@app/server/src/model";
+import { SysTranslationDetailResponseType } from "@app/server/src/model";
 import { DataTableToolbarCreateBtn } from "./data-table-toolbar-create-btn";
 import DataTableToolbarDeleteBtn from "./data-table-toolbar-delete-btn";
 import { DataTableToolbarOptions } from "./data-table-toolbar-options";
 import { DataTableToolbarViewOptions } from "./data-table-toolbar-view-options";
 import { DataTableToolbarFilter } from "./data-table-toolbar-filter";
 
-interface DataTableToolbarProps<TData extends SysUserDetailResponseType> {
+interface DataTableToolbarProps<TData extends SysTranslationDetailResponseType> {
   table: Table<TData>;
 
   isDelete: boolean;
@@ -16,7 +16,7 @@ interface DataTableToolbarProps<TData extends SysUserDetailResponseType> {
   onResetColumnFilters: () => void;
 }
 
-export function DataTableToolbar<TData extends SysUserDetailResponseType>({
+export function DataTableToolbar<TData extends SysTranslationDetailResponseType>({
   table,
   isDelete,
   onDelete,

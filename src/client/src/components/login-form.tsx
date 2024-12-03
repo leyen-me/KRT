@@ -105,7 +105,7 @@ export function LoginForm({
               >
                 <div className="w-full">
                   <GoogleLogin
-                    locale={name === "zh-CN" ? "zh_CN" : "en"}
+                    locale={name}
                     onSuccess={(credentialResponse) =>
                       onGoogleLogin(credentialResponse)
                     }

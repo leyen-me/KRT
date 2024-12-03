@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { LOCALS, DEFAULT_LOCAL_NAME, DEFAULT_PATH } from "./locals";
+import { LOCALS, DEFAULT_LOCAL_NAME, DEFAULT_PATH, ILocalName } from "./locals";
 
 export const checkLocaByPathname = (pathname: string) => {
   return pathname.match(
@@ -53,6 +53,20 @@ export const getI18n = (): I18nInfo => {
   return i18nInfo;
 };
 
+// dynamic add i18n local values
+export const addI18nLocalValues = (
+  list: { key: string; type: ILocalName; value: string }[]
+) => {
+  const localsMap = new Map(LOCALS.map((local) => [local.name, local]));
+  list.forEach((item) => {
+    const local = localsMap.get(item.type);
+    if (local) {
+      // @ts-ignore
+      local.value = { ...local.value, [item.key]: item.value };
+    }
+  });
+};
+
 // set i18n
 export const setI18n = (name: string, rLocation: any) => {
   const isSystem = name === DEFAULT_LOCAL_NAME;
@@ -74,6 +88,6 @@ export const t = (key: string, ctx?: any): string => {
   let locals = ctx
     ? LOCALS.find((local) => local.name === ctx.i18n)
     : LOCALS.find((local) => local.name === clientName);
-  let result = locals!.flat[key];
+  let result = locals!.value[key];
   return result ? result : key;
 };

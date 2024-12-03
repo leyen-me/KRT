@@ -70,3 +70,38 @@ model SysUserRole {
   userId String
   roleId String
 }
+
+// sys translation
+enum SYS_TRANSLATION_TYPE {
+  EN
+  ZH_CN
+}
+
+model SysTranslation {
+  id String @id @default(cuid())
+
+  // dont use key
+  transKey String
+  type     SYS_TRANSLATION_TYPE
+  value    String
+}
+
+// system dict
+model SysDict {
+  id       String @id @default(cuid())
+  // name
+  transKey String
+  // code
+  code     String
+}
+
+// system dict item
+model SysDictItem {
+  id String @id @default(cuid())
+
+  dictId String
+
+  // name
+  transKey String
+  value    String
+}
