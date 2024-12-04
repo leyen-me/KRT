@@ -96,6 +96,17 @@ export default {
   "pages.admin.sys.translation.data_table.columns.key": "Key",
   "pages.admin.sys.translation.data_table.columns.type": "Type",
   "pages.admin.sys.translation.data_table.columns.value": "Value",
+  "pages.admin.sys.translation.data_table.model.drawer.header.create_title":
+    "Create System Translation",
+  "pages.admin.sys.translation.data_table.model.drawer.header.create_description":
+    "Create a new system translation",
+  "pages.admin.sys.translation.data_table.model.drawer.header.update_title":
+    "Update System Translation", 
+  "pages.admin.sys.translation.data_table.model.drawer.header.update_description":
+    "Update an existing system translation",
+  "pages.admin.sys.translation.data_table.model.drawer.card1.base_title": "Base Information",
+  "pages.admin.sys.translation.data_table.model.drawer.card1.base_description":
+    "System translation basic information",
 
   "pages.error.not_found.title": "Oops! Page Not Found!",
   "pages.error.not_found.desc":

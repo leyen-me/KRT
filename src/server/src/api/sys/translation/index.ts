@@ -5,7 +5,7 @@ import { DeleteSchema, SysTranslationCreateSchema, SysTranslationUpdateSchema, S
 import { SysTranslationService } from "@/service/sys/translation";
 
 export const translationRouter = new Router({ prefix: "/translation" });
-export const sysTranslationService = new SysTranslationService({ tableName: "SysTranslation" })
+export const sysTranslationService = new SysTranslationService()
 
 translationRouter.post("/page", validate(SysTranslationPageSchema), sysTranslationService.page);
 translationRouter.post("/list", sysTranslationService.list);

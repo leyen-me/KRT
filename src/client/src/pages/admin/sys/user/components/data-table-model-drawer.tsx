@@ -186,7 +186,7 @@ export function DataTableModelDrawer() {
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="h-[calc(100vh-100px)] px-8 flex flex-col max-w-4xl mx-auto">
+      <DrawerContent className="max-h-[calc(100vh-100px)] px-8 flex flex-col max-w-4xl mx-auto">
         <DrawerHeader className="px-0">
           <DrawerTitle className="text-2xl">
             {id === MODEL_CREATE_FLAG_ID

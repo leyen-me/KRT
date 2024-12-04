@@ -22,7 +22,7 @@ export default function DataTableToolbarDeleteBtn({
 }: DataTableToolbarDeleteBtnProps) {
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
+      <AlertDialogTrigger asChild>
         <Button variant="destructive" size="sm" className="ml-auto flex">
           <Trash2 />
           {t("pages.common.data_table.toolbar.delete")}

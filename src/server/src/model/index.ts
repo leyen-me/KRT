@@ -67,7 +67,7 @@ export type { SysTranslation } from "@prisma/client";
 
 // sys translation page
 export const SysTranslationPageSchema = PageSchema.extend({
-  transKey: z.string().optional(),
+  key: z.string().optional(),
 });
 export type SysTranslationPageSchemaType = z.infer<
   typeof SysTranslationPageSchema
@@ -79,7 +79,7 @@ export type SysTranslationListResponseType = SysTranslation[];
 
 // sys translation create
 export const SysTranslationCreateSchema = z.object({
-  transKey: z.string().min(1, "common.validate.required"),
+  key: z.string().min(1, "common.validate.required"),
   type: z.nativeEnum(SYS_TRANSLATION_TYPE),
   value: z.string().min(1, "common.validate.required"),
 });

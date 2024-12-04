@@ -92,6 +92,17 @@ export default {
   "pages.admin.sys.translation.data_table.columns.key": "键",
   "pages.admin.sys.translation.data_table.columns.type": "类型",
   "pages.admin.sys.translation.data_table.columns.value": "值",
+  "pages.admin.sys.translation.data_table.model.drawer.header.create_title":
+    "创建系统翻译",
+  "pages.admin.sys.translation.data_table.model.drawer.header.create_description":
+    "创建一个新的系统翻译",
+  "pages.admin.sys.translation.data_table.model.drawer.header.update_title":
+    "更新系统翻译",
+  "pages.admin.sys.translation.data_table.model.drawer.header.update_description":
+    "更新一个现有的系统翻译",
+  "pages.admin.sys.translation.data_table.model.drawer.card1.base_title": "基本信息",
+  "pages.admin.sys.translation.data_table.model.drawer.card1.base_description":
+    "系统翻译基本信息",
 
   "pages.error.not_found.title": "哎呀！页面未找到！",
   "pages.error.not_found.desc": "您访问的页面不存在或已被删除。",

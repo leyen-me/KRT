@@ -1,13 +1,17 @@
 import { prisma } from "@/libs/prisma";
 import { SysUserDetailResponseType } from "@/model";
 import { I18nResult } from "@app/result";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { Context } from "koa";
 
 export class BaseService {
-  public tableName: string = "";
+  
+  private tableName: string = "";
 
-  public constructor({ tableName }) {
-    this.tableName = tableName;
+  public constructor() {
+    this.tableName = this.constructor.name.replace("Service", "");
+    this.tableName =
+      this.tableName.charAt(0).toLowerCase() + this.tableName.slice(1);
   }
 
   public list = async (ctx: Context) => {
@@ -44,7 +48,7 @@ export class BaseService {
 
   public delete = async (ctx: Context) => {
     const { ids } = ctx.request.body as any;
-    await prisma.sysUser.deleteMany({
+    await prisma[this.tableName].deleteMany({
       where: { id: { in: ids } },
     });
     return ctx.send(new I18nResult<any>(200));

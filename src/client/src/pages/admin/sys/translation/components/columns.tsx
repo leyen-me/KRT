@@ -46,14 +46,14 @@ export const columns: ColumnDef<SysTranslationDetailResponseType>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "transKey",
+    accessorKey: "key",
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
         title={t("pages.admin.sys.translation.data_table.columns.key")}
       />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("transKey")}</div>,
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue("key")}</div>,
   },
   {
     accessorKey: "type",

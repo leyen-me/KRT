@@ -5,7 +5,7 @@ import { validate } from "@/middlewares/validate";
 import { DeleteSchema, SysUserCreateSchema, SysUserDetailSchema, SysUserPageSchema, SysUserUpdateSchema } from "@/model";
 
 export const userRouter = new Router({ prefix: "/user" });
-export const sysUserService = new SysUserService({ tableName: "SysUser" })
+export const sysUserService = new SysUserService()
 
 userRouter.post("/page", validate(SysUserPageSchema), sysUserService.page);
 userRouter.post("/create", validate(SysUserCreateSchema), sysUserService.create);

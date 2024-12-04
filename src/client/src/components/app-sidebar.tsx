@@ -43,14 +43,6 @@ const data = {
           title: "Dashboard",
           url: "/admin/sys/dashboard",
         },
-        {
-          title: "User",
-          url: "/admin/sys/user",
-        },
-        {
-          title: "Role",
-          url: "/admin/sys/role",
-        },
       ],
     },
     {
@@ -59,6 +51,22 @@ const data = {
       icon: Settings2,
       isActive: true,
       items: [
+        {
+          title: "User",
+          url: "/admin/sys/user",
+        },
+        {
+          title: "Role",
+          url: "/admin/sys/role",
+        },
+        {
+          title: "Menu",
+          url: "/admin/sys/menu",
+        },
+        {
+          title: "Dict",
+          url: "/admin/sys/dict",
+        },
         {
           title: "Translation",
           url: "/admin/sys/translation",

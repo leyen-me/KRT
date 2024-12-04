@@ -80,18 +80,15 @@ enum SYS_TRANSLATION_TYPE {
 model SysTranslation {
   id String @id @default(cuid())
 
-  // dont use key
-  transKey String
-  type     SYS_TRANSLATION_TYPE
-  value    String
+  key   String
+  type  SYS_TRANSLATION_TYPE
+  value String
 }
 
 // system dict
 model SysDict {
   id       String @id @default(cuid())
-  // name
   transKey String
-  // code
   code     String
 }
 
@@ -100,8 +97,6 @@ model SysDictItem {
   id String @id @default(cuid())
 
   dictId String
-
-  // name
   transKey String
   value    String
 }

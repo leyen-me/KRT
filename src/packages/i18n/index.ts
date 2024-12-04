@@ -57,9 +57,11 @@ export const getI18n = (): I18nInfo => {
 export const addI18nLocalValues = (
   list: { key: string; type: ILocalName; value: string }[]
 ) => {
-  const localsMap = new Map(LOCALS.map((local) => [local.name, local]));
+  const localsMap = new Map(
+    LOCALS.map((local) => [local.name.toUpperCase(), local])
+  );
   list.forEach((item) => {
-    const local = localsMap.get(item.type);
+    const local = localsMap.get(item.type.toUpperCase());
     if (local) {
       // @ts-ignore
       local.value = { ...local.value, [item.key]: item.value };

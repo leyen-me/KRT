@@ -67,7 +67,7 @@ export function DataTableModelDrawer() {
   const queryClient = useQueryClient();
 
   const defaultValues = {
-    transKey: "",
+    key: "",
     type: SYS_TRANSLATION_TYPE.EN,
     value: "",
   };
@@ -189,24 +189,24 @@ export function DataTableModelDrawer() {
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="h-[calc(100vh-100px)] px-8 flex flex-col max-w-4xl mx-auto">
+      <DrawerContent className="max-h-[calc(100vh-100px)] px-8 flex flex-col max-w-4xl mx-auto">
         <DrawerHeader className="px-0">
           <DrawerTitle className="text-2xl">
             {id === MODEL_CREATE_FLAG_ID
               ? t(
-                  "pages.admin.sys.user.data_table.model.drawer.header.create_title"
+                  "pages.admin.sys.translation.data_table.model.drawer.header.create_title"
                 )
               : t(
-                  "pages.admin.sys.user.data_table.model.drawer.header.update_title"
+                  "pages.admin.sys.translation.data_table.model.drawer.header.update_title"
                 )}
           </DrawerTitle>
           <DrawerDescription>
             {id === MODEL_CREATE_FLAG_ID
               ? t(
-                  "pages.admin.sys.user.data_table.model.drawer.header.create_description"
+                  "pages.admin.sys.translation.data_table.model.drawer.header.create_description"
                 )
               : t(
-                  "pages.admin.sys.user.data_table.model.drawer.header.update_description"
+                  "pages.admin.sys.translation.data_table.model.drawer.header.update_description"
                 )}
           </DrawerDescription>
         </DrawerHeader>
@@ -218,19 +218,19 @@ export function DataTableModelDrawer() {
                 <CardHeader>
                   <CardTitle>
                     {t(
-                      "pages.admin.sys.user.data_table.model.drawer.card1.base_title"
+                      "pages.admin.sys.translation.data_table.model.drawer.card1.base_title"
                     )}
                   </CardTitle>
                   <CardDescription>
                     {t(
-                      "pages.admin.sys.user.data_table.model.drawer.card1.base_description"
+                      "pages.admin.sys.translation.data_table.model.drawer.card1.base_description"
                     )}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <FormField
                     control={form.control}
-                    name="transKey"
+                    name="key"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
@@ -264,8 +264,8 @@ export function DataTableModelDrawer() {
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="zh_CN">zh_CN</SelectItem>
-                              <SelectItem value="en">en_US</SelectItem>
+                              <SelectItem value="ZH_CN">zh_CN</SelectItem>
+                              <SelectItem value="EN">en_US</SelectItem>
                             </SelectContent>
                           </Select>
                         </FormControl>

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { QUERY_KEY } from "@/constants/query-key";
 import { fetchSysTranslationList } from "@/api/sys/translation";
 import { addI18nLocalValues } from "@app/i18n";
+import { ILocalName } from "@app/i18n/locals";
 
 // Create a ProtectedRoute component to check if the user has permission to access the admin route.
 export const AdminProtectedRoute = ({
@@ -26,7 +27,7 @@ export const AdminProtectedRoute = ({
         fetchSysAuthUserInfo(),
         fetchSysTranslationList(),
       ]);
-      // addI18nLocalValues(translationList.data);
+      addI18nLocalValues(translationList.data as any);
       return null;
     },
     // refetch on mount
