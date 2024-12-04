@@ -45,6 +45,18 @@ export const SYS_USER_ROLES = [
 
 export const SYS_TRANSLATIONS = [
   {
+    id: "pages.common.yes_no",
+    key: "pages.common.yes_no",
+    type: "en",
+    value: "YesOrNo",
+  },
+  {
+    id: "pages.common.yes_no.zh_CN",
+    key: "pages.common.yes_no",
+    type: "zh_CN",
+    value: "是否",
+  },
+  {
     id: "pages.common.yes",
     key: "pages.common.yes",
     type: "en",
@@ -138,10 +150,80 @@ export const SYS_TRANSLATIONS = [
 
 export const SYS_DICTS = [
   {
-    id: "1",
-    name: "test",
+    id: "sys_yes_no",
+    transKey: "pages.common.yes_no",
+    code: "sys_yes_no"
+  },
+  {
+    id: "sys_user_gender",
+    transKey: "pages.admin.sys.user.data_table.columns.gender",
+    code: "sys_user_gender"
+  },
+  {
+    id: "sys_user_status",
+    transKey: "pages.admin.sys.user.data_table.columns.status",
+    code: "sys_user_status"
   },
 ];
+
+export const SYS_DICT_ITENS = [
+  {
+    id: "1",
+    dictId: "sys_yes_no",
+    transKey: "pages.common.yes",
+    value: "true",
+    sort: 1,
+    variant: "default",
+  },
+  {
+    id: "2",
+    dictId: "sys_yes_no",
+    transKey: "pages.common.no",
+    value: "false",
+    sort: 2,
+    variant: "outline",
+  },
+  {
+    id: "3",
+    dictId: "sys_user_gender",
+    transKey: "pages.admin.sys.user.gender.male",
+    value: "MALE",
+    sort: 1,
+    variant: "default",
+  },
+  {
+    id: "4",
+    dictId: "sys_user_gender",
+    transKey: "pages.admin.sys.user.gender.female",
+    value: "FEMALE",
+    sort: 2,
+    variant: "default",
+  },
+  {
+    id: "5",
+    dictId: "sys_user_gender",
+    transKey: "pages.admin.sys.user.gender.unknown",
+    value: "UNKNOWN",
+    sort: 3,
+    variant: "outline",
+  },
+  {
+    id: "6",
+    dictId: "sys_user_status",
+    transKey: "pages.admin.sys.user.status.normal",
+    value: "NORMAL",
+    sort: 1,
+    variant: "default",
+  },
+  {
+    id: "7",
+    dictId: "sys_user_status",
+    transKey: "pages.admin.sys.user.status.disabled",
+    value: "DISABLED",
+    sort: 2,
+    variant: "destructive",
+  },
+]
 
 const prisma = new PrismaClient();
 
@@ -167,6 +249,8 @@ async function main() {
   await createOrUpdate("SysRole", SYS_ROLES);
   await createOrUpdate("SysUserRole", SYS_USER_ROLES);
   await createOrUpdate("SysTranslation", SYS_TRANSLATIONS);
+  await createOrUpdate("SysDict", SYS_DICTS);
+  await createOrUpdate("SysDictItem", SYS_DICT_ITENS);
 }
 
 main()

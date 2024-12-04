@@ -58,6 +58,7 @@ import {
 import { t } from "@app/i18n";
 import { useToast } from "@/hooks/use-toast";
 import { QUERY_KEY } from "@/constants/query-key";
+import { DictSelect } from "@/components/dict-select";
 
 export function DataTableModelDrawer() {
   // common hook
@@ -144,7 +145,7 @@ export function DataTableModelDrawer() {
         description: error.message,
       });
     },
-    onSettled: () => {},
+    onSettled: () => { },
   });
 
   const { mutate: mutateUpdate, isPending: updatePending } = useMutation<
@@ -169,7 +170,7 @@ export function DataTableModelDrawer() {
         description: error.message,
       });
     },
-    onSettled: () => {},
+    onSettled: () => { },
   });
 
   const onSubmit = (
@@ -189,20 +190,20 @@ export function DataTableModelDrawer() {
           <DrawerTitle className="text-2xl">
             {id === MODEL_CREATE_FLAG_ID
               ? t(
-                  "pages.admin.sys.user.data_table.model.drawer.header.create_title"
-                )
+                "pages.admin.sys.user.data_table.model.drawer.header.create_title"
+              )
               : t(
-                  "pages.admin.sys.user.data_table.model.drawer.header.update_title"
-                )}
+                "pages.admin.sys.user.data_table.model.drawer.header.update_title"
+              )}
           </DrawerTitle>
           <DrawerDescription>
             {id === MODEL_CREATE_FLAG_ID
               ? t(
-                  "pages.admin.sys.user.data_table.model.drawer.header.create_description"
-                )
+                "pages.admin.sys.user.data_table.model.drawer.header.create_description"
+              )
               : t(
-                  "pages.admin.sys.user.data_table.model.drawer.header.update_description"
-                )}
+                "pages.admin.sys.user.data_table.model.drawer.header.update_description"
+              )}
           </DrawerDescription>
         </DrawerHeader>
 
@@ -266,23 +267,7 @@ export function DataTableModelDrawer() {
                           {t("pages.admin.sys.user.data_table.columns.status")}
                         </FormLabel>
                         <FormControl>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                            value={field.value}
-                          >
-                            <SelectTrigger>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value={SYS_USER_STATUS.NORMAL}>
-                                NORMAL
-                              </SelectItem>
-                              <SelectItem value={SYS_USER_STATUS.DISABLED}>
-                                DISABLED
-                              </SelectItem>
-                            </SelectContent>
-                          </Select>
+                          <DictSelect code='sys_user_status' value={field.value} onChange={field.onChange}></DictSelect>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -299,19 +284,7 @@ export function DataTableModelDrawer() {
                           )}
                         </FormLabel>
                         <FormControl>
-                          <Select
-                            onValueChange={(e) => field.onChange(e === "true")}
-                            defaultValue={field.value ? "true" : "false"}
-                            value={field.value ? "true" : "false"}
-                          >
-                            <SelectTrigger>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="true">true</SelectItem>
-                              <SelectItem value="false">false</SelectItem>
-                            </SelectContent>
-                          </Select>
+                          <DictSelect code='sys_yes_no' value={field.value} onChange={field.onChange}></DictSelect>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -326,26 +299,7 @@ export function DataTableModelDrawer() {
                           {t("pages.admin.sys.user.data_table.columns.gender")}
                         </FormLabel>
                         <FormControl>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                            value={field.value}
-                          >
-                            <SelectTrigger>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value={SYS_USER_GENDER.MALE}>
-                                MALE
-                              </SelectItem>
-                              <SelectItem value={SYS_USER_GENDER.FEMALE}>
-                                FEMALE
-                              </SelectItem>
-                              <SelectItem value={SYS_USER_GENDER.UNKNOWN}>
-                                UNKNOWN
-                              </SelectItem>
-                            </SelectContent>
-                          </Select>
+                        <DictSelect code='sys_user_gender' value={field.value} onChange={field.onChange}></DictSelect>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -447,8 +401,8 @@ export function DataTableModelDrawer() {
                 ? t("pages.common.data_table.model.drawer.create") + "..."
                 : t("pages.common.data_table.model.drawer.create")
               : updatePending
-              ? t("pages.common.data_table.model.drawer.update") + "..."
-              : t("pages.common.data_table.model.drawer.update")}
+                ? t("pages.common.data_table.model.drawer.update") + "..."
+                : t("pages.common.data_table.model.drawer.update")}
           </Button>
           <DrawerClose asChild>
             <Button variant="outline">

@@ -93,6 +93,8 @@ model SysDict {
   id       String @id @default(cuid())
   transKey String
   code     String
+
+  items SysDictItem[]
 }
 
 // system dict item
@@ -111,4 +113,5 @@ model SysDictItem {
   value    String
   sort     Int                   @default(1)
   variant  SYS_DICT_ITEM_VARIANT @default(default)
+  dict     SysDict?              @relation(fields: [dictId], references: [id])
 }

@@ -205,7 +205,11 @@ export type SysDictPageSchemaType = z.infer<typeof SysDictPageSchema>;
 export type SysDictPageResponseType = PageResponseType<SysDict>;
 
 // sys dict list
+export type SysDictWithItems = SysDict & {
+  items: SysDictItem[]
+}
 export type SysDictListResponseType = SysDict[];
+export type SysDictAllResponseType = SysDictWithItems[];
 
 // sys dict create
 export const SysDictCreateSchema = z.object({

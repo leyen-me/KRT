@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { QUERY_KEY } from "@/constants/query-key";
 import { fetchSysTranslationList } from "@/api/sys/translation";
 import { addI18nLocalValues } from "@app/i18n";
-import { ILocalName } from "@app/i18n/locals";
+import { fetchSysDictAll } from "@/api/sys/dict";
+import { useDictStore } from "@/stores/useDictStore";
 
 // Create a ProtectedRoute component to check if the user has permission to access the admin route.
 export const AdminProtectedRoute = ({
@@ -15,6 +16,7 @@ export const AdminProtectedRoute = ({
   children: React.ReactNode;
 }) => {
   const navigate = useNavigate();
+  const { setDictList } = useDictStore();
 
   const {
     data: _,
@@ -23,11 +25,13 @@ export const AdminProtectedRoute = ({
   } = useQuery<null>({
     queryKey: [QUERY_KEY.SYS_INFO],
     queryFn: async () => {
-      const [userInfo, translationList] = await Promise.all([
+      const [sysUserInfoRes, sysTranslationListRes, sysDictAllListRes] = await Promise.all([
         fetchSysAuthUserInfo(),
         fetchSysTranslationList(),
+        fetchSysDictAll()
       ]);
-      addI18nLocalValues(translationList.data as any);
+      addI18nLocalValues(sysTranslationListRes.data as any);
+      setDictList(sysDictAllListRes.data)
       return null;
     },
     // refetch on mount

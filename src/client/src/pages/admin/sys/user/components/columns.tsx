@@ -5,6 +5,7 @@ import { SysUserDetailResponseType } from "@app/server/src/model";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
 import { t } from "@app/i18n";
+import { DictBadge } from "@/components/dict-badge";
 
 export const columns: ColumnDef<SysUserDetailResponseType>[] = [
   {
@@ -85,7 +86,9 @@ export const columns: ColumnDef<SysUserDetailResponseType>[] = [
         title={t("pages.admin.sys.user.data_table.columns.status")}
       />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("status")}</div>,
+    cell: ({ row }) => <div className="w-[80px]">
+      <DictBadge code="sys_user_status" value={row.getValue("status")} />
+    </div>,
   },
 
   {
@@ -97,7 +100,8 @@ export const columns: ColumnDef<SysUserDetailResponseType>[] = [
       />
     ),
     cell: ({ row }) => (
-      <div className="w-[80px]">{String(row.getValue("superAdmin"))}</div>
+      <div className="w-[80px]">
+        <DictBadge code="sys_yes_no" value={row.getValue("superAdmin")} /></div>
     ),
   },
   {
@@ -108,7 +112,9 @@ export const columns: ColumnDef<SysUserDetailResponseType>[] = [
         title={t("pages.admin.sys.user.data_table.columns.gender")}
       />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("gender")}</div>,
+    cell: ({ row }) => <div className="w-[80px]">
+      <DictBadge code="sys_user_gender" value={row.getValue("gender")} />
+    </div>,
   },
   {
     id: "actions",

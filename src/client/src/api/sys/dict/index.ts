@@ -11,6 +11,7 @@ import {
   SysDictCreateResponseType,
   SysDictListResponseType,
   SysDictUpdateSchemaType,
+  SysDictAllResponseType,
 } from "@app/server/src/model";
 
 export const fetchSysDictPage = async (
@@ -23,6 +24,12 @@ export const fetchSysDictList = async (): Promise<
   IResult<SysDictListResponseType>
 > => {
   return fetchRequest(`/sys/dict/list`);
+};
+
+export const fetchSysDictAll = async (): Promise<
+  IResult<SysDictAllResponseType>
+> => {
+  return fetchRequest(`/sys/dict/all`);
 };
 
 export const fetchSysDictCreate = async (

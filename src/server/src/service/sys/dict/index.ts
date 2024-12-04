@@ -7,6 +7,7 @@ import {
   SysDictPageResponseType,
   SysDictCreateSchemaType,
   SysDictCreateResponseType,
+  SysDictAllResponseType,
 } from "@/model";
 import { DictCodeAlreadyExistsError } from "@/error/sys/dict/DictCodeAlreadyExistsError";
 
@@ -32,16 +33,12 @@ export class SysDictService extends BaseService {
   };
 
   public all = async (ctx: Context) => {
-    // const res = await prisma.sysDict.findMany({
-    //   include: {
-    //     items: true
-    //   }
-    // });
-    // const data = res.map(dict => ({
-    //   ...dict,
-    //   list: dict.items
-    // }));
-    // return ctx.send(new I18nResult<any>(200, data));
+    const res = await prisma.sysDict.findMany({
+      include: {
+        items: true
+      }
+    });
+    return ctx.send(new I18nResult<SysDictAllResponseType>(200, res));
   };
 
   public create = async (ctx: Context) => {

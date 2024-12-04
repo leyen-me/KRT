@@ -48,7 +48,7 @@ CREATE TABLE `SysUserRole` (
 CREATE TABLE `SysTranslation` (
     `id` VARCHAR(191) NOT NULL,
     `key` VARCHAR(191) NOT NULL,
-    `type` ENUM('EN', 'ZH_CN') NOT NULL,
+    `type` ENUM('en', 'zh_CN') NOT NULL DEFAULT 'en',
     `value` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -69,6 +69,11 @@ CREATE TABLE `SysDictItem` (
     `dictId` VARCHAR(191) NOT NULL,
     `transKey` VARCHAR(191) NOT NULL,
     `value` VARCHAR(191) NOT NULL,
+    `sort` INTEGER NOT NULL DEFAULT 1,
+    `variant` ENUM('default', 'secondary', 'destructive', 'outline') NOT NULL DEFAULT 'default',
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `SysDictItem` ADD CONSTRAINT `SysDictItem_dictId_fkey` FOREIGN KEY (`dictId`) REFERENCES `SysDict`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
