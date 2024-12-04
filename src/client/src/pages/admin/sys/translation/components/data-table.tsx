@@ -18,7 +18,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
 import {
   DeleteResponseType,
@@ -35,6 +34,7 @@ import { IResult } from "@app/result";
 import { useToast } from "@/hooks/use-toast";
 import { t } from "@app/i18n";
 import { fetchSysTranslationDelete, fetchSysTranslationPage } from "@/api/sys/translation";
+import { DataTablePagination } from "@/components/data-table-pagination";
 
 interface DataTableProps {
   columns: ColumnDef<SysTranslationDetailResponseType, any>[];

@@ -60,16 +60,16 @@ const data = {
           url: "/admin/sys/role",
         },
         {
-          title: "Menu",
-          url: "/admin/sys/menu",
+          title: "Translation",
+          url: "/admin/sys/translation",
         },
         {
           title: "Dict",
           url: "/admin/sys/dict",
         },
         {
-          title: "Translation",
-          url: "/admin/sys/translation",
+          title: "Menu",
+          url: "/admin/sys/menu",
         },
       ],
     },

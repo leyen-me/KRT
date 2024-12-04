@@ -11,7 +11,7 @@ export function DataTableToolbarCreateBtn() {
   
   return (
     <Button
-      variant="outline"
+      variant="default"
       size="sm"
       className="ml-auto flex"
       onClick={() => setId({ id: MODEL_CREATE_FLAG_ID })}

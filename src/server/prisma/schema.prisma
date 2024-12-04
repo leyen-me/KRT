@@ -4,6 +4,9 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// 🐛 After adding enums to Prisma schema, if client needs to use them,
+// please delete client's node_modules and reinstall dependencies
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -73,15 +76,15 @@ model SysUserRole {
 
 // sys translation
 enum SYS_TRANSLATION_TYPE {
-  EN
-  ZH_CN
+  en
+  zh_CN
 }
 
 model SysTranslation {
   id String @id @default(cuid())
 
   key   String
-  type  SYS_TRANSLATION_TYPE
+  type  SYS_TRANSLATION_TYPE @default(en)
   value String
 }
 
@@ -93,10 +96,19 @@ model SysDict {
 }
 
 // system dict item
+enum SYS_DICT_ITEM_VARIANT {
+  default
+  secondary
+  destructive
+  outline
+}
+
 model SysDictItem {
   id String @id @default(cuid())
 
-  dictId String
+  dictId   String
   transKey String
   value    String
+  sort     Int                   @default(1)
+  variant  SYS_DICT_ITEM_VARIANT @default(default)
 }

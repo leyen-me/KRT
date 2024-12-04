@@ -58,10 +58,10 @@ export const addI18nLocalValues = (
   list: { key: string; type: ILocalName; value: string }[]
 ) => {
   const localsMap = new Map(
-    LOCALS.map((local) => [local.name.toUpperCase(), local])
+    LOCALS.map((local) => [local.name, local])
   );
   list.forEach((item) => {
-    const local = localsMap.get(item.type.toUpperCase());
+    const local = localsMap.get(item.type);
     if (local) {
       // @ts-ignore
       local.value = { ...local.value, [item.key]: item.value };

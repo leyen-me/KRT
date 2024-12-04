@@ -60,6 +60,7 @@ import {
   fetchSysTranslationDetail,
   fetchSysTranslationUpdate,
 } from "@/api/sys/translation";
+import { LOCALS } from "@app/i18n/locals";
 
 export function DataTableModelDrawer() {
   // common hook
@@ -68,7 +69,7 @@ export function DataTableModelDrawer() {
 
   const defaultValues = {
     key: "",
-    type: SYS_TRANSLATION_TYPE.EN,
+    type: SYS_TRANSLATION_TYPE.en,
     value: "",
   };
 
@@ -259,13 +260,17 @@ export function DataTableModelDrawer() {
                           <Select
                             onValueChange={field.onChange}
                             defaultValue={field.value}
+                            value={field.value}
                           >
                             <SelectTrigger>
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="ZH_CN">zh_CN</SelectItem>
-                              <SelectItem value="EN">en_US</SelectItem>
+                              {LOCALS.map((local) => (
+                                <SelectItem key={local.name} value={local.name}>
+                                  {local.name}
+                                </SelectItem>
+                              ))}
                             </SelectContent>
                           </Select>
                         </FormControl>

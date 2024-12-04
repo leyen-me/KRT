@@ -10,4 +10,8 @@ export const ERROR_CODES = {
   200_003: "server.error.code.sys.auth.password_decrypt",
   200_004: "server.error.code.sys.auth.user_disabled",
   200_005: "server.error.code.sys.auth.user_already_exists",
+
+  // sys dict
+  200_006: "server.error.code.sys.dict.dict_code_already_exists",
+  200_007: "server.error.code.sys.dict.item.dict_item_value_already_exists",
 };

@@ -6,6 +6,9 @@ export default {
   "common.validate.login.password_min_error":
     "Password must be at least 6 characters",
 
+  "components.i18n_combo_box.select": "Select...",
+  "components.i18n_combo_box.no_transkey_found": "No TransKey found.",
+
   "pages.common.i18n.en": "English",
   "pages.common.i18n.zhCn": "Chinese",
   "pages.common.i18n.system": "System",
@@ -34,7 +37,7 @@ export default {
   "pages.common.data_table.toolbar.delete": "Delete",
   "pages.common.data_table.toolbar.delete.dialog.title": "Delete Confirm",
   "pages.common.data_table.toolbar.delete.dialog.description":
-    "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
+    "This action cannot be undone. This will permanently delete your data.",
   "pages.common.data_table.toolbar.delete.dialog.cancel": "Cancel",
   "pages.common.data_table.toolbar.delete.dialog.confirm": "Confirm",
 
@@ -68,6 +71,57 @@ export default {
   "pages.register.toast.error.try_again": "Try again",
   "pages.register.toast.error.description": "Uh oh! Something went wrong.",
 
+  "pages.admin.sys.translation.data_table.columns.key": "Key",
+  "pages.admin.sys.translation.data_table.columns.type": "Type",
+  "pages.admin.sys.translation.data_table.columns.value": "Value",
+  "pages.admin.sys.translation.data_table.model.drawer.header.create_title":
+    "Create System Translation",
+  "pages.admin.sys.translation.data_table.model.drawer.header.create_description":
+    "Create a new system translation",
+  "pages.admin.sys.translation.data_table.model.drawer.header.update_title":
+    "Update System Translation",
+  "pages.admin.sys.translation.data_table.model.drawer.header.update_description":
+    "Update an existing system translation",
+  "pages.admin.sys.translation.data_table.model.drawer.card1.base_title":
+    "Base Information",
+  "pages.admin.sys.translation.data_table.model.drawer.card1.base_description":
+    "System translation basic information",
+
+  "pages.admin.sys.dict.title": "Dict Management",
+  "pages.admin.sys.dict.item.title": "Dict Item Management",
+  "pages.admin.sys.dict.item.no_select": "Please select a dictionary first",
+  "pages.admin.sys.dict.data_table.columns.name": "Name",
+  "pages.admin.sys.dict.data_table.columns.code": "Code",
+  "pages.admin.sys.dict.data_table.model.drawer.header.create_title":
+    "Create System Dict",
+  "pages.admin.sys.dict.data_table.model.drawer.header.create_description":
+    "Create a new system dictionary",
+  "pages.admin.sys.dict.data_table.model.drawer.header.update_title":
+    "Update System Dict",
+  "pages.admin.sys.dict.data_table.model.drawer.header.update_description":
+    "Update an existing system dictionary",
+  "pages.admin.sys.dict.data_table.model.drawer.card1.base_title":
+    "Base Information",
+  "pages.admin.sys.dict.data_table.model.drawer.card1.base_description":
+    "System dictionary basic information",
+
+  "pages.admin.sys.dict.item.data_table.columns.name": "Name",
+  "pages.admin.sys.dict.item.data_table.columns.value": "Value",
+  "pages.admin.sys.dict.item.data_table.columns.sort": "Sort",
+  "pages.admin.sys.dict.item.data_table.columns.variant": "Variant",
+  "pages.admin.sys.dict.item.data_table.model.drawer.header.create_title":
+    "Create Dict Item",
+  "pages.admin.sys.dict.item.data_table.model.drawer.header.create_description":
+    "Create a new dictionary item",
+  "pages.admin.sys.dict.item.data_table.model.drawer.header.update_title":
+    "Update Dict Item",
+  "pages.admin.sys.dict.item.data_table.model.drawer.header.update_description":
+    "Update an existing dictionary item",
+  "pages.admin.sys.dict.item.data_table.model.drawer.card1.base_title":
+    "Base Information",
+  "pages.admin.sys.dict.item.data_table.model.drawer.card1.base_description":
+    "Dictionary item basic information",
+
   "pages.admin.sys.user.data_table.columns.email": "Email",
   "pages.admin.sys.user.data_table.columns.password": "Password",
   "pages.admin.sys.user.data_table.columns.mobile": "Mobile",
@@ -93,21 +147,6 @@ export default {
   "pages.admin.sys.user.data_table.model.drawer.card2.role_description":
     "Account role",
 
-  "pages.admin.sys.translation.data_table.columns.key": "Key",
-  "pages.admin.sys.translation.data_table.columns.type": "Type",
-  "pages.admin.sys.translation.data_table.columns.value": "Value",
-  "pages.admin.sys.translation.data_table.model.drawer.header.create_title":
-    "Create System Translation",
-  "pages.admin.sys.translation.data_table.model.drawer.header.create_description":
-    "Create a new system translation",
-  "pages.admin.sys.translation.data_table.model.drawer.header.update_title":
-    "Update System Translation", 
-  "pages.admin.sys.translation.data_table.model.drawer.header.update_description":
-    "Update an existing system translation",
-  "pages.admin.sys.translation.data_table.model.drawer.card1.base_title": "Base Information",
-  "pages.admin.sys.translation.data_table.model.drawer.card1.base_description":
-    "System translation basic information",
-
   "pages.error.not_found.title": "Oops! Page Not Found!",
   "pages.error.not_found.desc":
     "It seems like the page you're looking for does not exist or might have been removed.",
@@ -123,4 +162,8 @@ export default {
   "server.error.code.sys.auth.password_decrypt": "Password decrypt error",
   "server.error.code.sys.auth.user_disabled": "User disabled",
   "server.error.code.sys.auth.user_already_exists": "User already exists",
+  "server.error.code.sys.dict.dict_code_already_exists":
+    "Dictionary code already exists",
+  "server.error.code.sys.dict.item.dict_item_value_already_exists":
+    "Dictionary item value already exists",
 };

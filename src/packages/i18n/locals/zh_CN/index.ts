@@ -4,13 +4,16 @@ export default {
   "common.validate.register.password_min_error": "密码长度至少为6位",
   "common.validate.login.password_min_error": "密码长度至少为6位",
 
+  "components.i18n_combo_box.select": "选择...",
+  "components.i18n_combo_box.no_transkey_found": "未找到翻译键。",
+
   "pages.common.i18n.en": "英语",
   "pages.common.i18n.zhCn": "中文",
   "pages.common.i18n.system": "系统",
   "pages.common.theme.light": "明亮",
   "pages.common.theme.dark": "暗黑",
   "pages.common.theme.system": "系统",
-  "pages.common.toast.success.description": "登录成功",
+  "pages.common.toast.success.description": "成功",
   "pages.common.toast.error.try_again": "重试",
   "pages.common.toast.error.description": "哎呀！出错了。",
   "pages.common.data_table.no_data": "暂无数据",
@@ -32,7 +35,7 @@ export default {
   "pages.common.data_table.toolbar.delete": "删除",
   "pages.common.data_table.toolbar.delete.dialog.title": "删除确认",
   "pages.common.data_table.toolbar.delete.dialog.description":
-    "此操作无法撤消。这将永久删除您的账号并从我们的服务器中删除您的数据。",
+    "此操作无法撤消。这将永久删除您删除您的数据。",
   "pages.common.data_table.toolbar.delete.dialog.cancel": "取消",
   "pages.common.data_table.toolbar.delete.dialog.confirm": "确定",
   "pages.common.data_table.column.id": "编号",
@@ -65,6 +68,56 @@ export default {
   "pages.register.toast.error.try_again": "重试",
   "pages.register.toast.error.description": "哎呀！出错了。",
 
+  "pages.admin.sys.translation.data_table.columns.key": "键",
+  "pages.admin.sys.translation.data_table.columns.type": "类型",
+  "pages.admin.sys.translation.data_table.columns.value": "值",
+  "pages.admin.sys.translation.data_table.model.drawer.header.create_title":
+    "创建系统翻译",
+  "pages.admin.sys.translation.data_table.model.drawer.header.create_description":
+    "创建一个新的系统翻译",
+  "pages.admin.sys.translation.data_table.model.drawer.header.update_title":
+    "更新系统翻译",
+  "pages.admin.sys.translation.data_table.model.drawer.header.update_description":
+    "更新一个现有的系统翻译",
+  "pages.admin.sys.translation.data_table.model.drawer.card1.base_title":
+    "基本信息",
+  "pages.admin.sys.translation.data_table.model.drawer.card1.base_description":
+    "系统翻译基本信息",
+
+  "pages.admin.sys.dict.title": "字典管理",
+  "pages.admin.sys.dict.item.title": "字典项管理",
+  "pages.admin.sys.dict.item.no_select": "请先选择一个字典",
+  "pages.admin.sys.dict.data_table.columns.name": "名称",
+  "pages.admin.sys.dict.data_table.columns.code": "编码",
+  "pages.admin.sys.dict.data_table.model.drawer.header.create_title":
+    "创建系统字典",
+  "pages.admin.sys.dict.data_table.model.drawer.header.create_description":
+    "创建一个新的系统字典",
+  "pages.admin.sys.dict.data_table.model.drawer.header.update_title":
+    "更新系统字典",
+  "pages.admin.sys.dict.data_table.model.drawer.header.update_description":
+    "更新一个现有的系统字典",
+  "pages.admin.sys.dict.data_table.model.drawer.card1.base_title": "基本信息",
+  "pages.admin.sys.dict.data_table.model.drawer.card1.base_description":
+    "系统字典基本信息",
+
+  "pages.admin.sys.dict.item.data_table.columns.name": "名称",
+  "pages.admin.sys.dict.item.data_table.columns.value": "值",
+  "pages.admin.sys.dict.item.data_table.columns.sort": "排序",
+  "pages.admin.sys.dict.item.data_table.columns.variant": "样式",
+  "pages.admin.sys.dict.item.data_table.model.drawer.header.create_title":
+    "创建字典项",
+  "pages.admin.sys.dict.item.data_table.model.drawer.header.create_description":
+    "创建一个新的字典项",
+  "pages.admin.sys.dict.item.data_table.model.drawer.header.update_title":
+    "更新字典项",
+  "pages.admin.sys.dict.item.data_table.model.drawer.header.update_description":
+    "更新一个现有的字典项",
+  "pages.admin.sys.dict.item.data_table.model.drawer.card1.base_title":
+    "基本信息",
+  "pages.admin.sys.dict.item.data_table.model.drawer.card1.base_description":
+    "字典项基本信息",
+
   "pages.admin.sys.user.data_table.columns.email": "邮箱",
   "pages.admin.sys.user.data_table.columns.password": "密码",
   "pages.admin.sys.user.data_table.columns.mobile": "手机号",
@@ -89,21 +142,6 @@ export default {
   "pages.admin.sys.user.data_table.model.drawer.card2.role_description":
     "账号角色",
 
-  "pages.admin.sys.translation.data_table.columns.key": "键",
-  "pages.admin.sys.translation.data_table.columns.type": "类型",
-  "pages.admin.sys.translation.data_table.columns.value": "值",
-  "pages.admin.sys.translation.data_table.model.drawer.header.create_title":
-    "创建系统翻译",
-  "pages.admin.sys.translation.data_table.model.drawer.header.create_description":
-    "创建一个新的系统翻译",
-  "pages.admin.sys.translation.data_table.model.drawer.header.update_title":
-    "更新系统翻译",
-  "pages.admin.sys.translation.data_table.model.drawer.header.update_description":
-    "更新一个现有的系统翻译",
-  "pages.admin.sys.translation.data_table.model.drawer.card1.base_title": "基本信息",
-  "pages.admin.sys.translation.data_table.model.drawer.card1.base_description":
-    "系统翻译基本信息",
-
   "pages.error.not_found.title": "哎呀！页面未找到！",
   "pages.error.not_found.desc": "您访问的页面不存在或已被删除。",
   "pages.error.not_found.back": "返回",
@@ -118,4 +156,6 @@ export default {
   "server.error.code.sys.auth.password_decrypt": "密码格式错误",
   "server.error.code.sys.auth.user_disabled": "用户已禁用",
   "server.error.code.sys.auth.user_already_exists": "用户已存在",
+  "server.error.code.sys.dict.dict_code_already_exists": "字典编码已存在",
+  "server.error.code.sys.dict.item.dict_item_value_already_exists": "字典项值已存在",
 };

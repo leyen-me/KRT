@@ -144,8 +144,7 @@ export function DataTableModelDrawer() {
         description: error.message,
       });
     },
-    onSettled: () => {
-    },
+    onSettled: () => {},
   });
 
   const { mutate: mutateUpdate, isPending: updatePending } = useMutation<
@@ -170,8 +169,7 @@ export function DataTableModelDrawer() {
         description: error.message,
       });
     },
-    onSettled: () => {
-    },
+    onSettled: () => {},
   });
 
   const onSubmit = (
@@ -271,6 +269,7 @@ export function DataTableModelDrawer() {
                           <Select
                             onValueChange={field.onChange}
                             defaultValue={field.value}
+                            value={field.value}
                           >
                             <SelectTrigger>
                               <SelectValue />
@@ -303,6 +302,7 @@ export function DataTableModelDrawer() {
                           <Select
                             onValueChange={(e) => field.onChange(e === "true")}
                             defaultValue={field.value ? "true" : "false"}
+                            value={field.value ? "true" : "false"}
                           >
                             <SelectTrigger>
                               <SelectValue />
@@ -329,6 +329,7 @@ export function DataTableModelDrawer() {
                           <Select
                             onValueChange={field.onChange}
                             defaultValue={field.value}
+                            value={field.value}
                           >
                             <SelectTrigger>
                               <SelectValue />

@@ -10,18 +10,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { SysUserDetailResponseType } from "@app/server/src/model";
 import { t } from "@app/i18n";
 
-interface DataTableToolbarViewOptionsProps<
-  TData extends SysUserDetailResponseType
-> {
+interface DataTableToolbarViewOptionsProps<TData> {
   table: Table<TData>;
 }
 
-export function DataTableToolbarViewOptions<
-  TData extends SysUserDetailResponseType
->({ table }: DataTableToolbarViewOptionsProps<TData>) {
+export function DataTableToolbarViewOptions<TData>({
+  table,
+}: DataTableToolbarViewOptionsProps<TData>) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

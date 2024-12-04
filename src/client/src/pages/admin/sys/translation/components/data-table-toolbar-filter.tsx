@@ -22,15 +22,15 @@ export function DataTableToolbarFilter<
 }: DataTableToolbarFilterProps<TData>) {
   return (
     <div className="flex flex-1 items-center space-x-2">
-      {/* <Input
-        placeholder={t("pages.admin.sys.user.data_table.columns.email")}
-        value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+      <Input
+        placeholder={t("pages.admin.sys.translation.data_table.columns.key")}
+        value={(table.getColumn("key")?.getFilterValue() as string) ?? ""}
         onChange={(event) =>
-          table.getColumn("email")?.setFilterValue(event.target.value)
+          table.getColumn("key")?.setFilterValue(event.target.value)
         }
         className="h-8 w-[150px] lg:w-[250px]"
       />
-      {table.getColumn("status") && (
+      {/* {table.getColumn("status") && (
         <DataTableFacetedFilter
           column={table.getColumn("status")}
           title={t("pages.admin.sys.user.data_table.columns.status")}

@@ -11,6 +11,7 @@ import {
   SysTranslationUpdateResponseType,
   SysTranslationDetailResponseType,
   DeleteResponseType,
+  SysTranslationAllResponseType,
 } from "@app/server/src/model";
 
 export const fetchSysTranslationPage = async (
@@ -23,6 +24,10 @@ export const fetchSysTranslationList = async (): Promise<
   IResult<SysTranslationListResponseType>
 > => {
   return fetchRequest(`/sys/translation/list`);
+};
+
+export const fetchSysTranslationAll = async (): Promise<IResult<SysTranslationAllResponseType>> => {
+  return fetchRequest(`/sys/translation/all`);
 };
 
 export const fetchSysTranslationCreate = async (

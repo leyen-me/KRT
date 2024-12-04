@@ -9,6 +9,7 @@ export const sysTranslationService = new SysTranslationService()
 
 translationRouter.post("/page", validate(SysTranslationPageSchema), sysTranslationService.page);
 translationRouter.post("/list", sysTranslationService.list);
+translationRouter.post("/all", sysTranslationService.all);
 translationRouter.post("/create", validate(SysTranslationCreateSchema), sysTranslationService.create);
 translationRouter.post("/update", validate(SysTranslationUpdateSchema), sysTranslationService.update);
 translationRouter.post("/detail", validate(SysTranslationDetailSchema), sysTranslationService.detail);

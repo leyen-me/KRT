@@ -20,6 +20,7 @@ import AdminLayout from "./layout/AdminLayout";
 import { AdminProtectedRoute } from "./layout/AdminProtectedRoute";
 import AdminSysUser from "./pages/admin/sys/user";
 import AdminSysDashboard from "./pages/admin/sys/dashboard";
+import AdminSysDict from "./pages/admin/sys/dict";
 import AdminSysTranslation from "./pages/admin/sys/translation";
 import { DrawerCSSProvider } from "./components/drawer-css-provider";
 
@@ -56,6 +57,7 @@ function App() {
                   }
                 >
                   <Route path="/admin/sys/translation" element={<AdminSysTranslation />} />
+                  <Route path="/admin/sys/dict" element={<AdminSysDict />} />
                   <Route path="/admin/sys/user" element={<AdminSysUser />} />
                   <Route
                     path="/admin/sys/dashboard"

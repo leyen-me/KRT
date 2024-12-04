@@ -43,6 +43,106 @@ export const SYS_USER_ROLES = [
   },
 ];
 
+export const SYS_TRANSLATIONS = [
+  {
+    id: "pages.common.yes",
+    key: "pages.common.yes",
+    type: "en",
+    value: "Yes",
+  },
+  {
+    id: "pages.common.yes.zh_CN",
+    key: "pages.common.yes",
+    type: "zh_CN",
+    value: "是",
+  },
+  {
+    id: "pages.common.no",
+    key: "pages.common.no",
+    type: "en",
+    value: "No",
+  },
+  {
+    id: "pages.common.no.zh_CN",
+    key: "pages.common.no",
+    type: "zh_CN",
+    value: "否",
+  },
+  {
+    id: "pages.admin.sys.user.status.normal.zh_CN",
+    key: "pages.admin.sys.user.status.normal",
+    type: "zh_CN",
+    value: "默认",
+  },
+  {
+    id: "pages.admin.sys.user.status.normal.en",
+    key: "pages.admin.sys.user.status.normal",
+    type: "en",
+    value: "Normal",
+  },
+  {
+    id: "pages.admin.sys.user.status.normal.zh_CN",
+    key: "pages.admin.sys.user.status.normal",
+    type: "zh_CN",
+    value: "默认",
+  },
+  {
+    id: "pages.admin.sys.user.status.disabled.en",
+    key: "pages.admin.sys.user.status.disabled",
+    type: "en",
+    value: "Disabled",
+  },
+  {
+    id: "pages.admin.sys.user.status.disabled.zh_CN",
+    key: "pages.admin.sys.user.status.disabled",
+    type: "zh_CN",
+    value: "禁用",
+  },
+  {
+    id: "pages.admin.sys.user.gender.male.en",
+    key: "pages.admin.sys.user.gender.male",
+    type: "en",
+    value: "Male",
+  },
+  {
+    id: "pages.admin.sys.user.gender.male.zh_CN",
+    key: "pages.admin.sys.user.gender.male",
+    type: "zh_CN",
+    value: "男",
+  },
+  {
+    id: "pages.admin.sys.user.gender.female.en",
+    key: "pages.admin.sys.user.gender.female",
+    type: "en",
+    value: "Female",
+  },
+  {
+    id: "pages.admin.sys.user.gender.female.zh_CN",
+    key: "pages.admin.sys.user.gender.female",
+    type: "zh_CN",
+    value: "女",
+  },
+  {
+    id: "pages.admin.sys.user.gender.unknown.en",
+    key: "pages.admin.sys.user.gender.unknown",
+    type: "en",
+    value: "Unknown",
+  },
+  {
+    id: "pages.admin.sys.user.gender.unknown.zh_CN",
+    key: "pages.admin.sys.user.gender.unknown",
+    type: "zh_CN",
+    value: "未知",
+  },
+];
+
+export const SYS_DICTS = [
+  {
+    id: "1",
+    name: "test",
+  },
+];
+
 const prisma = new PrismaClient();
 
 const createOrUpdate = async (model, data) => {
@@ -66,6 +166,7 @@ async function main() {
   await createOrUpdate("SysUser", SYS_USERS);
   await createOrUpdate("SysRole", SYS_ROLES);
   await createOrUpdate("SysUserRole", SYS_USER_ROLES);
+  await createOrUpdate("SysTranslation", SYS_TRANSLATIONS);
 }
 
 main()
