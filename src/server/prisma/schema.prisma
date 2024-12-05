@@ -43,8 +43,9 @@ model SysUser {
   gender   SYS_USER_GENDER? @default(UNKNOWN)
   mobile   String?
 
-  createdAt DateTime @default(dbgenerated("NOW()")) @db.DateTime
-  updatedAt DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.Timestamp(0)
+  createdAt   DateTime      @default(dbgenerated("NOW()")) @db.DateTime
+  updatedAt   DateTime      @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.Timestamp(0)
+  SysUserRole SysUserRole[]
 }
 
 // sys user token
@@ -57,21 +58,6 @@ model SysUserToken {
 
   createdAt DateTime @default(dbgenerated("NOW()")) @db.DateTime
   updatedAt DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.Timestamp(0)
-}
-
-// sys role
-model SysRole {
-  id String @id @default(cuid())
-
-  name String
-}
-
-// sys user role
-model SysUserRole {
-  id String @id @default(cuid())
-
-  userId String
-  roleId String
 }
 
 // sys translation
@@ -90,9 +76,9 @@ model SysTranslation {
 
 // system dict
 model SysDict {
-  id       String @id @default(cuid())
-  transKey String
-  code     String
+  id   String @id @default(cuid())
+  name String
+  code String
 
   items SysDictItem[]
 }
@@ -108,10 +94,27 @@ enum SYS_DICT_ITEM_VARIANT {
 model SysDictItem {
   id String @id @default(cuid())
 
-  dictId   String
-  transKey String
-  value    String
-  sort     Int                   @default(1)
-  variant  SYS_DICT_ITEM_VARIANT @default(default)
-  dict     SysDict?              @relation(fields: [dictId], references: [id])
+  dictId  String
+  name    String
+  value   String
+  sort    Int                   @default(1)
+  variant SYS_DICT_ITEM_VARIANT @default(default)
+  dict    SysDict?              @relation(fields: [dictId], references: [id])
+}
+
+// sys role
+model SysRole {
+  id String @id @default(cuid())
+
+  name String
+  code String
+}
+
+// sys user role
+model SysUserRole {
+  id String @id @default(cuid())
+
+  userId String
+  roleId String
+  user   SysUser @relation(fields: [userId], references: [id])
 }

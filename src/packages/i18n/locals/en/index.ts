@@ -29,6 +29,7 @@ export default {
   "pages.common.data_table.row_actions.detail": "Detail",
   "pages.common.data_table.row_actions.delete": "Delete",
   "pages.common.data_table.toolbar.reset": "Reset",
+  "pages.common.data_table.toolbar.filter.clear": "Clear filters",
   "pages.common.data_table.toolbar.view": "View",
   "pages.common.data_table.toolbar.view.toggle_columns": "Toggle columns",
   "pages.common.data_table.toolbar.import": "Import",
@@ -147,6 +148,40 @@ export default {
   "pages.admin.sys.user.data_table.model.drawer.card2.role_description":
     "Account role",
 
+  "pages.admin.sys.role.title": "Role Management",
+  "pages.admin.sys.role.data_table.columns.name": "Name",
+  "pages.admin.sys.role.data_table.columns.code": "Code",
+  "pages.admin.sys.role.data_table.model.drawer.header.create_title":
+    "Create Role",
+  "pages.admin.sys.role.data_table.model.drawer.header.create_description":
+    "Create a new role",
+  "pages.admin.sys.role.data_table.model.drawer.header.update_title":
+    "Update Role",
+  "pages.admin.sys.role.data_table.model.drawer.header.update_description":
+    "Update an existing role",
+  "pages.admin.sys.role.data_table.model.drawer.card1.base_title":
+    "Base Information",
+  "pages.admin.sys.role.data_table.model.drawer.card1.base_description":
+    "Role basic information",
+
+  "pages.admin.sys.role.item.title": "Role User Management",
+  "pages.admin.sys.role.item.data_table.columns.userId": "User",
+  "pages.admin.sys.role.item.data_table.columns.name": "Name",
+  "pages.admin.sys.role.item.data_table.columns.email": "Email",
+  "pages.admin.sys.role.item.no_select": "Please select a role first",
+  "pages.admin.sys.role.item.data_table.model.drawer.header.create_title":
+    "Create Role User",
+  "pages.admin.sys.role.item.data_table.model.drawer.header.create_description":
+    "Create a new role user",
+  "pages.admin.sys.role.item.data_table.model.drawer.header.update_title":
+    "Update Role User",
+  "pages.admin.sys.role.item.data_table.model.drawer.header.update_description":
+    "Update an existing role user",
+  "pages.admin.sys.role.item.data_table.model.drawer.card1.base_title":
+    "Base Information",
+  "pages.admin.sys.role.item.data_table.model.drawer.card1.base_description":
+    "Role user basic information",
+
   "pages.error.not_found.title": "Oops! Page Not Found!",
   "pages.error.not_found.desc":
     "It seems like the page you're looking for does not exist or might have been removed.",
@@ -154,6 +189,7 @@ export default {
   "pages.error.not_found.home": "Back to Home",
 
   "server.error.code.success": "Success",
+  "server.error.code.unauthorized": "Unauthorized",
   "server.error.code.not_found": "API Not Found",
   "server.error.code.internal_error": "Internal Error",
   "server.error.code.validate_error": "Invalid parameters",
@@ -166,4 +202,5 @@ export default {
     "Dictionary code already exists",
   "server.error.code.sys.dict.item.dict_item_value_already_exists":
     "Dictionary item value already exists",
+  "server.error.code.sys.role.role_code_already_exists": "Role code already exists",
 };

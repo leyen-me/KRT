@@ -1,6 +1,5 @@
 import { Input } from "@/components/ui/input";
-import { DataTableFacetedFilter } from "./data-table-faceted-filter";
-import { SysTranslationDetailResponseType, SysUserDetailResponseType } from "@app/server/src/model";
+import { SysTranslationDetailResponseType } from "@app/server/src/model";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { Table } from "@tanstack/react-table";
@@ -30,13 +29,6 @@ export function DataTableToolbarFilter<
         }
         className="h-8 w-[150px] lg:w-[250px]"
       />
-      {/* {table.getColumn("status") && (
-        <DataTableFacetedFilter
-          column={table.getColumn("status")}
-          title={t("pages.admin.sys.user.data_table.columns.status")}
-          options={statuses}
-        />
-      )} */}
       {isColumnFiltered && (
         <Button
           variant="ghost"

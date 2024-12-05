@@ -1,5 +1,6 @@
 import { UserAlreadyExistsError } from "@/error/sys/auth/UserAlreadyExistsError";
 import { prisma } from "@/libs/prisma";
+import { redisClient } from "@/libs/redis";
 import {
   SysUserPageSchemaType,
   SysUserPageResponseType,
@@ -13,6 +14,7 @@ import { BaseService } from "@/service/BaseService";
 import { encrypt } from "@app/helper/password";
 import { I18nResult } from "@app/result";
 import { Context } from "koa";
+import { SysAuthService } from "../auth";
 
 export class SysUserService extends BaseService {
   // Mask mobile number by replacing middle digits with asterisks
@@ -27,11 +29,13 @@ export class SysUserService extends BaseService {
       pageSize = 10,
       email,
       status,
+      gender
     } = ctx.request.body as SysUserPageSchemaType;
 
     const where = {
       ...(email ? { email: { contains: email } } : {}),
       ...(status ? { status: { in: status } } : {}),
+      ...(gender ? { gender: { in: gender } } : {}),
     };
     const [result, total] = await Promise.all([
       prisma.sysUser.findMany({
@@ -91,6 +95,29 @@ export class SysUserService extends BaseService {
       },
       data,
     });
+
+    // update user from redis
+    const tokens = await prisma.sysUserToken.findMany({
+      where: {
+        userId: id,
+        expires: {
+          gt: new Date(),
+        },
+      },
+    });
+    const sysAuthService = new SysAuthService();
+    const userDetail = await sysAuthService.getUserDetail({
+      userId: id,
+    });
+    for (const token of tokens) {
+      const expires = Math.floor((token.expires.getTime() - Date.now()) / 1000);
+      await redisClient.updateSysUserToken(
+        token.token,
+        JSON.stringify(userDetail),
+        expires
+      );
+    }
+
     return ctx.send(
       new I18nResult<SysUserUpdateResponseType>(200, { id: res.id })
     );

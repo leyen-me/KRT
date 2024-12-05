@@ -47,7 +47,7 @@ export const columns: ColumnDef<SysDictItemDetailResponseType>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "transKey",
+    accessorKey: "name",
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
@@ -55,7 +55,7 @@ export const columns: ColumnDef<SysDictItemDetailResponseType>[] = [
       />
     ),
     cell: ({ row }) => (
-      <div className="w-[80px]">{t(row.getValue("transKey"))}</div>
+      <div className="w-[80px]">{t(row.getValue("name"))}</div>
     ),
   },
   {

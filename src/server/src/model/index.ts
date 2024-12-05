@@ -1,12 +1,10 @@
 import {
-  // SYS_DICT_ITEM_VARIANT,
-  // SYS_TRANSLATION_TYPE,
-  // SYS_USER_GENDER,
-  // SYS_USER_STATUS,
   SysDict,
   SysDictItem,
+  SysRole,
   SysTranslation,
   SysUser,
+  SysUserRole,
 } from "@prisma/client";
 import { z } from "zod";
 
@@ -148,10 +146,14 @@ export type SysUserDetailResponseType = Omit<SysUser, "password"> & {
 export const SysUserPageSchema = PageSchema.extend({
   email: z.string().optional(),
   status: z.array(z.nativeEnum(SYS_USER_STATUS)).optional(),
+  gender: z.array(z.nativeEnum(SYS_USER_GENDER)).optional(),
 });
 export type SysUserPageSchemaType = z.infer<typeof SysUserPageSchema>;
 export type SysUserPageResponseType =
   PageResponseType<SysUserDetailResponseType>;
+
+// sys user list
+export type SysUserListResponseType = SysUserDetailResponseType[];
 
 // sys user create
 export const SysUserCreateSchema = z.object({
@@ -198,7 +200,7 @@ export type { SysDict } from "@prisma/client";
 
 // sys dict page
 export const SysDictPageSchema = PageSchema.extend({
-  transKey: z.string().optional(),
+  name: z.string().optional(),
   code: z.string().optional(),
 });
 export type SysDictPageSchemaType = z.infer<typeof SysDictPageSchema>;
@@ -206,14 +208,14 @@ export type SysDictPageResponseType = PageResponseType<SysDict>;
 
 // sys dict list
 export type SysDictWithItems = SysDict & {
-  items: SysDictItem[]
-}
+  items: SysDictItem[];
+};
 export type SysDictListResponseType = SysDict[];
 export type SysDictAllResponseType = SysDictWithItems[];
 
 // sys dict create
 export const SysDictCreateSchema = z.object({
-  transKey: z.string().min(1, "common.validate.required"),
+  name: z.string().min(1, "common.validate.required"),
   code: z.string().min(1, "common.validate.required"),
 });
 export type SysDictCreateSchemaType = z.infer<typeof SysDictCreateSchema>;
@@ -249,7 +251,7 @@ export type { SysDictItem } from "@prisma/client";
 // sys dict item page
 export const SysDictItemPageSchema = PageSchema.extend({
   dictId: z.string().optional(),
-  transKey: z.string().optional(),
+  name: z.string().optional(),
   value: z.string().optional(),
 });
 export type SysDictItemPageSchemaType = z.infer<typeof SysDictItemPageSchema>;
@@ -265,7 +267,7 @@ export type SysDictItemListResponseType = SysDictItem[];
 // sys dict item create
 export const SysDictItemCreateSchema = z.object({
   dictId: z.string().min(1, "common.validate.required"),
-  transKey: z.string().min(1, "common.validate.required"),
+  name: z.string().min(1, "common.validate.required"),
   value: z.string().min(1, "common.validate.required"),
   sort: z.number().min(1, "common.validate.required"),
   variant: z.nativeEnum(SYS_DICT_ITEM_VARIANT),
@@ -299,7 +301,95 @@ export type SysDictItemDetailResponseType = SysDictItem;
 
 // sys role
 export type { SysRole } from "@prisma/client";
+
+// sys role page
+export const SysRolePageSchema = PageSchema.extend({
+  name: z.string().optional(),
+});
+export type SysRolePageSchemaType = z.infer<typeof SysRolePageSchema>;
+export type SysRolePageResponseType = PageResponseType<SysRole>;
+
+// sys role list
+export type SysRoleListResponseType = SysRole[];
+
+// sys role create
+export const SysRoleCreateSchema = z.object({
+  code: z.string().min(1, "common.validate.required"),
+  name: z.string().min(1, "common.validate.required"),
+});
+export type SysRoleCreateSchemaType = z.infer<typeof SysRoleCreateSchema>;
+export type SysRoleCreateResponseType = {
+  id: string;
+};
+
+// sys role update
+export const SysRoleUpdateSchema = SysRoleCreateSchema.extend({
+  id: z.string().min(1, "common.validate.required"),
+});
+export type SysRoleUpdateSchemaType = z.infer<typeof SysRoleUpdateSchema>;
+export type SysRoleUpdateResponseType = {
+  id: string;
+};
+
+// sys role detail
+export const SysRoleDetailSchema = z.object({
+  id: z.string().min(1, "common.validate.required"),
+});
+export type SysRoleDetailSchemaType = z.infer<typeof SysRoleDetailSchema>;
+export type SysRoleDetailResponseType = SysRole;
+
+// sys user role
 export type { SysUserRole } from "@prisma/client";
+
+// sys user role page
+export const SysUserRolePageSchema = PageSchema.extend({
+  name: z.string().optional(),
+  roleId: z.string(),
+  email: z.string().optional(),
+});
+export type SysUserRolePageSchemaType = z.infer<typeof SysUserRolePageSchema>;
+export type SysUserRolePageResponseType =
+  PageResponseType<SysUserRoleDetailResponseType>;
+
+// sys user role list
+export type SysUserRoleListResponseType = SysUserRoleDetailResponseType[];
+
+// sys user role create
+export const SysUserRoleCreateSchema = z.object({
+  roleId: z.string().min(1, "common.validate.required"),
+  userId: z.string().min(1, "common.validate.required"),
+});
+export type SysUserRoleCreateSchemaType = z.infer<
+  typeof SysUserRoleCreateSchema
+>;
+export type SysUserRoleCreateResponseType = {
+  id: string;
+};
+
+// sys user role update
+export const SysUserRoleUpdateSchema = SysUserRoleCreateSchema.extend({
+  id: z.string().min(1, "common.validate.required"),
+});
+export type SysUserRoleUpdateSchemaType = z.infer<
+  typeof SysUserRoleUpdateSchema
+>;
+export type SysUserRoleUpdateResponseType = {
+  id: string;
+};
+
+// sys user role detail
+export const SysUserRoleDetailSchema = z.object({
+  id: z.string().min(1, "common.validate.required"),
+});
+export type SysUserRoleDetailSchemaType = z.infer<
+  typeof SysUserRoleDetailSchema
+>;
+export type SysUserRoleDetailResponseType = SysUserRole & {
+  user: {
+    nickname: string;
+    email: string;
+  };
+};
 
 // sys user token
 export type { SysUserToken } from "@prisma/client";

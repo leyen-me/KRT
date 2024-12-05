@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { I18nContext, useI18n } from "@app/i18n";
 import { ThemeProvider } from "@app/theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { DrawerCSSProvider } from "./components/drawer-css-provider";
 
 import NotFound from "@/pages/error";
 import Login from "@/pages/login";
@@ -18,11 +19,12 @@ import Support from "@/pages/support";
 
 import AdminLayout from "./layout/AdminLayout";
 import { AdminProtectedRoute } from "./layout/AdminProtectedRoute";
-import AdminSysUser from "./pages/admin/sys/user";
+
 import AdminSysDashboard from "./pages/admin/sys/dashboard";
-import AdminSysDict from "./pages/admin/sys/dict";
 import AdminSysTranslation from "./pages/admin/sys/translation";
-import { DrawerCSSProvider } from "./components/drawer-css-provider";
+import AdminSysDict from "./pages/admin/sys/dict";
+import AdminSysUser from "./pages/admin/sys/user";
+import AdminSysRole from "./pages/admin/sys/role";
 
 const queryClient = new QueryClient();
 
@@ -56,9 +58,13 @@ function App() {
                     </AdminProtectedRoute>
                   }
                 >
-                  <Route path="/admin/sys/translation" element={<AdminSysTranslation />} />
+                  <Route
+                    path="/admin/sys/translation"
+                    element={<AdminSysTranslation />}
+                  />
                   <Route path="/admin/sys/dict" element={<AdminSysDict />} />
                   <Route path="/admin/sys/user" element={<AdminSysUser />} />
+                  <Route path="/admin/sys/role" element={<AdminSysRole />} />
                   <Route
                     path="/admin/sys/dashboard"
                     element={<AdminSysDashboard />}

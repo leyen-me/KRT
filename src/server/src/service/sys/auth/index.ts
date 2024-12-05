@@ -7,7 +7,7 @@ import { decrypt, encrypt } from "@app/helper/password";
 import { UserNoFoundError } from "@/error/sys/auth/UserNoFoundError";
 import { PasswordNotIncorrectError } from "@/error/sys/auth/PasswordNotIncorrectError";
 import { PasswordDecryptError } from "@/error/sys/auth/PasswordDecryptError";
-import { SysUser, SYS_USER_STATUS } from "@prisma/client";
+import { SysUser, SYS_USER_STATUS, Prisma } from "@prisma/client";
 import { UserDisabledError } from "@/error/sys/auth/UserDisabledError";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -25,7 +25,6 @@ import { OAuth2Client, TokenPayload } from "google-auth-library";
 const client = new OAuth2Client(import.meta.env.VITE_GOOGLE_CLIENT_ID);
 
 export class SysAuthService {
-
   private issueToken = async (sysUser: SysUser) => {
     // 1. todo: Query user other related information, menu list, permission list, remove password information, and combine it into UserDetail
     const userDetail = {
@@ -56,6 +55,26 @@ export class SysAuthService {
     return { token };
   };
 
+  public getUserDetail = async ({
+    email,
+    userId,
+  }: {
+    email?: string;
+    userId?: string;
+  }) => {
+    let where: Prisma.SysUserWhereInput = {};
+    if (email) {
+      where.email = email;
+    }
+    if (userId) {
+      where.id = userId;
+    }
+    let sysUser = await prisma.sysUser.findFirst({
+      where,
+    });
+    return sysUser;
+  };
+
   public register = async (ctx: Context) => {
     const { email, password } = ctx.request.body as RegisterSchemaType;
     // 1. Check if the user already exists
@@ -81,20 +100,12 @@ export class SysAuthService {
   public login = async (ctx: Context): Promise<IResult<LoginResponseType>> => {
     const { email, password } = ctx.request.body as LoginSchemaType;
     // 1. Query user from database by email
-    const sysUser = await prisma.sysUser.findFirst({
-      where: {
-        email,
-      },
-    });
+    const sysUser = await this.getUserDetail({ email });
     // 2. If user not found, return error message
     if (!sysUser) {
       throw new UserNoFoundError();
     }
     // 3. Compare passwords
-
-    // todo: no need to encrypt password
-    // const { data } = encrypt("123456", import.meta.env.VITE_AUTH_SECURITY);
-    // console.log(data);
     let dbPassword = "";
     try {
       const { data } = decrypt(
@@ -130,11 +141,7 @@ export class SysAuthService {
     const { email = "", name = "", picture = "" } = payload as TokenPayload;
 
     // 2. Query user from database by email
-    let sysUser = await prisma.sysUser.findFirst({
-      where: {
-        email,
-      },
-    });
+    let sysUser = await this.getUserDetail({ email });
 
     // 3. If user not found, auto register
     if (!sysUser) {
@@ -158,12 +165,7 @@ export class SysAuthService {
   };
 
   public userInfo = async (ctx: Context) => {
-    const token = ctx.get(AUTHORIZATION_KEY);
-    const userDetailString = await redisClient.getSysUserToken(token);
-    const userDetail: SysUserDetailResponseType = userDetailString
-      ? JSON.parse(userDetailString)
-      : null;
-    return ctx.send(new I18nResult<SysUserDetailResponseType>(200, userDetail));
+    return ctx.send(new I18nResult<SysUserDetailResponseType>(200, ctx.state.user));
   };
 
   public logout = async (ctx: Context) => {

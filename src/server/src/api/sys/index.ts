@@ -1,14 +1,17 @@
-import { authRouter } from "./auth";
-import { dictRouter } from "./dict";
-import { translationRouter } from "./translation";
-import { userRouter } from "./user";
 import Router from "koa-router";
+
+import { sysAuthRouter } from "./auth";
+import { sysTranslationRouter } from "./translation";
+import { sysDictRouter } from "./dict";
+import { sysUserRouter } from "./user";
+import { sysRoleRouter } from "./role";
 
 export const sysRouter = new Router({
   prefix: "/sys",
 });
 
-sysRouter.use(translationRouter.routes(), translationRouter.allowedMethods());
-sysRouter.use(authRouter.routes(), authRouter.allowedMethods());
-sysRouter.use(userRouter.routes(), userRouter.allowedMethods());
-sysRouter.use(dictRouter.routes(), dictRouter.allowedMethods());
+sysRouter.use(sysAuthRouter.routes(), sysAuthRouter.allowedMethods());
+sysRouter.use(sysTranslationRouter.routes(), sysTranslationRouter.allowedMethods());
+sysRouter.use(sysDictRouter.routes(), sysDictRouter.allowedMethods());
+sysRouter.use(sysUserRouter.routes(), sysUserRouter.allowedMethods());
+sysRouter.use(sysRoleRouter.routes(), sysRoleRouter.allowedMethods());

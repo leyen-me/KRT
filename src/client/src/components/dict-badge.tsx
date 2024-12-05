@@ -16,7 +16,7 @@ export function DictBadge({ code, value }: DictBadgeProps) {
 
     return (
         <Badge variant={item?.variant}>
-            {item ? t(item.transKey) : t('unknown')}
+            {item ? t(item.name) : t('unknown')}
         </Badge>
     );
 }

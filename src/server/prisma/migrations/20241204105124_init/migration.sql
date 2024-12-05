@@ -57,7 +57,7 @@ CREATE TABLE `SysTranslation` (
 -- CreateTable
 CREATE TABLE `SysDict` (
     `id` VARCHAR(191) NOT NULL,
-    `transKey` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
     `code` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -67,7 +67,7 @@ CREATE TABLE `SysDict` (
 CREATE TABLE `SysDictItem` (
     `id` VARCHAR(191) NOT NULL,
     `dictId` VARCHAR(191) NOT NULL,
-    `transKey` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
     `value` VARCHAR(191) NOT NULL,
     `sort` INTEGER NOT NULL DEFAULT 1,
     `variant` ENUM('default', 'secondary', 'destructive', 'outline') NOT NULL DEFAULT 'default',

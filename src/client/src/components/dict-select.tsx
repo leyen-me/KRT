@@ -32,7 +32,7 @@ export function DictSelect({ code, value, onChange }: DictSelectProps) {
                 {
                     items.map((item) => {
                         return <SelectItem key={item.value} value={item.value}>
-                            {t(item.transKey)}
+                            {t(item.name)}
                         </SelectItem>
                     })
                 }

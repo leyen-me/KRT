@@ -57,7 +57,7 @@ export function DataTableModelDrawer() {
   const queryClient = useQueryClient();
 
   const defaultValues = {
-    transKey: "",
+    name: "",
     code: "",
   };
 
@@ -211,7 +211,7 @@ export function DataTableModelDrawer() {
                 <CardContent className="space-y-3">
                   <FormField
                     control={form.control}
-                    name="transKey"
+                    name="name"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>

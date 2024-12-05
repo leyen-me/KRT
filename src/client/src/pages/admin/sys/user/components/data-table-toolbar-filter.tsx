@@ -1,21 +1,10 @@
 import { Input } from "@/components/ui/input";
-import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 import { SysUserDetailResponseType } from "@app/server/src/model";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { Table } from "@tanstack/react-table";
 import { t } from "@app/i18n";
-
-const statuses: any[] = [
-  {
-    label: "正常",
-    value: "NORMAL",
-  },
-  {
-    label: "禁用",
-    value: "DISABLED",
-  },
-];
+import { DataTableDictFacetedFilter } from "@/components/data-table-dict-faceted-filter";
 
 type DataTableToolbarFilterProps<TData extends SysUserDetailResponseType> = {
   table: Table<TData>;
@@ -42,10 +31,17 @@ export function DataTableToolbarFilter<
         className="h-8 w-[150px] lg:w-[250px]"
       />
       {table.getColumn("status") && (
-        <DataTableFacetedFilter
+        <DataTableDictFacetedFilter
           column={table.getColumn("status")}
           title={t("pages.admin.sys.user.data_table.columns.status")}
-          options={statuses}
+          code={"sys_user_status"}
+        />
+      )}
+      {table.getColumn("gender") && (
+        <DataTableDictFacetedFilter
+          column={table.getColumn("gender")}
+          title={t("pages.admin.sys.user.data_table.columns.gender")}
+          code={"sys_user_gender"}
         />
       )}
       {isColumnFiltered && (

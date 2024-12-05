@@ -27,6 +27,7 @@ export default {
   "pages.common.data_table.row_actions.detail": "详情",
   "pages.common.data_table.row_actions.delete": "删除",
   "pages.common.data_table.toolbar.reset": "重置",
+  "pages.common.data_table.toolbar.filter.clear": "清空",
   "pages.common.data_table.toolbar.view": "查看",
   "pages.common.data_table.toolbar.view.toggle_columns": "切换列",
   "pages.common.data_table.toolbar.import": "导入",
@@ -142,12 +143,46 @@ export default {
   "pages.admin.sys.user.data_table.model.drawer.card2.role_description":
     "账号角色",
 
+  "pages.admin.sys.role.title": "角色管理",
+  "pages.admin.sys.role.data_table.columns.name": "名称",
+  "pages.admin.sys.role.data_table.columns.code": "编码",
+  "pages.admin.sys.role.data_table.model.drawer.header.create_title":
+    "创建角色",
+  "pages.admin.sys.role.data_table.model.drawer.header.create_description":
+    "创建一个新的角色",
+  "pages.admin.sys.role.data_table.model.drawer.header.update_title":
+    "更新角色",
+  "pages.admin.sys.role.data_table.model.drawer.header.update_description":
+    "更新一个现有的角色",
+  "pages.admin.sys.role.data_table.model.drawer.card1.base_title": "基本信息",
+  "pages.admin.sys.role.data_table.model.drawer.card1.base_description":
+    "角色基本信息",
+
+  "pages.admin.sys.role.item.title": "角色用户管理",
+  "pages.admin.sys.role.item.data_table.columns.userId": "用户",
+  "pages.admin.sys.role.item.data_table.columns.name": "昵称",
+  "pages.admin.sys.role.item.data_table.columns.email": "邮箱",
+  "pages.admin.sys.role.item.no_select": "请先选择一个角色",
+  "pages.admin.sys.role.item.data_table.model.drawer.header.create_title":
+    "创建角色用户",
+  "pages.admin.sys.role.item.data_table.model.drawer.header.create_description":
+    "创建一个新的角色用户",
+  "pages.admin.sys.role.item.data_table.model.drawer.header.update_title":
+    "更新角色用户",
+  "pages.admin.sys.role.item.data_table.model.drawer.header.update_description":
+    "更新一个现有的角色用户",
+  "pages.admin.sys.role.item.data_table.model.drawer.card1.base_title":
+    "基本信息",
+  "pages.admin.sys.role.item.data_table.model.drawer.card1.base_description":
+    "角色用户基本信息",
+
   "pages.error.not_found.title": "哎呀！页面未找到！",
   "pages.error.not_found.desc": "您访问的页面不存在或已被删除。",
   "pages.error.not_found.back": "返回",
   "pages.error.not_found.home": "返回首页",
 
   "server.error.code.success": "成功",
+  "server.error.code.unauthorized": "未授权",
   "server.error.code.not_found": "API 未找到",
   "server.error.code.internal_error": "服务器内部错误",
   "server.error.code.validate_error": "参数错误",
@@ -157,5 +192,7 @@ export default {
   "server.error.code.sys.auth.user_disabled": "用户已禁用",
   "server.error.code.sys.auth.user_already_exists": "用户已存在",
   "server.error.code.sys.dict.dict_code_already_exists": "字典编码已存在",
-  "server.error.code.sys.dict.item.dict_item_value_already_exists": "字典项值已存在",
+  "server.error.code.sys.dict.item.dict_item_value_already_exists":
+    "字典项值已存在",
+  "server.error.code.sys.role.role_code_already_exists": "角色编码已存在",
 };

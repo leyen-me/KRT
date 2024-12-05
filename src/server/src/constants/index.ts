@@ -7,3 +7,5 @@ export const CLIENT_SERVER_PATH = IS_PRODUCTION
   : path.resolve(process.cwd(), "../client");
 
 export const AUTHORIZATION_KEY = "Authorization";
+
+export const AUTH_WHITE_LIST = ["/api/sys/auth/**"];

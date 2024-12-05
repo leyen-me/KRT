@@ -4,13 +4,13 @@ import { validate } from "@/middlewares/validate";
 import { DeleteSchema, SysTranslationCreateSchema, SysTranslationUpdateSchema, SysTranslationDetailSchema, SysTranslationPageSchema } from "@/model";
 import { SysTranslationService } from "@/service/sys/translation";
 
-export const translationRouter = new Router({ prefix: "/translation" });
+export const sysTranslationRouter = new Router({ prefix: "/translation" });
 export const sysTranslationService = new SysTranslationService()
 
-translationRouter.post("/page", validate(SysTranslationPageSchema), sysTranslationService.page);
-translationRouter.post("/list", sysTranslationService.list);
-translationRouter.post("/all", sysTranslationService.all);
-translationRouter.post("/create", validate(SysTranslationCreateSchema), sysTranslationService.create);
-translationRouter.post("/update", validate(SysTranslationUpdateSchema), sysTranslationService.update);
-translationRouter.post("/detail", validate(SysTranslationDetailSchema), sysTranslationService.detail);
-translationRouter.post("/delete", validate(DeleteSchema), sysTranslationService.delete);
+sysTranslationRouter.post("/page", validate(SysTranslationPageSchema), sysTranslationService.page);
+sysTranslationRouter.post("/list", sysTranslationService.list);
+sysTranslationRouter.post("/all", sysTranslationService.all);
+sysTranslationRouter.post("/create", validate(SysTranslationCreateSchema), sysTranslationService.create);
+sysTranslationRouter.post("/update", validate(SysTranslationUpdateSchema), sysTranslationService.update);
+sysTranslationRouter.post("/detail", validate(SysTranslationDetailSchema), sysTranslationService.detail);
+sysTranslationRouter.post("/delete", validate(DeleteSchema), sysTranslationService.delete);

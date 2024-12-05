@@ -3,12 +3,14 @@ import { PrismaClient } from "@prisma/client";
 export const SYS_USERS = [
   {
     id: "user_a",
+    nickname: "user_a",
     email: "a@example.com",
     password: "DpRhz9JwNaNc1RJLb2nkgA==",
     superAdmin: true,
   },
   {
     id: "user_b",
+    nickname: "user_b",
     email: "b@example.com",
     password: "DpRhz9JwNaNc1RJLb2nkgA==",
   },
@@ -18,10 +20,12 @@ export const SYS_ROLES = [
   {
     id: "developer",
     name: "developer",
+    code: "developer",
   },
   {
     id: "designer",
     name: "designer",
+    code: "designer",
   },
 ];
 
@@ -33,7 +37,7 @@ export const SYS_USER_ROLES = [
   },
   {
     id: "2",
-    userId: "user_a",
+    userId: "user_b",
     roleId: "developer",
   },
   {
@@ -151,18 +155,18 @@ export const SYS_TRANSLATIONS = [
 export const SYS_DICTS = [
   {
     id: "sys_yes_no",
-    transKey: "pages.common.yes_no",
-    code: "sys_yes_no"
+    name: "pages.common.yes_no",
+    code: "sys_yes_no",
   },
   {
     id: "sys_user_gender",
-    transKey: "pages.admin.sys.user.data_table.columns.gender",
-    code: "sys_user_gender"
+    name: "pages.admin.sys.user.data_table.columns.gender",
+    code: "sys_user_gender",
   },
   {
     id: "sys_user_status",
-    transKey: "pages.admin.sys.user.data_table.columns.status",
-    code: "sys_user_status"
+    name: "pages.admin.sys.user.data_table.columns.status",
+    code: "sys_user_status",
   },
 ];
 
@@ -170,7 +174,7 @@ export const SYS_DICT_ITENS = [
   {
     id: "1",
     dictId: "sys_yes_no",
-    transKey: "pages.common.yes",
+    name: "pages.common.yes",
     value: "true",
     sort: 1,
     variant: "default",
@@ -178,7 +182,7 @@ export const SYS_DICT_ITENS = [
   {
     id: "2",
     dictId: "sys_yes_no",
-    transKey: "pages.common.no",
+    name: "pages.common.no",
     value: "false",
     sort: 2,
     variant: "outline",
@@ -186,7 +190,7 @@ export const SYS_DICT_ITENS = [
   {
     id: "3",
     dictId: "sys_user_gender",
-    transKey: "pages.admin.sys.user.gender.male",
+    name: "pages.admin.sys.user.gender.male",
     value: "MALE",
     sort: 1,
     variant: "default",
@@ -194,7 +198,7 @@ export const SYS_DICT_ITENS = [
   {
     id: "4",
     dictId: "sys_user_gender",
-    transKey: "pages.admin.sys.user.gender.female",
+    name: "pages.admin.sys.user.gender.female",
     value: "FEMALE",
     sort: 2,
     variant: "default",
@@ -202,7 +206,7 @@ export const SYS_DICT_ITENS = [
   {
     id: "5",
     dictId: "sys_user_gender",
-    transKey: "pages.admin.sys.user.gender.unknown",
+    name: "pages.admin.sys.user.gender.unknown",
     value: "UNKNOWN",
     sort: 3,
     variant: "outline",
@@ -210,7 +214,7 @@ export const SYS_DICT_ITENS = [
   {
     id: "6",
     dictId: "sys_user_status",
-    transKey: "pages.admin.sys.user.status.normal",
+    name: "pages.admin.sys.user.status.normal",
     value: "NORMAL",
     sort: 1,
     variant: "default",
@@ -218,23 +222,25 @@ export const SYS_DICT_ITENS = [
   {
     id: "7",
     dictId: "sys_user_status",
-    transKey: "pages.admin.sys.user.status.disabled",
+    name: "pages.admin.sys.user.status.disabled",
     value: "DISABLED",
     sort: 2,
     variant: "destructive",
   },
-]
+];
 
 const prisma = new PrismaClient();
 
 const createOrUpdate = async (model, data) => {
-  data.forEach(async (item) => {
-    await prisma[model].upsert({
-      where: { id: item.id },
-      update: item,
-      create: item,
-    });
-  });
+  await Promise.all(
+    data.map((item) =>
+      prisma[model].upsert({
+        where: { id: item.id },
+        update: item,
+        create: item,
+      })
+    )
+  );
 };
 
 async function main() {

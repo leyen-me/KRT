@@ -1,5 +1,6 @@
 export const ERROR_CODES = {
   200: "server.error.code.success",
+  401: "server.error.code.unauthorized",
   404: "server.error.code.not_found",
   500: "server.error.code.internal_error",
   501: "server.error.code.validate_error",
@@ -14,4 +15,7 @@ export const ERROR_CODES = {
   // sys dict
   200_006: "server.error.code.sys.dict.dict_code_already_exists",
   200_007: "server.error.code.sys.dict.item.dict_item_value_already_exists",
+
+  // sys role
+  200_008: "server.error.code.sys.role.role_code_already_exists",
 };

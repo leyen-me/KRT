@@ -68,7 +68,7 @@ export function DataTableModelDrawer() {
   const { activeDict } = useContext(DictContext) as DictContextType;
 
   const defaultValues = {
-    transKey: "",
+    name: "",
     dictId: activeDict,
     value: "",
     sort: 1,
@@ -231,7 +231,7 @@ export function DataTableModelDrawer() {
                 <CardContent className="space-y-3">
                   <FormField
                     control={form.control}
-                    name="transKey"
+                    name="name"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>

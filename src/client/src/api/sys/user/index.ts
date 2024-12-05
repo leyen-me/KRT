@@ -6,6 +6,7 @@ import {
   SysUserCreateResponseType,
   SysUserCreateSchemaType,
   SysUserDetailResponseType,
+  SysUserListResponseType,
   SysUserPageResponseType,
   SysUserPageSchemaType,
   SysUserUpdateResponseType,
@@ -16,6 +17,12 @@ export const fetchSysUserPage = async (
   body: SysUserPageSchemaType
 ): Promise<IResult<SysUserPageResponseType>> => {
   return fetchRequest(`/sys/user/page`, { body });
+};
+
+export const fetchSysUserList = async (): Promise<
+  IResult<SysUserListResponseType>
+> => {
+  return fetchRequest(`/sys/user/list`);
 };
 
 export const fetchSysUserCreate = async (
