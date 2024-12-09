@@ -51,6 +51,9 @@ export type LoginWithGoogleResponseType = {
   token: string;
 };
 
+// logout
+export type LogoutResponseType = null;
+
 // register
 export const RegisterSchema = z.object({
   email: z
@@ -305,6 +308,7 @@ export type { SysRole } from "@prisma/client";
 // sys role page
 export const SysRolePageSchema = PageSchema.extend({
   name: z.string().optional(),
+  code: z.string().optional(),
 });
 export type SysRolePageSchemaType = z.infer<typeof SysRolePageSchema>;
 export type SysRolePageResponseType = PageResponseType<SysRole>;

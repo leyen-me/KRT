@@ -16,6 +16,7 @@ import {
   LoginWithGoogleSchemaType,
   LoginWithGoogleResponseType,
   SysUserDetailResponseType,
+  LogoutResponseType,
 } from "@/model";
 import { LoginSchemaType, LoginResponseType } from "@/model";
 import { UserAlreadyExistsError } from "@/error/sys/auth/UserAlreadyExistsError";
@@ -172,9 +173,14 @@ export class SysAuthService {
     // 1. Get token from header
     const token = ctx.get(AUTHORIZATION_KEY);
     // 2. Delete token from redis
-    // await redisClient.deleteSysUserToken(token);
-
-    // 3. Return success message
-    return ctx.send(new I18nResult(200));
+    await redisClient.removeSysUserToken(token);
+    // 3. Delete token from database
+    await prisma.sysUserToken.deleteMany({
+      where: {
+        token,
+      },
+    });
+    // 4. Return success message
+    return ctx.send(new I18nResult<LogoutResponseType>(200));
   };
 }

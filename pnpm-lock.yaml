@@ -100,6 +100,9 @@ importers:
       react:
         specifier: ^18.3.1
         version: 18.3.1
+      react-complex-tree:
+        specifier: ^2.4.6
+        version: 2.4.6(react@18.3.1)
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
@@ -3699,6 +3702,14 @@ packages:
       http-errors: 2.0.0
       iconv-lite: 0.4.24
       unpipe: 1.0.0
+    dev: false
+
+  /react-complex-tree@2.4.6(react@18.3.1):
+    resolution: {integrity: sha512-Akt55R8sI2r66ngxwU7lSgh0YxoBsQHjaVnLzRVCL3Xe+7vbrYfkRpdCK9i/Awga2vYkkdAh9z8etnO3PF/lAg==}
+    peerDependencies:
+      react: '>=16.0.0'
+    dependencies:
+      react: 18.3.1
     dev: false
 
   /react-dom@18.3.1(react@18.3.1):

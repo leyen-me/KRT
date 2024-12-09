@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { AUTHORIZATION_KEY } from "@/constants";
+import { fetchSysAuthLogout } from "@/api/sys/auth";
 export type AuthStore = {
   token: string;
   isAuthenticated: boolean;
@@ -18,7 +19,8 @@ const useAuthStore = create<AuthStore>((set) => ({
     set({ token, isAuthenticated: true });
   },
 
-  logout: () => {
+  logout: async () => {
+    await fetchSysAuthLogout();
     localStorage.removeItem(AUTHORIZATION_KEY);
     set({ token: "", isAuthenticated: false });
   },

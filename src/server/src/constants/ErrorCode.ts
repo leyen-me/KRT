@@ -18,4 +18,7 @@ export const ERROR_CODES = {
 
   // sys role
   200_008: "server.error.code.sys.role.role_code_already_exists",
+
+  // sys translation
+  200_009: "server.error.code.sys.translation.translation_type_already_exists",
 };

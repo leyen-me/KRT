@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 import { AppSidebar } from "@/components/app-sidebar";
 import { Tool } from "@/components/tool";
@@ -17,8 +17,31 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/toaster";
+import { t } from "@app/i18n";
 
 export default function AdminLayout() {
+  const location = useLocation();
+  let title = "";
+  switch (location.pathname) {
+    case "/admin/sys/dashboard":
+      title = "pages.common.nav.dashboard";
+      break;
+    case "/admin/sys/user":
+      title = "pages.common.nav.user";
+      break;
+    case "/admin/sys/role":
+      title = "pages.common.nav.role";
+      break;
+    case "/admin/sys/translation":
+      title = "pages.common.nav.translation";
+      break;
+    case "/admin/sys/dict":
+      title = "pages.common.nav.dict";
+      break;
+    default:
+      break;
+  }
+
   return (
     <>
       <SidebarProvider className="w-full overflow-x-hidden">
@@ -32,13 +55,13 @@ export default function AdminLayout() {
                 <Breadcrumb>
                   <BreadcrumbList>
                     <BreadcrumbItem className="hidden md:block">
-                      <BreadcrumbLink href="#">
-                        Building Your Application
+                      <BreadcrumbLink>
+                        {t("pages.common.nav.application")}
                       </BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator className="hidden md:block" />
                     <BreadcrumbItem>
-                      <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                      <BreadcrumbPage>{t(title)}</BreadcrumbPage>
                     </BreadcrumbItem>
                   </BreadcrumbList>
                 </Breadcrumb>
@@ -46,9 +69,13 @@ export default function AdminLayout() {
               <Tool relative />
             </div>
           </header>
-          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+
+          {/* todo mb */}
+          <div className="flex flex-1 h-0 flex-col p-4 overflow-auto">
             <Outlet />
           </div>
+
+          <div className="h-0"></div>
         </SidebarInset>
       </SidebarProvider>
 

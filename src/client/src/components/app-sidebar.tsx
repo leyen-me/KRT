@@ -34,106 +34,102 @@ const data = {
   },
   navMain: [
     {
-      title: "Playground",
+      title: "pages.common.nav.playground",
       url: "#",
       icon: SquareTerminal,
       isActive: true,
       items: [
         {
-          title: "Dashboard",
+          title: "pages.common.nav.dashboard",
           url: "/admin/sys/dashboard",
         },
       ],
     },
     {
-      title: "System",
+      title: "pages.common.nav.system",
       url: "#",
       icon: Settings2,
       isActive: true,
       items: [
         {
-          title: "User",
+          title: "pages.common.nav.user",
           url: "/admin/sys/user",
         },
         {
-          title: "Role",
+          title: "pages.common.nav.role",
           url: "/admin/sys/role",
         },
         {
-          title: "Translation",
+          title: "pages.common.nav.translation",
           url: "/admin/sys/translation",
         },
         {
-          title: "Dict",
+          title: "pages.common.nav.dict",
           url: "/admin/sys/dict",
-        },
-        {
-          title: "Menu",
-          url: "/admin/sys/menu",
         },
       ],
     },
     {
-      title: "Models",
+      title: "pages.common.nav.models",
       url: "#",
       icon: Bot,
       items: [
         {
-          title: "Genesis",
+          title: "pages.common.nav.genesis",
           url: "#",
         },
         {
-          title: "Explorer",
+          title: "pages.common.nav.explorer",
           url: "#",
         },
         {
-          title: "Quantum",
+          title: "pages.common.nav.quantum",
           url: "#",
         },
       ],
     },
     {
-      title: "Documentation",
+      title: "pages.common.nav.documentation",
       url: "#",
       icon: BookOpen,
       items: [
         {
-          title: "Introduction",
+          title: "pages.common.nav.introduction",
           url: "#",
         },
         {
-          title: "Get Started",
+          title: "pages.common.nav.get_started",
           url: "#",
         },
         {
-          title: "Tutorials",
+          title: "pages.common.nav.tutorials",
           url: "#",
         },
         {
-          title: "Changelog",
+          title: "pages.common.nav.changelog",
           url: "#",
         },
       ],
     },
     {
-      title: "Settings",
+      title: "pages.common.nav.settings",
       url: "#",
       icon: Settings2,
       items: [
         {
-          title: "General",
+          title: "pages.common.nav.general",
           url: "#",
         },
         {
-          title: "Team",
+          title: "pages.common.nav.team",
           url: "#",
         },
         {
-          title: "Billing",
+          title: "pages.common.nav.billing",
           url: "#",
         },
         {
-          title: "Limits",
+          title: "pages.common.nav.limits",
           url: "#",
         },
       ],
@@ -141,29 +137,29 @@ const data = {
   ],
   navSecondary: [
     {
-      title: "Support",
+      title: "pages.common.nav.support",
       url: "#",
       icon: LifeBuoy,
     },
     {
-      title: "Feedback",
+      title: "pages.common.nav.feedback",
       url: "#",
       icon: Send,
     },
   ],
   projects: [
     {
-      name: "Design Engineering",
+      name: "pages.common.nav.projects.design_engineering",
       url: "#",
       icon: Frame,
     },
     {
-      name: "Sales & Marketing",
+      name: "pages.common.nav.projects.sales_marketing",
       url: "#",
       icon: PieChart,
     },
     {
-      name: "Travel",
+      name: "pages.common.nav.projects.travel",
       url: "#",
       icon: Map,
     },

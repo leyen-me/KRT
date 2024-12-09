@@ -1,8 +1,10 @@
+import { TranslationTypeAlreadyExistsError } from "@/error/sys/translation/TranslationTypeAlreadyExistsError";
 import { prisma } from "@/libs/prisma";
 import {
   SysTranslationPageSchemaType,
   SysTranslationPageResponseType,
   SysTranslationAllResponseType,
+  SysTranslationCreateSchemaType,
 } from "@/model";
 import { BaseService } from "@/service/BaseService";
 import { LOCALS } from "@app/i18n/locals";
@@ -10,6 +12,29 @@ import { I18nResult } from "@app/result";
 import { Context } from "koa";
 
 export class SysTranslationService extends BaseService {
+  
+  public createOrUpdateHook = async (
+    body: SysTranslationCreateSchemaType & { id?: string }
+  ) => {
+    const where = {
+      key: body.key,
+      type: body.type,
+      ...(body.id
+        ? {
+            id: {
+              not: body.id,
+            },
+          }
+        : {}),
+    };
+    const sysTranslation = await prisma.sysTranslation.findFirst({
+      where,
+    });
+    if (sysTranslation) {
+      throw new TranslationTypeAlreadyExistsError();
+    }
+  };
+
   public page = async (ctx: Context) => {
     const { page, pageSize, key } = ctx.request
       .body as SysTranslationPageSchemaType;

@@ -6,6 +6,7 @@ import {
   LoginResponseType,
   LoginWithGoogleResponseType,
   LoginWithGoogleSchemaType,
+  LogoutResponseType,
 } from "@app/server/src/model";
 import {
   RegisterSchemaType,
@@ -26,6 +27,12 @@ export const fetchSysAuthLogin = async (
   return fetchRequest(`/sys/auth/login`, {
     body,
   });
+};
+
+export const fetchSysAuthLogout = async (): Promise<
+  IResult<LogoutResponseType>
+> => {
+  return fetchRequest(`/sys/auth/logout`);
 };
 
 export const fetchSysAuthLoginWithGoogle = async (

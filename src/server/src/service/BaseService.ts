@@ -1,11 +1,8 @@
 import { prisma } from "@/libs/prisma";
-import { SysUserDetailResponseType } from "@/model";
 import { I18nResult } from "@app/result";
-import { Prisma, PrismaClient } from "@prisma/client";
 import { Context } from "koa";
 
 export class BaseService {
-  
   private tableName: string = "";
 
   public constructor() {
@@ -14,24 +11,32 @@ export class BaseService {
       this.tableName.charAt(0).toLowerCase() + this.tableName.slice(1);
   }
 
+  /**
+   * create or update hook
+   * @param body request body
+   */
+  public createOrUpdateHook = async (body: any): Promise<void> => {};
+
   public list = async (ctx: Context) => {
     const res = await prisma[this.tableName].findMany();
     return ctx.send(new I18nResult<any>(200, res));
   };
 
   public create = async (ctx: Context) => {
-    const { ...data } = ctx.request.body as any;
+    const body = ctx.request.body as any;
+    await this.createOrUpdateHook(body);
     const res = await prisma[this.tableName].create({
-      data,
+      data: body,
     });
     return ctx.send(new I18nResult<any>(200, { id: res.id }));
   };
 
   public update = async (ctx: Context) => {
-    const { id, ...data } = ctx.request.body as any;
+    const body = ctx.request.body as any;
+    await this.createOrUpdateHook(body);
     const res = await prisma[this.tableName].update({
-      where: { id },
-      data,
+      where: { id: body.id },
+      data: body,
     });
     return ctx.send(new I18nResult<any>(200, { id: res.id }));
   };

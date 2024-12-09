@@ -20,6 +20,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { Link } from "react-router-dom"
+import { t } from "@app/i18n"
 
 export function NavMain({
   items,
@@ -38,7 +39,7 @@ export function NavMain({
   const { isMobile, toggleSidebar } = useSidebar()
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel>{t("pages.common.nav.title.platform")}</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
@@ -46,7 +47,7 @@ export function NavMain({
               <SidebarMenuButton asChild tooltip={item.title}>
                 <a href={item.url}>
                   <item.icon />
-                  <span>{item.title}</span>
+                  <span>{t(item.title)}</span>
                 </a>
               </SidebarMenuButton>
               {item.items?.length ? (
@@ -63,7 +64,7 @@ export function NavMain({
                         <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton asChild>
                             <Link to={subItem.url} onClick={() => isMobile && toggleSidebar()}>
-                              <span>{subItem.title}</span>
+                              <span>{t(subItem.title)}</span>
                             </Link>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
