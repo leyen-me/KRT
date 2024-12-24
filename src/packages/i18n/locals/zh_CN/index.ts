@@ -166,7 +166,7 @@ export default {
   "pages.admin.sys.user.data_table.columns.gender": "性别",
   "pages.admin.sys.user.data_table.columns.status": "状态",
   "pages.admin.sys.user.data_table.columns.avatar": "头像",
-  "pages.admin.sys.user.data_table.columns.roleIds": "角色列表",
+  "pages.admin.sys.user.data_table.columns.roleList": "角色列表",
   "pages.admin.sys.user.data_table.columns.nickname": "昵称",
   "pages.admin.sys.user.data_table.columns.super_admin": "超级管理员",
   "pages.admin.sys.user.data_table.model.drawer.header.create_title":
@@ -227,6 +227,7 @@ export default {
   "server.error.code.not_found": "API 未找到",
   "server.error.code.internal_error": "服务器内部错误",
   "server.error.code.validate_error": "参数错误",
+  "server.error.code.foreign_key_constraint_failed": "数据已被其他数据关联",
   "server.error.code.sys.auth.user_not_found": "用户不存在",
   "server.error.code.sys.auth.password_not_incorrect": "密码不正确",
   "server.error.code.sys.auth.password_decrypt": "密码格式错误",

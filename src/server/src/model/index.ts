@@ -141,8 +141,10 @@ export const SysUserDetailSchema = z.object({
   id: z.string().min(1, "common.validate.required"),
 });
 export type SysUserDetailSchemaType = z.infer<typeof SysUserDetailSchema>;
+export const SysRoleOptionSchema = z.object({ label: z.string(), value: z.string() });
+export type SysRoleOptionSchemaType = z.infer<typeof SysRoleOptionSchema>;
 export type SysUserDetailResponseType = Omit<SysUser, "password"> & {
-  roleIds: string[];
+  roleList: SysRoleOptionSchemaType[];
 };
 
 // sys user page
@@ -171,7 +173,7 @@ export const SysUserCreateSchema = z.object({
   gender: z.nativeEnum(SYS_USER_GENDER).optional(),
   mobile: z.string().optional(),
   avatar: z.string().optional(),
-  roleIds: z.array(z.string()).optional(),
+  roleList: z.array(SysRoleOptionSchema),
 });
 export type SysUserCreateSchemaType = z.infer<typeof SysUserCreateSchema>;
 export type SysUserCreateResponseType = {

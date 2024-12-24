@@ -72,6 +72,13 @@ export class SysAuthService {
     }
     let sysUser = await prisma.sysUser.findFirst({
       where,
+      include: {
+        roles: {
+          include: {
+            role: true,
+          },
+        },
+      },
     });
     return sysUser;
   };
@@ -146,13 +153,18 @@ export class SysAuthService {
 
     // 3. If user not found, auto register
     if (!sysUser) {
-      sysUser = await prisma.sysUser.create({
+      const sysCreateUser = await prisma.sysUser.create({
         data: {
           email,
           // random password
           password: encrypt(uuidv4(), import.meta.env.VITE_AUTH_SECURITY).data,
         },
       });
+
+      sysUser = {
+        ...sysCreateUser,
+        roles: [],
+      };
     }
 
     // 4. Check if the user is disabled
@@ -166,7 +178,9 @@ export class SysAuthService {
   };
 
   public userInfo = async (ctx: Context) => {
-    return ctx.send(new I18nResult<SysUserDetailResponseType>(200, ctx.state.user));
+    return ctx.send(
+      new I18nResult<SysUserDetailResponseType>(200, ctx.state.user)
+    );
   };
 
   public logout = async (ctx: Context) => {

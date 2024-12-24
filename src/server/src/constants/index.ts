@@ -8,4 +8,9 @@ export const CLIENT_SERVER_PATH = IS_PRODUCTION
 
 export const AUTHORIZATION_KEY = "Authorization";
 
-export const AUTH_WHITE_LIST = ["/api/sys/auth/**"];
+export const AUTH_WHITE_LIST = [
+  "/api/sys/auth/register",
+  "/api/sys/auth/login",
+  "/api/sys/auth/login-with-google",
+  "/api/sys/auth/logout",
+];

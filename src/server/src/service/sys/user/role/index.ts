@@ -5,13 +5,13 @@ import {
   SysUserRolePageResponseType,
   SysUserRoleDetailResponseType,
   SysUserRoleCreateSchemaType,
+  SysRoleOptionSchemaType,
 } from "@/model";
-import { BaseService } from "@/service/BaseService";
+import { BaseService, PrismaTransaction } from "@/service/BaseService";
 import { I18nResult } from "@app/result";
 import { Context } from "koa";
 
 export class SysUserRoleService extends BaseService {
-
   public createOrUpdateHook = async (
     body: SysUserRoleCreateSchemaType & { id?: string }
   ) => {
@@ -33,7 +33,7 @@ export class SysUserRoleService extends BaseService {
       throw new UserAlreadyExistsError();
     }
   };
-  
+
   public page = async (ctx: Context) => {
     const { page, pageSize, roleId, email } = ctx.request
       .body as SysUserRolePageSchemaType;
@@ -65,5 +65,28 @@ export class SysUserRoleService extends BaseService {
       list: result as SysUserRoleDetailResponseType[],
     };
     return ctx.send(new I18nResult<SysUserRolePageResponseType>(200, res));
+  };
+
+  public createOrUpdate = async ({
+    tx,
+    userId,
+    roleList,
+  }: {
+    tx?: PrismaTransaction;
+    userId: string;
+    roleList: SysRoleOptionSchemaType[];
+  }) => {
+    const prismaTx = tx || prisma;
+    await prismaTx.sysUserRole.deleteMany({
+      where: {
+        userId,
+      },
+    });
+    await prismaTx.sysUserRole.createMany({
+      data: roleList.map((role) => ({
+        userId,
+        roleId: role.value,
+      })),
+    });
   };
 }

@@ -9,6 +9,7 @@ export enum QUERY_KEY {
   SYS_DICT_ITEM_DETAIL = "sysDictItemDetail",
 
   SYS_ROLE_PAGE = "sysRolePage",
+  SYS_ROLE_LIST = "sysRoleList",
   SYS_ROLE_DETAIL = "sysRoleDetail",
 
   SYS_USER_ROLE_PAGE = "sysUserRolePage",

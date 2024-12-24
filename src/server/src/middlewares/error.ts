@@ -1,5 +1,6 @@
 import { BaseError } from "@/error/BaseError";
 import { I18nResult } from "@app/result";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { Context, Next } from "koa";
 
 export const notFoundMiddleware = async (ctx: Context, next: Next) => {
@@ -16,10 +17,12 @@ export const errorMiddleware = async (ctx: Context, next: Next) => {
     await next();
   } catch (err: any) {
     console.error(err);
-    if (err instanceof BaseError) {
-      ctx.send(new I18nResult(err.code));
-    } else {
-      ctx.send(new I18nResult(500));
+    if (err instanceof PrismaClientKnownRequestError && err.code === "P2003") {
+      return ctx.send(new I18nResult(200_2003));
     }
+    if (err instanceof BaseError) {
+      return ctx.send(new I18nResult(err.code));
+    }
+    return ctx.send(new I18nResult(500));
   }
 };

@@ -13,6 +13,7 @@ import { zodResolver } from "@/utils/zodUtils";
 import {
   SYS_USER_GENDER,
   SYS_USER_STATUS,
+  SysRoleListResponseType,
   SysUserCreateResponseType,
   SysUserCreateSchema,
   SysUserCreateSchemaType,
@@ -52,12 +53,14 @@ import { t } from "@app/i18n";
 import { useToast } from "@/hooks/use-toast";
 import { QUERY_KEY } from "@/constants/query-key";
 import { DictSelect } from "@/components/dict-select";
+import MultipleSelector, { Option } from "@/components/ui/multiselect";
+import { fetchSysRoleList } from "@/api/sys/role";
 
 export function DataTableModelDrawer() {
   // common hook
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const defaultValues = {
+  const defaultValues: SysUserCreateSchemaType = {
     email: "",
     password: "",
     status: SYS_USER_STATUS.NORMAL,
@@ -66,8 +69,26 @@ export function DataTableModelDrawer() {
     gender: SYS_USER_GENDER.UNKNOWN,
     mobile: "",
     avatar: "",
-    roleIds: [],
+    roleList: [],
   };
+
+  // role options
+  const [roleOptions, setRoleOptions] = useState<Option[]>([]);
+  const { data: roleList } = useQuery<SysRoleListResponseType>({
+    queryKey: [QUERY_KEY.SYS_ROLE_LIST],
+    queryFn: async () => {
+      const response = await fetchSysRoleList();
+      return response.data;
+    },
+  });
+  useEffect(() => {
+    setRoleOptions(
+      roleList?.map((role) => ({
+        value: role.id,
+        label: t(role.name),
+      })) || []
+    );
+  }, [roleList]);
 
   // user edit context
   const { id, setId } = useContext(UserEditContext) as UserEditContextType;
@@ -112,6 +133,11 @@ export function DataTableModelDrawer() {
       const data = Object.fromEntries(
         Object.entries(modelInfo.data).filter(([_, value]) => value !== null)
       );
+      data.roleList = data.roleList as Option[];
+      data.roleList = data.roleList.map((role) => ({
+        label: t(role.label),
+        value: role.value,
+      }));
       form.reset(data as SysUserUpdateSchemaType);
     }
   }, [modelInfo]);
@@ -138,7 +164,7 @@ export function DataTableModelDrawer() {
         description: error.message,
       });
     },
-    onSettled: () => { },
+    onSettled: () => {},
   });
 
   const { mutate: mutateUpdate, isPending: updatePending } = useMutation<
@@ -163,7 +189,7 @@ export function DataTableModelDrawer() {
         description: error.message,
       });
     },
-    onSettled: () => { },
+    onSettled: () => {},
   });
 
   const onSubmit = (
@@ -183,20 +209,20 @@ export function DataTableModelDrawer() {
           <DrawerTitle className="text-2xl">
             {id === MODEL_CREATE_FLAG_ID
               ? t(
-                "pages.admin.sys.user.data_table.model.drawer.header.create_title"
-              )
+                  "pages.admin.sys.user.data_table.model.drawer.header.create_title"
+                )
               : t(
-                "pages.admin.sys.user.data_table.model.drawer.header.update_title"
-              )}
+                  "pages.admin.sys.user.data_table.model.drawer.header.update_title"
+                )}
           </DrawerTitle>
           <DrawerDescription>
             {id === MODEL_CREATE_FLAG_ID
               ? t(
-                "pages.admin.sys.user.data_table.model.drawer.header.create_description"
-              )
+                  "pages.admin.sys.user.data_table.model.drawer.header.create_description"
+                )
               : t(
-                "pages.admin.sys.user.data_table.model.drawer.header.update_description"
-              )}
+                  "pages.admin.sys.user.data_table.model.drawer.header.update_description"
+                )}
           </DrawerDescription>
         </DrawerHeader>
 
@@ -260,7 +286,11 @@ export function DataTableModelDrawer() {
                           {t("pages.admin.sys.user.data_table.columns.status")}
                         </FormLabel>
                         <FormControl>
-                          <DictSelect code='sys_user_status' value={field.value} onChange={field.onChange}></DictSelect>
+                          <DictSelect
+                            code="sys_user_status"
+                            value={field.value}
+                            onChange={field.onChange}
+                          ></DictSelect>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -277,7 +307,11 @@ export function DataTableModelDrawer() {
                           )}
                         </FormLabel>
                         <FormControl>
-                          <DictSelect code='sys_yes_no' value={field.value} onChange={field.onChange}></DictSelect>
+                          <DictSelect
+                            code="sys_yes_no"
+                            value={field.value}
+                            onChange={field.onChange}
+                          ></DictSelect>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -292,7 +326,11 @@ export function DataTableModelDrawer() {
                           {t("pages.admin.sys.user.data_table.columns.gender")}
                         </FormLabel>
                         <FormControl>
-                        <DictSelect code='sys_user_gender' value={field.value} onChange={field.onChange}></DictSelect>
+                          <DictSelect
+                            code="sys_user_gender"
+                            value={field.value}
+                            onChange={field.onChange}
+                          ></DictSelect>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -363,14 +401,30 @@ export function DataTableModelDrawer() {
                 <CardContent>
                   <FormField
                     control={form.control}
-                    name="roleIds"
+                    name="roleList"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          {t("pages.admin.sys.user.data_table.columns.roleIds")}
+                          {t("pages.admin.sys.user.data_table.columns.roleList")}
                         </FormLabel>
                         <FormControl>
-                          <Input {...field} />
+                          {/* <Input {...field} /> */}
+                          <MultipleSelector
+                            commandProps={{
+                              label: "Select roles",
+                            }}
+                            value={field.value}
+                            onChange={field.onChange}
+                            defaultOptions={roleOptions}
+                            placeholder="Select roles"
+                            hideClearAllButton
+                            hidePlaceholderWhenSelected
+                            emptyIndicator={
+                              <p className="text-center text-sm">
+                                No results found
+                              </p>
+                            }
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -394,8 +448,8 @@ export function DataTableModelDrawer() {
                 ? t("pages.common.data_table.model.drawer.create") + "..."
                 : t("pages.common.data_table.model.drawer.create")
               : updatePending
-                ? t("pages.common.data_table.model.drawer.update") + "..."
-                : t("pages.common.data_table.model.drawer.update")}
+              ? t("pages.common.data_table.model.drawer.update") + "..."
+              : t("pages.common.data_table.model.drawer.update")}
           </Button>
           <DrawerClose asChild>
             <Button variant="outline">

@@ -25,6 +25,7 @@ import AdminSysTranslation from "./pages/admin/sys/translation";
 import AdminSysDict from "./pages/admin/sys/dict";
 import AdminSysUser from "./pages/admin/sys/user";
 import AdminSysRole from "./pages/admin/sys/role";
+import AdminSysMenu from "./pages/admin/sys/menu";
 
 const queryClient = new QueryClient();
 
@@ -65,6 +66,7 @@ function App() {
                   <Route path="/admin/sys/dict" element={<AdminSysDict />} />
                   <Route path="/admin/sys/user" element={<AdminSysUser />} />
                   <Route path="/admin/sys/role" element={<AdminSysRole />} />
+                  <Route path="/admin/sys/menu" element={<AdminSysMenu />} />
                   <Route
                     path="/admin/sys/dashboard"
                     element={<AdminSysDashboard />}

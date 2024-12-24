@@ -45,7 +45,8 @@ model SysUser {
 
   createdAt   DateTime      @default(dbgenerated("NOW()")) @db.DateTime
   updatedAt   DateTime      @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.Timestamp(0)
-  SysUserRole SysUserRole[]
+
+  roles SysUserRole[]
 }
 
 // sys user token
@@ -99,6 +100,7 @@ model SysDictItem {
   value   String
   sort    Int                   @default(1)
   variant SYS_DICT_ITEM_VARIANT @default(default)
+  
   dict    SysDict?              @relation(fields: [dictId], references: [id])
 }
 
@@ -108,6 +110,8 @@ model SysRole {
 
   name String
   code String
+
+  roles SysUserRole[]
 }
 
 // sys user role
@@ -116,5 +120,7 @@ model SysUserRole {
 
   userId String
   roleId String
+
   user   SysUser @relation(fields: [userId], references: [id])
+  role   SysRole @relation(fields: [roleId], references: [id])
 }

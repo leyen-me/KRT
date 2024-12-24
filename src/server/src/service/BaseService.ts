@@ -1,6 +1,9 @@
 import { prisma } from "@/libs/prisma";
 import { I18nResult } from "@app/result";
+import { PrismaClient } from "@prisma/client";
 import { Context } from "koa";
+
+export type PrismaTransaction = Omit<PrismaClient, "$connect" | "$disconnect" | "$on" | "$transaction" | "$use" | "$extends">;
 
 export class BaseService {
   private tableName: string = "";

@@ -5,6 +5,9 @@ export const ERROR_CODES = {
   500: "server.error.code.internal_error",
   501: "server.error.code.validate_error",
 
+  // foreign key constraint failed
+  200_2003: "server.error.code.foreign_key_constraint_failed",
+
   // sys auth
   200_001: "server.error.code.sys.auth.user_not_found",
   200_002: "server.error.code.sys.auth.password_not_incorrect",

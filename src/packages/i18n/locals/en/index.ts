@@ -170,7 +170,7 @@ export default {
   "pages.admin.sys.user.data_table.columns.gender": "Gender",
   "pages.admin.sys.user.data_table.columns.status": "Status",
   "pages.admin.sys.user.data_table.columns.avatar": "Avatar",
-  "pages.admin.sys.user.data_table.columns.roleIds": "Role List",
+  "pages.admin.sys.user.data_table.columns.roleList": "Role List",
   "pages.admin.sys.user.data_table.columns.nickname": "Nickname",
   "pages.admin.sys.user.data_table.columns.super_admin": "SuperAdmin",
   "pages.admin.sys.user.data_table.model.drawer.header.create_title":
@@ -234,6 +234,7 @@ export default {
   "server.error.code.not_found": "API Not Found",
   "server.error.code.internal_error": "Internal Error",
   "server.error.code.validate_error": "Invalid parameters",
+  "server.error.code.foreign_key_constraint_failed": "The data is related to other data",
   "server.error.code.sys.auth.user_not_found": "User not found",
   "server.error.code.sys.auth.password_not_incorrect": "Password not incorrect",
   "server.error.code.sys.auth.password_decrypt": "Password decrypt error",
